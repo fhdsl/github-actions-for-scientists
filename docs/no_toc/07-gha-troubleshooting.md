@@ -59,7 +59,7 @@ And make plots too:
 hist_plot <- hist(iris$Sepal.Length)
 ```
 
-<img src="resources/images/02-programming-practices_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="resources/images/07-gha-troubleshooting_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 You can also save these plots to file:
 
@@ -107,7 +107,7 @@ dev.off()
 How to include a Google slide. It's simplest to use the `ottrpal` package:
 
 
-<img src="resources/images/02-programming-practices_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" title="Major point!! example image" alt="Major point!! example image" width="100%" style="display: block; margin: auto;" />
+<img src="resources/images/07-gha-troubleshooting_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" title="Major point!! example image" alt="Major point!! example image" width="100%" style="display: block; margin: auto;" />
 
 But if you have the slide or some other image locally downloaded you can also use HTML like this:
 

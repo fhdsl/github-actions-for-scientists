@@ -1,6 +1,6 @@
 ---
 title: "Informatics Technology for Cancer Research (ITCR): Course Name "
-date: "August, 2023"
+date: "September, 2023"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
