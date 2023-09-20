@@ -24,15 +24,15 @@ _This course is written for individuals who:_
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g1173f7473f7_0_0")
 ```
 
-## Topics covered:
+## Topics covered
 
-This course covers how to use GitHub actions for scientific software development. We encourage the recognition that scientific software can take many forms that can all benefit the concepts of continuous integration and continuous deployment.
+This course covers how to use GitHub actions for scientific software development. We encourage the recognition that scientific software can take many forms that can all benefit from the concepts of continuous integration and continuous deployment.
 
 ```{r, out.width = "100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.gd422c5de97_0_10")
 ```
 
-This course builds on concepts introduced in the [Reproducibility](https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/introduction.html) and [Advanced Reproducibility](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/introduction.html) courses from the ITCR Training Network.
+This course builds on concepts introduced in the [Reproducibility](https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/introduction.html) and [Advanced Reproducibility](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/introduction.html) courses from the ITCR Training Network. If you are unfamiliar with GitHub and/or do not have an account, we'd suggest you start with those courses by using the links or QR codes below.
 
 ```{r, echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g101867ebdaa_18_0")
@@ -46,7 +46,7 @@ Data analyses are generally not reproducible without direct contact with the ori
 
 Equipping researchers with the skills to create reproducible data analyses increases the efficiency of everyone involved. One tool among many for creating reproducible analyses is utilizing automation. Many individuals performing analyses on cancer data may not have formal training in software development and may be unfamiliar with the ideas of continuous integration and continuous deployment. By recognizing that biological data analysis code is a form of software development, we can try to adapt good development practices in scientific analyses and software contexts.
 
-Scientific software projects may include (but aren't limited to):
+_Scientific software projects may include (but aren't limited to):_
 
 - Software that built as tools to be utilized by others to analyze biologically derived data.
 - Code that is built primarily for analyzing one project's data.
@@ -66,4 +66,4 @@ This course is meant to teach learners how to create sophisticated GitHub Action
 
 ## How to use the course
 
-Ideally you should follow along with the chapters and perform they activities as they are described. These activities involve using GitHub and GitHub actions. You will need a GitHub account and basic familiarity with GitHub and how
+Ideally you should follow along with the chapters and perform they activities as they are described. These activities involve using GitHub and GitHub actions. You will need a GitHub account and basic familiarity with GitHub. 
