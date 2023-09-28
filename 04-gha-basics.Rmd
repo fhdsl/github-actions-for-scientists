@@ -13,7 +13,7 @@ Recognize computing environments as a key tool of reproducibility and automation
 Navigate GitHub to find a details on a GitHub actions run
 
 
-## GitHub Actions Basics
+## GHA structure
 
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
@@ -56,7 +56,56 @@ Two items that every GitHub Action YAML must contain is `on:` and `jobs:`.
 
 - `on:` tells GitHub when something should be run. For example "whenever a pull request is opened".
 - `jobs:` tells GitHub what should be run. For example "run this bash script".
+- `runs-on`: tells GitHub with what environment should this be run. For example "windows-latest".
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2787")
 ```
+
+## on: When a thing should be run
+
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2808")
+```
+
+
+
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2815")
+```
+
+
+## jobs: What should be run
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2820")
+```
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2827")
+```
+
+**Scenario:** You are running an analysis using public data that continually has more samples added
+- You would like the analysis to rerun when new samples are added
+- You would like to be informed of when the analysis got rerun and what the results were on Slack
+
+That's totally a thing a GitHub action can do! We will walk through some examples like it!
+
+And here's the good news, you don't have to write things from scratch or know ALL the languages. GitHub marketplace allows you to use really cool actions that other people have created. More on this later.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2843")
+```
+
+## runs-on: with what:
+
+
+The runs-on: tag specifies with what environment the job is going to be run. So for example, there are built in operating systems like `windows-latest`, `mac-latest`, and `ubuntu-latest`. But you can also create custom environments.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2843")
+```
+
+About computing environments:
