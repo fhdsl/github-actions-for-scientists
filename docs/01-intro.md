@@ -26,7 +26,7 @@ This course covers how to use GitHub actions for scientific software development
 
 This course builds on concepts introduced in the [Reproducibility](https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/introduction.html) and [Advanced Reproducibility](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/introduction.html) courses from the ITCR Training Network. If you are unfamiliar with GitHub and/or do not have an account, we'd suggest you start with those courses by using the links or QR codes below.
 
-![](resources/images/01-intro_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g101867ebdaa_18_0.png)<!-- -->
+<img src="resources/images/01-intro_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g101867ebdaa_18_0.png" width="1250" />
 
 ## Motivation
 

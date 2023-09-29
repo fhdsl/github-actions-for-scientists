@@ -1,12 +1,11 @@
 ---
-title: "Informatics Technology for Cancer Research (ITCR): Course Name "
+title: "GitHub Automation for Scientists"
 date: "September, 2023"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-description: "Description about Course/Book."
 favicon: assets/ITN_favicon.ico
 ---
 
