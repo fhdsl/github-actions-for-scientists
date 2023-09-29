@@ -35,7 +35,7 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 The headlines about working with YAML files:
 
 1. Everything is a list (kind of like a JSON file).
-1. Indentions = subsets of a list
+1. Indentations = subsets of a list
 1. Spacing is VERY specific! -- incorrect spacing will definitely result in errors for your GitHub Action run.
 
 Let's take a look at an example YAML.
@@ -162,7 +162,7 @@ Most languages and programs allow you to print out the specifications of your co
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2913")
 ```
 
-There's various containerization softwares, that will allow you to share your computing environments but a very popular one is Docker. We can picture how this makes analyses more reproducible.
+There's various containerization software programs, that will allow you to share your computing environments but a very popular one is Docker. We can picture how this makes analyses more reproducible.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2946")
@@ -199,7 +199,7 @@ Super important side note: DO NOT put data that needs to be secured like Persona
 - GitHub actions are specified by YAML files in ` .github/workflows/` folder on a GitHub repository.
 - The specs from this YAML are used to run a `job` when an `on` trigger specifies it should be run.
 - The `runs-on` spec tells the server what kind of environment it should be run with.
-- Containers like those made with Docker can help you make custom computing environments. 
+- Containers like those made with Docker can help you make custom computing environments.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3054")
