@@ -64,13 +64,15 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 ### on: When a thing should be run
 
+If you are to automate something, step one is to figure out when do you want the thing to happen.
+
+What should trigger your action? For that we use `on:` in a GitHub Action.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2808")
 ```
 
-
-
+There's lots of possible answers for when something should be run. The triggers can be a lot of different events on GitHub: pull requests, issues, comments, times of day, etc.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2815")
@@ -79,13 +81,22 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 ### jobs: What should be run
 
+Perhaps even more important, what is the job that this automated task needs to do?
+
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2820")
 ```
 
-```{r, fig.align='center', out.width="100%", echo = FALSE}
-ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2827")
-```
+|Description |Trigger term |
+|------------|-------------|
+|When you click a button| [workflow_dispatch:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch)|
+|When its a certain time of day|[schedule:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule)|
+|When a pull request is opened or has a new commit |[pull_request:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request)|
+|When a branch is merged|[push:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#push)|
+|When something happens with an issue|[issue:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#issues)|
+|When a different github action runs|[workflow_call:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_call)|
+|When someone comments on a pull request |[pull_request_review_comment:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_review_comment)|
+
 
 **Scenario:** You are running an analysis using public data that continually has more samples added
 - You would like the analysis to rerun when new samples are added
@@ -368,4 +379,4 @@ Congrats! You've ran your first GitHub Action!
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3204")
 ```
 
-In the next chapter we'll run something a little more automated and a little more fun to build on what we've learned here. 
+In the next chapter we'll run something a little more automated and a little more fun to build on what we've learned here.
