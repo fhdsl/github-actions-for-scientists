@@ -102,10 +102,105 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 ## runs-on: with what:
 
 
-The runs-on: tag specifies with what environment the job is going to be run. So for example, there are built in operating systems like `windows-latest`, `mac-latest`, and `ubuntu-latest`. But you can also create custom environments.
+The `runs-on:` tag specifies with what environment the job is going to be run.
+
+What does this mean? Well let's start by discussing that the term "cloud" computing is a tad misleading. When we send a job to an online service like GitHub Actions, its not a mysterious vague mass.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2859")
+```
+
+Instead, its being sent to a real computer somewhere and that computer is setting up a *computing environment* to run your job and sends back the results to you through the GitHub website.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2867")
+```
+
+What do we mean by a computing environment? As just like when you work on your personal computer, you install, update, and sometimes delete software in order to run different things, the GitHub Actions computers need to do the same in order to run your code. Although some person from Microsoft isn't setting up a new physical computer and manually installing software, the specs you give underneath `runs-on:` tell GitHub Actions what kind of set up to use.
+
+So for example, there are built in operating systems like `windows-latest`, `mac-latest`, and `ubuntu-latest`. You can see more about the [default GitHub runners here](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources).
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2843")
 ```
 
-About computing environments:
+But just like a Windows machine straight out of a box is unlikely to have everything you need to run some code, you may need a more specific computing environment. You can also create custom environments using `containerization`.
+
+### Containerization
+
+A "virtual machine" is basically when your computer creates its own fake computer inside of it. It's acting like a different computer but it doesn't have any additional physical parts.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g285ab2029e8_0_2")
+```
+
+Containers aren't virtual machines, but they do a similar thing, which is they spin up a computing environment where you can do things. They are called containers because they are isolated from the rest of your computer.
+
+Containerization is useful because it allows us to share our computing environments with others. This is useful because it can be a powerful tool for reproducing analyses if we are controlling our computing environments.
+
+The software you use, and the versions of the software you use can affect the results from an analysis (Beaulieu-Jones and Casey S. Greene, 2017).
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2889")
+```
+
+Real data and experiments have shown this! Below is a figure from Beaulieu-Jones and Casey S. Greene, 2017 that shows how a microarray data analysis had different results depending on the software versions used.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2937")
+```
+
+And as time goes on, your computing environment changes; potentially in ways you don't realize!
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2894")
+```
+
+Most languages and programs allow you to print out the specifications of your computing environment. See below a "session info" print out from R. What this shows is two different computing environments. Side by side we can see how they differ.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2913")
+```
+
+There's various containerization softwares, that will allow you to share your computing environments but a very popular one is Docker. We can picture how this makes analyses more reproducible.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2946")
+```
+
+Docker and other containerization software work by allowing you to take a snapshot of your environment, called an *image*. This image can be shared and others can use this image to build the *container* from which they can run the analysis or whatever it is they plan to do.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2950")
+```
+
+
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2942")
+```
+
+Docker is a whole other world. There's whole conferences, hackathons, and etc devoted to Docker and other containerization software. It can be a lot to learn. To start, we recommend borrowing other people’s Docker images as much as possible instead of trying to build your own And then install the few packages you need. (more on this in a future chapter)
+
+<div class = "warning">
+
+Super important side note: DO NOT put data that needs to be secured like Personally Identifiable Information (PII) and Personal Health Information (PHI) data on your Docker images! Especially when you share them! They are not meant for this purpose and this data would be exposed!
+
+</div>
+
+#### More resources about Docker
+
+- [Launching a Docker image](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/launching-a-docker-image.html)
+- [Modifying a Docker image](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/modifying-a-docker-image.html)
+- [Docker for data scientists](https://towardsdatascience.com/docker-for-data-scientists-5732501f0ba4)
+
+## Summarizing
+
+- GitHub actions are specified by YAML files in ` .github/workflows/` folder on a GitHub repository.
+- The specs from this YAML are used to run a `job` when an `on` trigger specifies it should be run.
+- The `runs-on` spec tells the server what kind of environment it should be run with.
+- Containers like those made with Docker can help you make custom computing environments. 
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3054")
+```
