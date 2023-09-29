@@ -62,7 +62,7 @@ Two items that every GitHub Action YAML must contain is `on:` and `jobs:`.
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2787")
 ```
 
-## on: When a thing should be run
+### on: When a thing should be run
 
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
@@ -77,7 +77,7 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 ```
 
 
-## jobs: What should be run
+### jobs: What should be run
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2820")
@@ -99,7 +99,7 @@ And here's the good news, you don't have to write things from scratch or know AL
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2843")
 ```
 
-## runs-on: with what:
+### runs-on: with what:
 
 
 The `runs-on:` tag specifies with what environment the job is going to be run.
@@ -194,7 +194,7 @@ Super important side note: DO NOT put data that needs to be secured like Persona
 - [Modifying a Docker image](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/modifying-a-docker-image.html)
 - [Docker for data scientists](https://towardsdatascience.com/docker-for-data-scientists-5732501f0ba4)
 
-## Summarizing
+### Summarizing
 
 - GitHub actions are specified by YAML files in ` .github/workflows/` folder on a GitHub repository.
 - The specs from this YAML are used to run a `job` when an `on` trigger specifies it should be run.
@@ -204,3 +204,168 @@ Super important side note: DO NOT put data that needs to be secured like Persona
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3054")
 ```
+
+## Exercise 1 - Running your first GitHub Action
+
+Let's apply what we've learned about GitHub Actions by running one!
+
+1. If you don't have a standard workflow for how you use GitHub locally, or are unhappy with your current methods for this activity we recommend [installing GitHub Desktop](https://desktop.github.com/)
+
+
+2. First we need to create a copy of the exercise GitHub repository we will use for this course.
+Go to [`https://github.com/fhdsl/github-action-workshop`](https://github.com/fhdsl/github-action-workshop) and click on the `Use this template` button.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3070")
+```
+
+3. Fill out the form on this page about where you want this repository to be and what description you want it to have. And click `Create Repository`.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3076")
+```
+
+4. Clone this repository to your local computer.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3080")
+```
+In GitHub Desktop you can do this by clicking the `Clone Repository button`.
+But from command line you can use this kind of command:
+
+```
+git clone https://github.com/<your-username>/github-actions-workshop
+```
+
+5. Create a new branch by clicking the buttons as shown here or using the command line examples below
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3088")  
+```
+
+```
+cd github-actions-workshop
+git checkout -b "first-gha"
+```
+
+6. Create the specific GitHub Actions folders. Recall that in order to run a GitHub action, GitHub will look for YAML files in a specific location. We will need to create these folders to get going. Use your operating system to create a `.github` folder and then inside that folder, a `workflows` folder. Don't forget the `s` in workflows or the `.` in `.github` -- these folder names have to be *exactly* written this way for your GitHub Action to be found and recognized by GitHub.
+
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3101")  
+```
+
+You can use this command to do this:
+```
+mkdir -p .github/workflows
+```
+
+7. Now you will want to move the `00-my-first-action.yml` file into the `.github/workflows` folder.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3107")
+```
+
+In command line you can do this by using this command:
+```
+mv activity-1-sample-github-actions/00-my-first-action.yml .github/workflows/00-my-first-action.yml
+```
+
+8. Add and commit these changes to your branch. Then you will want to push your branch to the online GitHub repository.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3115")
+```
+
+In command line this can be done like this:
+```
+git add .github/*
+git commit -m "adding first gha"
+git push --set-upstream origin first-gha
+```
+
+9. Open a pull request. In GitHub Desktop you can click this button:
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3132")
+```
+
+Or just navigate to your GitHub repository online and [open a pull request through the website](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
+
+
+10. Check your pull request to make sure the changes are what you expect. Then merge it!
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3139")
+```
+
+11. After merging, go to the `Actions` tab on GitHub
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3146")
+```
+
+You'll be come very acquainted with this page if you use GitHub actions. On the left shows the workflows that are available or have been run before.
+
+We should see our new GitHub Action we just merged from our pull request here called "Basic GitHub Action". Click on that. Underneath this we should now see a blue banner that allows us to click "Run workflow".
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3152")
+```
+
+12. Click `Run workflow ` and then `Run workflow` again. Because we made our `on:` trigger `workflow_dispatch` this means we have to tell the GitHub Action when to run (which means its not really automated in this case).
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3161")
+```
+
+Yay!
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3168")
+```
+
+
+### Checking results of a GitHub Action
+
+Go to the `Action` tab. You'll see your newest run of your GitHub Action is logged here. All future GitHub Action runs will have their logs here.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3173")
+```
+
+Click on the workflow run log so we can look into it.
+To see more run details we'll click on the job name which in this case is `hello`.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3179")
+```
+
+Click on the dropdown arrows to see even more details on each step.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3188")
+```
+
+### Breaking down the YAML
+
+We can break down how what we wrote in the YAML lead to what is shown in this run's log.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3193")
+```
+
+- We named this Action `Basic GitHub Action` and the log was named that.
+- The only job being ran was named `hello` so in the log it shows up this way underneath the `Jobs` header. If we had more than one job, those jobs' names would show up here too.
+- Each job can contain as many steps as we want. Our one step is named `Hello World`.
+- This step involved running some code using the `run:` tag which by default uses bash.
+- The bash code just [echoed "hello world"](https://linuxhint.com/bash_echo/).
+
+
+Congrats! You've ran your first GitHub Action!
+
+```{r, fig.align='center', out.width="100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3204")
+```
+
+In the next chapter we'll run something a little more automated and a little more fun to build on what we've learned here. 
