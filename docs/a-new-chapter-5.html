@@ -4,19 +4,20 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 A new chapter | GitHub Automation for Scientists</title>
-  <meta name="description" content="Chapter 8 A new chapter | GitHub Automation for Scientists" />
-  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+  <title>Chapter 7 A new chapter | GitHub Automation for Scientists</title>
+  <meta name="description" content="Chapter 7 A new chapter | GitHub Automation for Scientists" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 A new chapter | GitHub Automation for Scientists" />
+  <meta property="og:title" content="Chapter 7 A new chapter | GitHub Automation for Scientists" />
   <meta property="og:type" content="book" />
+  
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 A new chapter | GitHub Automation for Scientists" />
-  
+  <meta name="twitter:title" content="Chapter 7 A new chapter | GitHub Automation for Scientists" />
+
   
   
 
@@ -429,6 +430,7 @@ div.csl-indent {
 <p>For this chapter, we’ll need the following packages attached:</p>
 <p>*Remember to add <a href="https://github.com/jhudsl/OTTR_Template/wiki/Using-Docker#starting-a-new-docker-image">any additional packages you need to your course’s own docker image</a>.</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="a-new-chapter-5.html#cb61-1" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span></code></pre></div>
+
 </div>
 <div id="topic-of-section-5" class="section level2 hasAnchor" number="8.3">
 <h2><span class="header-section-number">8.3</span> Topic of Section<a href="a-new-chapter-5.html#topic-of-section-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -442,16 +444,17 @@ div.csl-indent {
 <div id="code-examples-5" class="section level2 hasAnchor" number="8.4">
 <h2><span class="header-section-number">8.4</span> Code examples<a href="a-new-chapter-5.html#code-examples-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You can demonstrate code like this:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="a-new-chapter-5.html#cb62-1" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;resources&quot;</span>, <span class="st">&quot;code_output&quot;</span>)</span>
-<span id="cb62-2"><a href="a-new-chapter-5.html#cb62-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(output_dir)) {</span>
-<span id="cb62-3"><a href="a-new-chapter-5.html#cb62-3" tabindex="-1"></a>  <span class="fu">dir.create</span>(output_dir)</span>
-<span id="cb62-4"><a href="a-new-chapter-5.html#cb62-4" tabindex="-1"></a>}</span></code></pre></div>
+
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="a-new-chapter-5.html#cb62-1" aria-hidden="true" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;resources&quot;</span>, <span class="st">&quot;code_output&quot;</span>)</span>
+<span id="cb62-2"><a href="a-new-chapter-5.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(output_dir)) {</span>
+<span id="cb62-3"><a href="a-new-chapter-5.html#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(output_dir)</span>
+<span id="cb62-4"><a href="a-new-chapter-5.html#cb62-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>And make plots too:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="a-new-chapter-5.html#cb63-1" tabindex="-1"></a>hist_plot <span class="ot">&lt;-</span> <span class="fu">hist</span>(iris<span class="sc">$</span>Sepal.Length)</span></code></pre></div>
-<p><img src="resources/images/08-gha-publishing_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="a-new-chapter-5.html#cb63-1" aria-hidden="true" tabindex="-1"></a>hist_plot <span class="ot">&lt;-</span> <span class="fu">hist</span>(iris<span class="sc">$</span>Sepal.Length)</span></code></pre></div>
+<p><img src="resources/images/07-gha-troubleshooting_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>You can also save these plots to file:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="a-new-chapter-5.html#cb64-1" tabindex="-1"></a><span class="fu">png</span>(<span class="fu">file.path</span>(output_dir, <span class="st">&quot;test_plot.png&quot;</span>))</span>
-<span id="cb64-2"><a href="a-new-chapter-5.html#cb64-2" tabindex="-1"></a>hist_plot</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="a-new-chapter-5.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="fu">file.path</span>(output_dir, <span class="st">&quot;test_plot.png&quot;</span>))</span>
+<span id="cb64-2"><a href="a-new-chapter-5.html#cb64-2" aria-hidden="true" tabindex="-1"></a>hist_plot</span></code></pre></div>
 <pre><code>## $breaks
 ## [1] 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5 8.0
 ## 
@@ -473,9 +476,10 @@ div.csl-indent {
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;histogram&quot;</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="a-new-chapter-5.html#cb66-1" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
-<pre><code>## quartz_off_screen 
-##                 2</code></pre>
+
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="a-new-chapter-5.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
 </div>
 <div id="image-example-5" class="section level2 hasAnchor" number="8.5">
 <h2><span class="header-section-number">8.5</span> Image example<a href="a-new-chapter-5.html#image-example-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -607,19 +611,19 @@ Here’s more words that are hidden.
 <div id="print-out-session-info-5" class="section level2 hasAnchor" number="8.12">
 <h2><span class="header-section-number">8.12</span> Print out session info<a href="a-new-chapter-5.html#print-out-session-info-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You should print out session info when you have code for <a href="https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/managing-package-versions.html">reproducibility purposes</a>.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="a-new-chapter-5.html#cb71-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="a-new-chapter-5.html#cb71-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
-##  setting  value
-##  version  R version 4.3.1 (2023-06-16)
-##  os       macOS Ventura 13.5.2
-##  system   x86_64, darwin20
-##  ui       X11
-##  language (EN)
-##  collate  en_US.UTF-8
-##  ctype    en_US.UTF-8
-##  tz       America/New_York
-##  date     2023-09-20
-##  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)
+##  setting  value                       
+##  version  R version 4.0.2 (2020-06-22)
+##  os       Ubuntu 20.04.5 LTS          
+##  system   x86_64, linux-gnu           
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Etc/UTC                     
+##  date     2023-09-29                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package     * version date (UTC) lib source

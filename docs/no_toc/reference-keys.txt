@@ -1,7 +1,9 @@
 introduction
-motivation
 target-audience
+topics-covered
+motivation
 curriculum
+how-to-use-the-course
 a-new-chapter
 learning-objectives
 libraries
