@@ -75,12 +75,111 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 You can navigate to this same page by going to the `Actions` tab, then Scrolling down to see the most recent workflow run which should be named `Re-run analysis` and clicking on that.
 
+## Diving into the details
 
-### Diving into the details
+Let's break down what is in this GitHub Action YAML file and what this workflow run did.
 
-Let's dive into what is in this GitHub Action YAML file.
+### name and on
 
-Open up the `.github/workflows/01-re-run-analysis.yml` so we can study it. 
+- At the top of the file we have: `name: Re-run analysis`. This is what our workflow run shows up in the `Actions` tab log as and helps us differentiate it from other GitHub Action Workflows.
+- Below that, there is the `on:` trigger. This workflow of re-running this analysis will only run when a pull request is open or pushed to. And further we've specified with `branches:` it will only run if the pull request is targeted to branches named `main` or `staging`.
+```
+# Run this workflow when a pull request is opened or pushed to.
+on:
+  pull_request:
+    branches: [ main, staging ]
+```
+
+### jobs
+
+In our `jobs:` we've named this job `R run analysis`.
+
+Additionally we are running this on a `ubuntu-latest` operating system, but as opposed to our first GitHub Action workflow from the previous chapter, where we didn't need any additional packages or software to run our job, this job, the analysis script we are running, requires things like R, python, and some specific packages.
+
+We could, attempt to write a script that installs everything we need. However, that would likely be a lot of work, may not work reliably, and would be hard to track changes. Instead, we are using a custom made docker image that has R, python, and other packages we need already installed.
+
+This custom made docker image is pulled from [Dockerhub and it exists here](https://hub.docker.com/r/jhudsl/ottr_python). If you wish to make a custom Docker image to use in your analysis, easiest way to do this is to make a Dockerfile, build a Docker image from this file and then push it to Dockerhub. We have some Dockerfiles for this image and others [managed and version controlled here on this GitHub repository](https://github.com/jhudsl/ottr_docker). You may note we use GitHub Actions on this repository to help us manage these Docker images.
+```
+jobs:
+  re-run:
+    name: Re run analysis
+    runs-on: ubuntu-latest
+    # This image has python, R and other things we need to run our mock analysis
+    container:
+      image: jhudsl/ottr_python:main
+```
+
+#### actions/checkout
+
+One of the most frequently use GitHub Actions [from the GitHub Action Marketplace is `actions/checkout`](https://github.com/actions/checkout). This action will grab all the files from a GitHub repository so you can do things with those files in your workflow. (Recall that when you spin up a GitHub Action Environment it is a blank slate, so we have to put our files there too if we want to use them).
+
+```
+steps:
+  # Need to get the files specific to our branch from our pull request
+  - name: Checkout files
+    uses: actions/checkout@v3
+    with:
+      fetch-depth: 0
+```
+
+By default, it will checkout the files from the repository where this action is being run, but we could specify other repository and other branches.
+
+`fetch-depth: 0` means we will grab all the file.
+
+
+#### sh run_analysis.sh
+
+Now the main objective we were building to. We are going to run a script that re-runs our entire analysis. We've named this file `run_analysis.sh` to be clear about what it does. We're giving this step an `id` of `running` (this will become clear in the next paragraph).
+
+Additionally the `|` tells `run:` to expect multiple lines of a command. We didn't need this to be a multiple line command, but we thought it would be good to show you this.
+```
+# We can call our main script then to re-run it to make sure it works
+- name: Run it
+  id: running
+  run: |
+    sh run_analysis.sh
+```  
+We have three steps in this fake analysis and the files are numbered in which order they are run. If you open up the [run_analysis.sh](https://github.com/fhdsl/github-actions-workshop/blob/main/run_analysis.sh) file, you will see its basically simple workflow step calling file.
+
+It looks like this:
+```
+# This is a mock script that shows how you could have your whole analysis ran by one script call.
+## Usage: To re-run this whole analysis, go to bash and
+
+# These specs will make sure that if one script fails this will fail the script
+set -e
+
+## Run the first step
+python3 "01-python_test.py"
+
+## Run the second step
+Rscript "02-r_test.R"
+
+## Run a third step
+Rscript -e "rmarkdown::render('03-make-a-plot.Rmd')"
+```
+
+The `set -e` is actually critical here. We need to make sure that this script will stop if it encounters an error. That is the main point of our GitHub Action here, is we want to know if something failed. (We also want to know if the results remained the same, but that will require a bit more engineering than we are showing in this simple example).
+
+A very tricky thing about GitHub Actions (and languages called by them) is that GitHub workflows do not always stop when there are errors as we would define them. **When designing a new action, we need to carefully evaluate the steps of the job in the logs to make sure what we think happened and completed actually did complete successfully.**
+
+Returning to our GitHub Action YAML file, we can see that the last step of this job has an `if` statement. What we are doing here is asking GitHub to evaluate whether the step `running` (remember the `id` we set?) had `success` as its outcome.
+```
+# We can have this double check that the last step was successfully run
+- name: Check on re-run outcome
+  if: steps.running.outcome != 'success'
+  run: |
+    echo Re-running status ${{steps.running.outcome}}
+    exit 1
+```
+
+This `steps.running.outcome` is representative of a whole new world of GitHub Actions Environmental variables that we have not discussed yet but we will now!
+
+## GHA Variables`
+
+
+
+### Summary
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3262")
