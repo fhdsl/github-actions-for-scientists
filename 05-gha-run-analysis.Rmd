@@ -175,7 +175,13 @@ Returning to our GitHub Action YAML file, we can see that the last step of this 
 
 This `steps.running.outcome` is representative of a whole new world of GitHub Actions Environmental variables that we have not discussed yet but we will now!
 
-## GHA Variables`
+## GHA Variables
+
+https://docs.github.com/en/actions/learn-github-actions/variables
+
+### Default variables
+
+### Set variables
 
 
 
