@@ -1,2 +1,38 @@
+# Scientific software development best practices
 
-# Programming Practices
+## Learning Objectives
+
+In this chapter, we will introduce scientific computational analyses as a form of software development, and ...
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g1013f9881e2_0_132")
+```
+
+## Science, and software, as iterative processes
+
+Scientific papers are often laid out as a list of methods and/or results, arranged more or less sequentially.
+Each figure follows from the previous figure or text description, to linearly describe the data that support a hypothesis or illustrate a conclusion.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g24731cad425_0_0")
+```
+
+However, the modern process of _doing_ science, itself, is rarely linear.
+It usually is not realistic to do an experiment, and write a manuscript, and publish the paper, in that order -- usually, there is some amount of iteration involved:
+* You might do an experiment, then summarize it, then run more experiments based on the results to confirm/test/extend your findings
+* You might do an experiment, write a manuscript, then revise the manuscript based on feedback from other scientists
+* You might submit a manuscript, then a reviewer may request revisions or additional experiments, which will require you to go back and revisit your experimental setup and conclusions
+
+It’s not reasonable to expect it to be a static, "write-once and forget" process!
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g287bcb243d2_0_16")
+```
+
+The same idea applies to developing research software.
+Rarely, you might be able to write a script for a scientific study and use it once, for a single well-defined purpose.
+But more often, you’ll write a script (or several of them joined together in a more complex pipeline) and reuse it, possibly with changes or extensions as the project progresses.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g287bcb243d2_0_46")
+```
