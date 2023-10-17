@@ -1,3 +1,9 @@
+YAML
+JSON
+PII
+GHA
+Beaulieu
+hackathons
 rmarkdown
 incentivized
 amongst
