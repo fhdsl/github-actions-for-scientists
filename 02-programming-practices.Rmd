@@ -51,12 +51,35 @@ It can be useful to think about the complexity of software engineering infrastru
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g287bcb243d2_0_153")
 ```
 
-We will take a closer look at two concrete examples, one on each end of the spectrum, in the next section.
+We will take a closer look at two concrete examples, one on each end of the software complexity spectrum, in the next section.
 
 ## Examples
 
 ### t-test
 
+Imagine that you have two sampling distributions (lists/arrays of numbers) and you want to test whether the means of the distributions are statistically equivalent or not.
+This is the setup for a _t_-test.
+_t_-tests are implemented in standard functions in R (base library) and Python (scipy), as well as most other commonly used programming languages.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g287bcb243d2_0_122")
+```
+
+In both R and Python, a _t_-test is a very well-defined, specific function that takes two lists of numbers and returns the _t_-statistic and _p_-value.
+Since this is a part of a standard, widely used library in each language, it is already tested as part of those libraries.
+In your own software, you might need to do some verification of your input (for instance, what happens if you pass an empty list of numbers?) but probably not too much, since you can be fairly confident that the _t_-test function does what it is documented to do in the programming language you choose to use.
+
 ### Sequencing analysis
+
+Imagine that you have a list of reads from a sequencing machine, and you want to use these data to answer a biological question, or to make a plot/visualization to support a biological insight.
+This is a much less well-defined problem than our previous example, with many more independently operating components, and many more subjective decisions that a researcher must make along the way.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g28fb47c580d_0_152")
+```
+
+Most sequencing analyses require multiple steps (i.e. different programs or scripts), and generate multiple intermediate files (e.g. read counts, normalized counts, quality information) that can be checked to verify that the pipeline is proceeding as expected.
+Sequencing analyses can also take hours or days to run, as compared to the _t_-test example which runs effectively instantaneously.
+All of these potential axes of variation mean that having infrastructure to check that everything is running smoothly is 1) more complex than our previous example, and 2) more necessary than our previous example, especially in the case where the sequencing pipeline needs to be rerun or modified.
 
 ## Automation for scientific software
