@@ -177,9 +177,19 @@ This `steps.running.outcome` is representative of a whole new world of GitHub Ac
 
 ## GHA Variables
 
-https://docs.github.com/en/actions/learn-github-actions/variables
+The GitHub Actions environments have variables that are already set by default in the environment but you can also set environment variables yourself.
 
 ### Default variables
+
+There are variables that are set by default in the GitHub Actions environment can be handy to use in different instances.
+
+To print things out, you can use this kind of notation:
+One of many useful default variables we can grab is `GITHUB_REPOSITORY`. We can use it with bash underneath a `run:` like this:
+```
+echo ${GITHUB_REPOSITORY}
+```
+
+#### Activity
 
 ### Set variables
 
