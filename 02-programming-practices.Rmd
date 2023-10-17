@@ -10,7 +10,7 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 ## Science, and software, as iterative processes
 
-Scientific papers are often arranged as a list of methods and/or results, building on itself more or less sequentially.
+Scientific papers are often arranged as a list of methods and results, building on themselves more or less sequentially.
 Each figure follows from the previous figure or text description, to describe the data that support a hypothesis or illustrate a conclusion in a linear, "story"-like order.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
@@ -43,7 +43,7 @@ It is almost always easier to put good software development practices in place p
 ## Software complexity as a spectrum
 
 Not all software is complex, and not all software requires complex infrastructure (or automation, for that matter)!
-It can be useful to think about the complexity of software engineering infrastructure necessary for a project as scaling proportionally to the complexity of the software itself:
+It can be useful to think about the complexity of software engineering infrastructure necessary for a project proportionally to the complexity of the software itself:
 * Simple software (math, data transformations, procedural/rule-based scripts) requires simpler infrastructure.
 * Complex software (e.g. "pipelines" composed of many commands/software packages chained together, "libraries" that are intended to be reused in many different applications) requires more complex infrastructure, to check assumptions and test reproducibility at each step.
 
@@ -71,7 +71,7 @@ In your own software, you might need to do some verification of your input (for 
 
 ### Sequencing analysis
 
-Imagine that you have a list of reads from a sequencing machine, and you want to use these data to answer a biological question, or to make a plot/visualization to support a biological insight.
+Imagine that you have a list of reads from a sequencing machine, and you want to use these data to answer a biological question, or to make a plot/visualization to communicate a biological insight.
 This is a much less well-defined problem than our previous example, with many more independently operating components, and many more subjective decisions that a researcher must make along the way.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
@@ -80,6 +80,25 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 Most sequencing analyses require multiple steps (i.e. different programs or scripts), and generate multiple intermediate files (e.g. read counts, normalized counts, quality information) that can be checked to verify that the pipeline is proceeding as expected.
 Sequencing analyses can also take hours or days to run, as compared to the _t_-test example which runs effectively instantaneously.
-All of these potential axes of variation mean that having infrastructure to check that everything is running smoothly is 1) more complex than our previous example, and 2) more necessary than our previous example, especially in the case where the sequencing pipeline needs to be rerun or modified.
+All of these potential axes of variation mean that having infrastructure to check that everything is running smoothly is 1) more complex than our previous example, and 2) more necessary than our previous example, especially in the case where the sequencing pipeline needs to be rerun or modified to generate different output.
 
 ## Automation for scientific software
+
+Good software practices do not necessarily have to be implemented using automation.
+However, as projects and infrastructure become more complex, it can be unwieldy to check and revise your results without some sort of automated process to kick them off automatically, without too much human intervention.
+Steps that are involved might include: rerunning the software itself (often on new or modified input data), software testing, code style linting, rebuilding figures or processed datasets, and so on.
+Each of these can be individually run by hand, or combined in a central script that runs all the steps in order or in parallel, which can also be triggered manually.
+Such a central script can itself be considered a form of automation.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g28fb47c580d_0_55")
+```
+
+Automation via GitHub Actions, in contrast, can provide a "single point of truth": a single central script to run these steps, and a single set of (automated) criteria for when to run them.
+This eliminates the need for you to remember to run tests, or to clean up your code, or to rebuild figures, etc. on your own.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g28fb47c580d_0_115")
+```
+
+Later in the course, we will talk more specifically about what exactly automation via continuous integration is, and go into more depth as to its uses and benefits.
