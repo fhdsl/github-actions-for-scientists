@@ -2,8 +2,6 @@
 
 ## Learning Objectives
 
-In this chapter, we will introduce scientific computational analyses as a form of software development, and ...
-
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g1013f9881e2_0_132")
 ```
@@ -39,6 +37,9 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 In this course, through the lens of automation, we hope to familiarize you with some of the skills necessary to think about research software iteratively, from the beginning of a research project.
 It is almost always easier to put good software development practices in place proactively, before a project has matured, rather than adding them on once the project is sufficiently complex that they are necessary.
+
+Although software development is not generally rewarded directly in academia, it turns out that writing good software does have less obvious rewards, even within the traditional academic structure.
+For example, software that is easy to install tends to be cited more often [@mangul2019], and software that is more consistently maintained tends to be more accurate [@gardner2022].
 
 ## Software complexity as a spectrum
 
