@@ -1,0 +1,62 @@
+
+# GitHub Action Variables
+
+The GitHub Actions environments have variables that are already set by default in the environment but you can also set environment variables yourself.
+
+### Default variables
+
+There are variables that are set by default in the GitHub Actions environment can be handy to use in different instances.
+
+To print things out, you can use this kind of notation:
+One of many useful default variables we can grab is `GITHUB_REPOSITORY`. We can use it with bash underneath a `run:` like this:
+```
+echo ${GITHUB_REPOSITORY}
+```
+
+In this next exercise we'll explore different ways to use variables.
+
+## Exercise 3
+
+For this exercise, we are going to continue to use the example repository that we set up in the previous chapter.
+
+1. Create a new branch to work from.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g2903858106e_0_4")
+```
+From command line:
+```
+`git checkout -b "env-var"`
+```
+
+2. For this exercise we are going to copy over another GHA yaml to explore. This time, move the `exploring-var-and-secrets.yml` file to your `.github/workflows` directories you made in the previous chapter.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g2903858106e_0_17")
+```
+From command line:
+```
+mv activity-1-sample-github-actions/exploring-var-and-secrets.yml .github/workflows/exploring-var-and-secrets.yml
+```
+
+3. Now follow the same set of steps we used in the previous chapter to Add, Commit, Push the changes.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g2903858106e_0_25")
+```
+From command line:
+```
+git add .github/*
+git commit -m "exploring gha variables"
+git push --set-upstream origin env-var
+```
+
+4. Now create a pull request with the changes you just made. (Refer to the previous chapter if you need reminders on how to do this).
+
+5. On your pull request page on GitHub, click on the `Details` button next to your workflow run.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3250")
+```
+
+### Set variables
