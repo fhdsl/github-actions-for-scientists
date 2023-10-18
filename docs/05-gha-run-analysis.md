@@ -1,362 +1,165 @@
 
-# A new chapter
-
-If you haven't yet read the getting started Wiki pages; [start there](https://www.ottrproject.org/getting_started.html).
-
-To see the rendered version of this chapter and the rest of the template, see here: https://jhudatascience.org/OTTR_Template/.
-
-Every chapter needs to start out with this chunk of code:
+# Automating Re-running Analyses
 
 
+<img src="05-gha-run-analysis_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3819.png" width="100%" style="display: block; margin: auto;" />
 
+In the beginning of this course we discussed the benefits of using continuous integration/continuous deployment principles for scientific code including analyses.
 
-## Learning Objectives
+In this chapter we will go through example code that shows how this can be set up. We highly encourage you to take this code and adapt it to your own project's needs.
 
-Every chapter also needs Learning objectives that will look like this:  
+## Exercise 2 - Re-run analysis example
 
-This chapter will cover:  
+For this exercise, we are going to continue to use the example repository that we set up in the previous chapter.
 
-- {You can use https://tips.uark.edu/using-blooms-taxonomy/ to define some learning objectives here}
-- {Another learning objective}
+1. Create a new branch to work from.
 
-## Libraries
+As is good practice for adapting a GitHub workflow, we will create a new branch for us to work from. In GitHub Desktop you can click the branch button and follow the same steps we did in the previous exercise.
 
-For this chapter, we'll need the following packages attached:
-
-*Remember to add [any additional packages you need to your course's own docker image](https://github.com/jhudsl/OTTR_Template/wiki/Using-Docker#starting-a-new-docker-image).
-
-
-```r
-library(magrittr)
+<img src="05-gha-run-analysis_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3213.png" width="100%" style="display: block; margin: auto;" />
+From command line:
+```
+`git checkout -b "more-ghas"`
 ```
 
-## Topic of Section
+2. For this exercise we are going to copy over a second GitHub Action YAML file from the folder. This time, move the `01-re-run-analysis.yml` file to your `.github/workflows` directories you made in the previous chapter.
 
-You can write all your text in sections like this, using `##` to indicate a new header. you can use additional pound symbols to create lower levels of headers.
-
-See [here](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for additional general information about how you can format text within R Markdown files. In addition, see [here](https://pandoc.org/MANUAL.html#pandocs-markdown) for more in depth and advanced options.
-
-### Subtopic
-
-Here's a subheading (using three pound symbols) and some text in this subsection!
-
-## Code examples
-
-You can demonstrate code like this:
-
-
-```r
-output_dir <- file.path("resources", "code_output")
-if (!dir.exists(output_dir)) {
-  dir.create(output_dir)
-}
+<img src="05-gha-run-analysis_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3226.png" width="100%" style="display: block; margin: auto;" />
+From command line:
+```
+mv activity-1-sample-github-actions/01-re-run-analysis.yml .github/workflows/01-re-run-analysis.yml
 ```
 
-And make plots too:
+3. Now follow the same set of steps we used in the previous chapter to Add, Commit, Push the changes.
 
-
-```r
-hist_plot <- hist(iris$Sepal.Length)
+<img src="05-gha-run-analysis_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3234.png" width="100%" style="display: block; margin: auto;" />
+From command line:
+```
+git add .github/*
+git commit -m "adding more ghas"
+git push --set-upstream origin more-ghas
 ```
 
-<img src="resources/images/05-gha-run-analysis_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+4. Now create a pull request with the changes you just made. (Refer to the previous chapter if you need reminders on how to do this).
 
-You can also save these plots to file:
+After you open your pull request, scroll down to the bottom of the page. If all went as expected, you should see a status message that shows a GitHub Action is running after opening your pull request.
 
+<img src="05-gha-run-analysis_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3239.png" width="100%" style="display: block; margin: auto;" />
 
-```r
-png(file.path(output_dir, "test_plot.png"))
-hist_plot
+Think about it.
+
+Without looking at the YAML file… What do you suppose the on: value (the when) might be for these actions?
+
+<img src="05-gha-run-analysis_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3246.png" width="100%" style="display: block; margin: auto;" />
+
+Take a look at the file, `.github/workflows/01-re-run-analysis.yml`, to see if you are right!
+
+5. On your pull request page on GitHub, click on the Details button next to your workflow run.
+
+<img src="05-gha-run-analysis_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3250.png" width="100%" style="display: block; margin: auto;" />
+
+You can navigate to this same page by going to the `Actions` tab, then Scrolling down to see the most recent workflow run which should be named `Re-run analysis` and clicking on that.
+
+## Diving into the details
+
+Let's break down what is in this GitHub Action YAML file and what this workflow run did.
+
+### name and on
+
+- At the top of the file we have: `name: Re-run analysis`. This is what our workflow run shows up in the `Actions` tab log as and helps us differentiate it from other GitHub Action Workflows.
+- Below that, there is the `on:` trigger. This workflow of re-running this analysis will only run when a pull request is open or pushed to. And further we've specified with `branches:` it will only run if the pull request is targeted to branches named `main` or `staging`.
+```
+# Run this workflow when a pull request is opened or pushed to.
+on:
+  pull_request:
+    branches: [ main, staging ]
 ```
 
+### jobs
+
+In our `jobs:` we've named this job `R run analysis`.
+
+Additionally we are running this on a `ubuntu-latest` operating system, but as opposed to our first GitHub Action workflow from the previous chapter, where we didn't need any additional packages or software to run our job, this job, the analysis script we are running, requires things like R, python, and some specific packages.
+
+We could, attempt to write a script that installs everything we need. However, that would likely be a lot of work, may not work reliably, and would be hard to track changes. Instead, we are using a custom made docker image that has R, python, and other packages we need already installed.
+
+This custom made docker image is pulled from [Dockerhub and it exists here](https://hub.docker.com/r/jhudsl/ottr_python). If you wish to make a custom Docker image to use in your analysis, easiest way to do this is to make a Dockerfile, build a Docker image from this file and then push it to Dockerhub. We have some Dockerfiles for this image and others [managed and version controlled here on this GitHub repository](https://github.com/jhudsl/ottr_docker). You may note we use GitHub Actions on this repository to help us manage these Docker images.
 ```
-## $breaks
-## [1] 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5 8.0
-## 
-## $counts
-## [1]  5 27 27 30 31 18  6  6
-## 
-## $density
-## [1] 0.06666667 0.36000000 0.36000000 0.40000000 0.41333333 0.24000000 0.08000000
-## [8] 0.08000000
-## 
-## $mids
-## [1] 4.25 4.75 5.25 5.75 6.25 6.75 7.25 7.75
-## 
-## $xname
-## [1] "iris$Sepal.Length"
-## 
-## $equidist
-## [1] TRUE
-## 
-## attr(,"class")
-## [1] "histogram"
+jobs:
+  re-run:
+    name: Re run analysis
+    runs-on: ubuntu-latest
+    # This image has python, R and other things we need to run our mock analysis
+    container:
+      image: jhudsl/ottr_python:main
 ```
 
-```r
-dev.off()
-```
+#### actions/checkout
+
+One of the most frequently use GitHub Actions [from the GitHub Action Marketplace is `actions/checkout`](https://github.com/actions/checkout). This action will grab all the files from a GitHub repository so you can do things with those files in your workflow. (Recall that when you spin up a GitHub Action Environment it is a blank slate, so we have to put our files there too if we want to use them).
 
 ```
-## png 
-##   2
+steps:
+  # Need to get the files specific to our branch from our pull request
+  - name: Checkout files
+    uses: actions/checkout@v3
+    with:
+      fetch-depth: 0
 ```
 
-## Image example
+By default, it will checkout the files from the repository where this action is being run, but we could specify other repository and other branches.
 
-How to include a Google slide. It's simplest to use the `ottrpal` package:
-
-
-<img src="resources/images/05-gha-run-analysis_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" title="Major point!! example image" alt="Major point!! example image" width="100%" style="display: block; margin: auto;" />
-
-But if you have the slide or some other image locally downloaded you can also use HTML like this:
-
-<img src="resources/images/02-chapter_of_course_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" title="Major point!! example image" alt="Major point!! example image" style="display: block; margin: auto;" />
-
-## Video examples
-You may also want to embed videos in your course. If alternatively, you just want to include a link you can do so like this:
-
-Check out this [link to a video](https://www.youtube.com/embed/VOCYL-FNbr0) using markdown syntax.
-
-### Using `knitr`
-
-To embed videos in your course, you can use `knitr::include_url()` like this:
-Note that you should use `echo=FALSE` in the code chunk because we don't want the code part of this to show up. If you are unfamiliar with [how R Markdown code chunks work, read this](https://rmarkdown.rstudio.com/lesson-3.html).
+`fetch-depth: 0` means we will grab all the file.
 
 
-<iframe src="https://www.youtube.com/embed/VOCYL-FNbr0" width="672" height="400px"></iframe>
+#### sh run_analysis.sh
 
-### Using HTML
+Now the main objective we were building to. We are going to run a script that re-runs our entire analysis. We've named this file `run_analysis.sh` to be clear about what it does. We're giving this step an `id` of `running` (this will become clear in the next paragraph).
 
-<iframe src="https://www.youtube.com/embed/VOCYL-FNbr0" width="672" height="400px"></iframe>
-
-## File examples
-
-You can again use simple markdown syntax to just include a link to a file like so:
-
-[A file]().
-
-Alternatively you can embed files like PDFs.
-
-### Using `knitr`
-
-<iframe src="https://drive.google.com/file/d/1mm72K4V7fqpgAfWkr6b7HTZrc3f-T6AV/preview" width="100%" height="400px"></iframe>
-
-### Using HTML
-
-<iframe src="https://drive.google.com/file/d/1mm72K4V7fqpgAfWkr6b7HTZrc3f-T6AV/preview" width="672" height="800px"></iframe>
-
-## Website Examples
-
-Yet again you can use a link to a website like so:
-
-[A Website](https://yihui.org)
-
-You might want to have users open a website in a new tab by default, especially if they need to reference both the course and a resource at once.
-
-[A Website](https://yihui.org){target="_blank"}
-
-Or, you can embed some websites.
-
-### Using `knitr`
-
-This works:
-
-<iframe src="https://yihui.org" width="672" height="400px"></iframe>
-
-
-### Using HTML
-
-<iframe src="https://yihui.org" width="672" height="400px"></iframe>
-
-
-If you'd like the URL to show up in a new tab you can do this:
-
+Additionally the `|` tells `run:` to expect multiple lines of a command. We didn't need this to be a multiple line command, but we thought it would be good to show you this.
 ```
-<a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
+# We can call our main script then to re-run it to make sure it works
+- name: Run it
+  id: running
+  run: |
+    sh run_analysis.sh
+```  
+We have three steps in this fake analysis and the files are numbered in which order they are run. If you open up the [run_analysis.sh](https://github.com/fhdsl/github-actions-workshop/blob/main/run_analysis.sh) file, you will see its basically simple workflow step calling file.
+
+It looks like this:
+```
+# This is a mock script that shows how you could have your whole analysis ran by one script call.
+## Usage: To re-run this whole analysis, go to bash and
+
+# These specs will make sure that if one script fails this will fail the script
+set -e
+
+## Run the first step
+python3 "01-python_test.py"
+
+## Run the second step
+Rscript "02-r_test.R"
+
+## Run a third step
+Rscript -e "rmarkdown::render('03-make-a-plot.Rmd')"
 ```
 
-## Citation examples
+The `set -e` is actually critical here. We need to make sure that this script will stop if it encounters an error. That is the main point of our GitHub Action here, is we want to know if something failed. (We also want to know if the results remained the same, but that will require a bit more engineering than we are showing in this simple example).
 
-We can put citations at the end of a sentence like this [@rmarkdown2021].
-Or multiple citations [@rmarkdown2021, @Xie2018].
+A very tricky thing about GitHub Actions (and languages called by them) is that GitHub workflows do not always stop when there are errors as we would define them. **When designing a new action, we need to carefully evaluate the steps of the job in the logs to make sure what we think happened and completed actually did complete successfully.**
 
-but they need a ; separator [@rmarkdown2021; @Xie2018].
-
-In text, we can put citations like this @rmarkdown2021.
-
-## Stylized boxes
-
-Occasionally, you might find it useful to emphasize a particular piece of information. To help you do so, we have provided css code and images (no need for you to worry about that!) to create the following stylized boxes.
-
-You can use these boxes in your course with either of two options: using HTML code or Pandoc syntax.
-
-### Using `rmarkdown` container syntax
-
-The `rmarkdown` package allows for a different syntax to be converted to the HTML that you just saw and also allows for conversion to LaTeX. See the [Bookdown](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) documentation for more information [@Xie2020]. Note that Bookdown uses Pandoc.
-
-
+Returning to our GitHub Action YAML file, we can see that the last step of this job has an `if` statement. What we are doing here is asking GitHub to evaluate whether the step `running` (remember the `id` we set?) had `success` as its outcome.
 ```
-::: {.notice}
-Note using rmarkdown syntax.
-
-:::
+# We can have this double check that the last step was successfully run
+- name: Check on re-run outcome
+  if: steps.running.outcome != 'success'
+  run: |
+    echo Re-running status ${{steps.running.outcome}}
+    exit 1
 ```
 
-::: {.notice}
-Note using rmarkdown syntax.
+This `steps.running.outcome` is representative of a whole new world of GitHub Actions Environmental variables that we have not discussed yet but we will now!
 
-:::
+### Summary
 
-As an example you might do something like this:
-
-::: {.notice}
-Please click on the subsection headers in the left hand
-navigation bar (e.g., 2.1, 4.3) a second time to expand the
-table of contents and enable the `scroll_highlight` feature
-([see more](introduction.html#scroll-highlight))
-:::
-
-
-### Using HTML
-
-To add a warning box like the following use:
-
-```
-<div class = "notice">
-Followed by the text you want inside
-</div>
-```
-
-This will create the following:
-
-<div class = "notice">
-
-Followed by the text you want inside
-
-</div>
-
-Here is a `<div class = "warning">` box:
-
-<div class = "warning">
-
-Note text
-
-</div>
-
-Here is a `<div class = "github">` box:
-
-<div class = "github">
-
-GitHub text
-
-</div>
-
-
-Here is a `<div class = "dictionary">` box:
-
-<div class = "dictionary">
-
-dictionary text
-
-</div>
-
-
-Here is a `<div class = "reflection">` box:
-
-<div class = "reflection">
-
-reflection text
-
-</div>
-
-
-## Dropdown summaries
-
-<details><summary> You can hide additional information in a dropdown menu </summary>
-Here's more words that are hidden.
-</details>
-
-## Print out session info
-
-You should print out session info when you have code for [reproducibility purposes](https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/managing-package-versions.html).
-
-
-```r
-devtools::session_info()
-```
-
-```
-## ─ Session info ───────────────────────────────────────────────────────────────
-##  setting  value                       
-##  version  R version 4.0.2 (2020-06-22)
-##  os       Ubuntu 20.04.5 LTS          
-##  system   x86_64, linux-gnu           
-##  ui       X11                         
-##  language (EN)                        
-##  collate  en_US.UTF-8                 
-##  ctype    en_US.UTF-8                 
-##  tz       Etc/UTC                     
-##  date     2023-10-18                  
-## 
-## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package     * version date       lib source                            
-##  assertthat    0.2.1   2019-03-21 [1] RSPM (R 4.0.5)                    
-##  bookdown      0.24    2023-03-28 [1] Github (rstudio/bookdown@88bc4ea) 
-##  bslib         0.4.2   2022-12-16 [1] CRAN (R 4.0.2)                    
-##  cachem        1.0.7   2023-02-24 [1] CRAN (R 4.0.2)                    
-##  callr         3.5.0   2020-10-08 [1] RSPM (R 4.0.2)                    
-##  cli           3.6.1   2023-03-23 [1] CRAN (R 4.0.2)                    
-##  crayon        1.3.4   2017-09-16 [1] RSPM (R 4.0.0)                    
-##  curl          4.3     2019-12-02 [1] RSPM (R 4.0.3)                    
-##  desc          1.2.0   2018-05-01 [1] RSPM (R 4.0.3)                    
-##  devtools      2.3.2   2020-09-18 [1] RSPM (R 4.0.3)                    
-##  digest        0.6.25  2020-02-23 [1] RSPM (R 4.0.0)                    
-##  ellipsis      0.3.1   2020-05-15 [1] RSPM (R 4.0.3)                    
-##  evaluate      0.20    2023-01-17 [1] CRAN (R 4.0.2)                    
-##  fansi         0.4.1   2020-01-08 [1] RSPM (R 4.0.0)                    
-##  fastmap       1.1.1   2023-02-24 [1] CRAN (R 4.0.2)                    
-##  fs            1.5.0   2020-07-31 [1] RSPM (R 4.0.3)                    
-##  glue          1.4.2   2020-08-27 [1] RSPM (R 4.0.5)                    
-##  highr         0.8     2019-03-20 [1] RSPM (R 4.0.3)                    
-##  hms           0.5.3   2020-01-08 [1] RSPM (R 4.0.0)                    
-##  htmltools     0.5.5   2023-03-23 [1] CRAN (R 4.0.2)                    
-##  httr          1.4.2   2020-07-20 [1] RSPM (R 4.0.3)                    
-##  jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.0.2)                    
-##  jsonlite      1.7.1   2020-09-07 [1] RSPM (R 4.0.2)                    
-##  knitr         1.33    2023-03-28 [1] Github (yihui/knitr@a1052d1)      
-##  lifecycle     1.0.3   2022-10-07 [1] CRAN (R 4.0.2)                    
-##  magrittr    * 2.0.3   2022-03-30 [1] CRAN (R 4.0.2)                    
-##  memoise       2.0.1   2021-11-26 [1] CRAN (R 4.0.2)                    
-##  ottrpal       1.0.1   2023-03-28 [1] Github (jhudsl/ottrpal@151e412)   
-##  pillar        1.9.0   2023-03-22 [1] CRAN (R 4.0.2)                    
-##  pkgbuild      1.1.0   2020-07-13 [1] RSPM (R 4.0.2)                    
-##  pkgconfig     2.0.3   2019-09-22 [1] RSPM (R 4.0.3)                    
-##  pkgload       1.1.0   2020-05-29 [1] RSPM (R 4.0.3)                    
-##  prettyunits   1.1.1   2020-01-24 [1] RSPM (R 4.0.3)                    
-##  processx      3.4.4   2020-09-03 [1] RSPM (R 4.0.2)                    
-##  ps            1.4.0   2020-10-07 [1] RSPM (R 4.0.2)                    
-##  R6            2.4.1   2019-11-12 [1] RSPM (R 4.0.0)                    
-##  readr         1.4.0   2020-10-05 [1] RSPM (R 4.0.2)                    
-##  remotes       2.2.0   2020-07-21 [1] RSPM (R 4.0.3)                    
-##  rlang         1.1.0   2023-03-14 [1] CRAN (R 4.0.2)                    
-##  rmarkdown     2.10    2023-03-28 [1] Github (rstudio/rmarkdown@02d3c25)
-##  rprojroot     2.0.3   2022-04-02 [1] CRAN (R 4.0.2)                    
-##  sass          0.4.5   2023-01-24 [1] CRAN (R 4.0.2)                    
-##  sessioninfo   1.1.1   2018-11-05 [1] RSPM (R 4.0.3)                    
-##  stringi       1.5.3   2020-09-09 [1] RSPM (R 4.0.3)                    
-##  stringr       1.4.0   2019-02-10 [1] RSPM (R 4.0.3)                    
-##  testthat      3.0.1   2023-03-28 [1] Github (R-lib/testthat@e99155a)   
-##  tibble        3.2.1   2023-03-20 [1] CRAN (R 4.0.2)                    
-##  usethis       1.6.3   2020-09-17 [1] RSPM (R 4.0.2)                    
-##  utf8          1.1.4   2018-05-24 [1] RSPM (R 4.0.3)                    
-##  vctrs         0.6.1   2023-03-22 [1] CRAN (R 4.0.2)                    
-##  withr         2.3.0   2020-09-22 [1] RSPM (R 4.0.2)                    
-##  xfun          0.26    2023-03-28 [1] Github (yihui/xfun@74c2a66)       
-##  yaml          2.2.1   2020-02-01 [1] RSPM (R 4.0.3)                    
-## 
-## [1] /usr/local/lib/R/site-library
-## [2] /usr/local/lib/R/library
-```
-
-[many links]: https://github.com/jhudsl/OTTR_Template
+<img src="05-gha-run-analysis_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3262.png" width="100%" style="display: block; margin: auto;" />

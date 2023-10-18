@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Introduction | GitHub Automation for Scientists</title>
-  <meta name="description" content="Chapter 1 Introduction | GitHub Automation for Scientists" />
+  <title>Chapter 5 Automating Re-running Analyses | GitHub Automation for Scientists</title>
+  <meta name="description" content="Chapter 5 Automating Re-running Analyses | GitHub Automation for Scientists" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Introduction | GitHub Automation for Scientists" />
+  <meta property="og:title" content="Chapter 5 Automating Re-running Analyses | GitHub Automation for Scientists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Introduction | GitHub Automation for Scientists" />
+  <meta name="twitter:title" content="Chapter 5 Automating Re-running Analyses | GitHub Automation for Scientists" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/ITN_favicon.ico" type="image/x-icon" />
-<link rel="prev" href="index.html"/>
-<link rel="next" href="programming-practices.html"/>
+<link rel="prev" href="github-actions-fundamentals.html"/>
+<link rel="next" href="github-action-variables.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -180,60 +180,131 @@ div.csl-indent {
 <div class="hero-image-container"> 
   <img class= "hero-image" src="assets/itcr_main_image.png">
 </div>
-<div id="introduction" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<p><img src="resources/images/01-intro_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_gd422c5de97_0_0.png" width="100%" /></p>
-<div id="target-audience" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Target Audience</h2>
-<p>The course is intended for students in the biomedical sciences and researchers who use informatics tools in their research</p>
-<p><em>This course is written for individuals who:</em></p>
+<div id="automating-re-running-analyses" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Automating Re-running Analyses</h1>
+<p><img src="05-gha-run-analysis_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3819.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>In the beginning of this course we discussed the benefits of using continuous integration/continuous deployment principles for scientific code including analyses.</p>
+<p>In this chapter we will go through example code that shows how this can be set up. We highly encourage you to take this code and adapt it to your own project’s needs.</p>
+<div id="exercise-2---re-run-analysis-example" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Exercise 2 - Re-run analysis example</h2>
+<p>For this exercise, we are going to continue to use the example repository that we set up in the previous chapter.</p>
+<ol style="list-style-type: decimal">
+<li>Create a new branch to work from.</li>
+</ol>
+<p>As is good practice for adapting a GitHub workflow, we will create a new branch for us to work from. In GitHub Desktop you can click the branch button and follow the same steps we did in the previous exercise.</p>
+<p><img src="05-gha-run-analysis_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3213.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>`git checkout -b &quot;more-ghas&quot;`</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>For this exercise we are going to copy over a second GitHub Action YAML file from the folder. This time, move the <code>01-re-run-analysis.yml</code> file to your <code>.github/workflows</code> directories you made in the previous chapter.</li>
+</ol>
+<p><img src="05-gha-run-analysis_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3226.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>mv activity-1-sample-github-actions/01-re-run-analysis.yml .github/workflows/01-re-run-analysis.yml</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Now follow the same set of steps we used in the previous chapter to Add, Commit, Push the changes.</li>
+</ol>
+<p><img src="05-gha-run-analysis_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3234.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>git add .github/*
+git commit -m &quot;adding more ghas&quot;
+git push --set-upstream origin more-ghas</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Now create a pull request with the changes you just made. (Refer to the previous chapter if you need reminders on how to do this).</li>
+</ol>
+<p>After you open your pull request, scroll down to the bottom of the page. If all went as expected, you should see a status message that shows a GitHub Action is running after opening your pull request.</p>
+<p><img src="05-gha-run-analysis_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3239.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Think about it.</p>
+<p>Without looking at the YAML file… What do you suppose the on: value (the when) might be for these actions?</p>
+<p><img src="05-gha-run-analysis_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3246.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Take a look at the file, <code>.github/workflows/01-re-run-analysis.yml</code>, to see if you are right!</p>
+<ol start="5" style="list-style-type: decimal">
+<li>On your pull request page on GitHub, click on the Details button next to your workflow run.</li>
+</ol>
+<p><img src="05-gha-run-analysis_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3250.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>You can navigate to this same page by going to the <code>Actions</code> tab, then Scrolling down to see the most recent workflow run which should be named <code>Re-run analysis</code> and clicking on that.</p>
+</div>
+<div id="diving-into-the-details" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Diving into the details</h2>
+<p>Let’s break down what is in this GitHub Action YAML file and what this workflow run did.</p>
+<div id="name-and-on" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> name and on</h3>
 <ul>
-<li>Are comfortable with GitHub and know how to make a pull request<br />
-</li>
-<li>Wish to save time and enhance their scientific projects using automation</li>
-<li>Perhaps previously tried to learn about GitHub Actions but felt overwhelmed on how to get started</li>
+<li>At the top of the file we have: <code>name: Re-run analysis</code>. This is what our workflow run shows up in the <code>Actions</code> tab log as and helps us differentiate it from other GitHub Action Workflows.</li>
+<li>Below that, there is the <code>on:</code> trigger. This workflow of re-running this analysis will only run when a pull request is open or pushed to. And further we’ve specified with <code>branches:</code> it will only run if the pull request is targeted to branches named <code>main</code> or <code>staging</code>.</li>
 </ul>
-<p><img src="resources/images/01-intro_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g1173f7473f7_0_0.png" width="100%" /></p>
+<pre><code># Run this workflow when a pull request is opened or pushed to.
+on:
+  pull_request:
+    branches: [ main, staging ]</code></pre>
 </div>
-<div id="topics-covered" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Topics covered</h2>
-<p>This course covers how to use GitHub actions for scientific software development. We encourage the recognition that scientific software can take many forms that can all benefit from the concepts of continuous integration and continuous deployment.</p>
-<p><img src="resources/images/01-intro_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_gd422c5de97_0_10.png" width="100%" /></p>
-<p>This course builds on concepts introduced in the <a href="https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/introduction.html">Reproducibility</a> and <a href="https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/introduction.html">Advanced Reproducibility</a> courses from the ITCR Training Network. If you are unfamiliar with GitHub and/or do not have an account, we’d suggest you start with those courses by using the links or QR codes below.</p>
-<p><img src="resources/images/01-intro_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g101867ebdaa_18_0.png" width="1250" /></p>
+<div id="jobs" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> jobs</h3>
+<p>In our <code>jobs:</code> we’ve named this job <code>R run analysis</code>.</p>
+<p>Additionally we are running this on a <code>ubuntu-latest</code> operating system, but as opposed to our first GitHub Action workflow from the previous chapter, where we didn’t need any additional packages or software to run our job, this job, the analysis script we are running, requires things like R, python, and some specific packages.</p>
+<p>We could, attempt to write a script that installs everything we need. However, that would likely be a lot of work, may not work reliably, and would be hard to track changes. Instead, we are using a custom made docker image that has R, python, and other packages we need already installed.</p>
+<p>This custom made docker image is pulled from <a href="https://hub.docker.com/r/jhudsl/ottr_python">Dockerhub and it exists here</a>. If you wish to make a custom Docker image to use in your analysis, easiest way to do this is to make a Dockerfile, build a Docker image from this file and then push it to Dockerhub. We have some Dockerfiles for this image and others <a href="https://github.com/jhudsl/ottr_docker">managed and version controlled here on this GitHub repository</a>. You may note we use GitHub Actions on this repository to help us manage these Docker images.</p>
+<pre><code>jobs:
+  re-run:
+    name: Re run analysis
+    runs-on: ubuntu-latest
+    # This image has python, R and other things we need to run our mock analysis
+    container:
+      image: jhudsl/ottr_python:main</code></pre>
+<div id="actionscheckout" class="section level4" number="5.2.2.1">
+<h4><span class="header-section-number">5.2.2.1</span> actions/checkout</h4>
+<p>One of the most frequently use GitHub Actions <a href="https://github.com/actions/checkout">from the GitHub Action Marketplace is <code>actions/checkout</code></a>. This action will grab all the files from a GitHub repository so you can do things with those files in your workflow. (Recall that when you spin up a GitHub Action Environment it is a blank slate, so we have to put our files there too if we want to use them).</p>
+<pre><code>steps:
+  # Need to get the files specific to our branch from our pull request
+  - name: Checkout files
+    uses: actions/checkout@v3
+    with:
+      fetch-depth: 0</code></pre>
+<p>By default, it will checkout the files from the repository where this action is being run, but we could specify other repository and other branches.</p>
+<p><code>fetch-depth: 0</code> means we will grab all the file.</p>
 </div>
-<div id="motivation" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Motivation</h2>
-<p>Cancer datasets are plentiful, complicated, and hold untold amounts of information regarding cancer biology. Cancer researchers are working to apply their expertise to the analysis of these vast amounts of data but training opportunities to properly equip them in these efforts can be sparse. This includes training in reproducible data analysis methods.</p>
-<p>Data analyses are generally not reproducible without direct contact with the original researchers and a substantial amount of time and effort <span class="citation">(<a href="#ref-BeaulieuJones2017" role="doc-biblioref">Beaulieu-Jones and Greene 2017</a>)</span>. Reproducibility in cancer informatics (as with other fields) is still not monitored or incentivized despite that it is fundamental to the scientific method. Despite the lack of incentive, many researchers strive for reproducibility in their own work but often lack the skills or training to do so effectively.</p>
-<p>Equipping researchers with the skills to create reproducible data analyses increases the efficiency of everyone involved. One tool among many for creating reproducible analyses is utilizing automation. Many individuals performing analyses on cancer data may not have formal training in software development and may be unfamiliar with the ideas of continuous integration and continuous deployment. By recognizing that biological data analysis code is a form of software development, we can try to adapt good development practices in scientific analyses and software contexts.</p>
-<p><em>Scientific software projects may include (but aren’t limited to):</em></p>
-<ul>
-<li>Software that built as tools to be utilized by others to analyze biologically derived data.</li>
-<li>Code that is built primarily for analyzing one project’s data.</li>
-<li>Code that is built as a workflow for a series of steps and analyses that might be reused among collaborators or within a lab.</li>
-<li>Any scripts and code that are built to handle data in a research setting.</li>
-<li>Any scripts and code a researcher might interact with.</li>
-</ul>
+<div id="sh-run_analysis.sh" class="section level4" number="5.2.2.2">
+<h4><span class="header-section-number">5.2.2.2</span> sh run_analysis.sh</h4>
+<p>Now the main objective we were building to. We are going to run a script that re-runs our entire analysis. We’ve named this file <code>run_analysis.sh</code> to be clear about what it does. We’re giving this step an <code>id</code> of <code>running</code> (this will become clear in the next paragraph).</p>
+<p>Additionally the <code>|</code> tells <code>run:</code> to expect multiple lines of a command. We didn’t need this to be a multiple line command, but we thought it would be good to show you this.</p>
+<pre><code># We can call our main script then to re-run it to make sure it works
+- name: Run it
+  id: running
+  run: |
+    sh run_analysis.sh</code></pre>
+<p>We have three steps in this fake analysis and the files are numbered in which order they are run. If you open up the <a href="https://github.com/fhdsl/github-actions-workshop/blob/main/run_analysis.sh">run_analysis.sh</a> file, you will see its basically simple workflow step calling file.</p>
+<p>It looks like this:</p>
+<pre><code># This is a mock script that shows how you could have your whole analysis ran by one script call.
+## Usage: To re-run this whole analysis, go to bash and
+
+# These specs will make sure that if one script fails this will fail the script
+set -e
+
+## Run the first step
+python3 &quot;01-python_test.py&quot;
+
+## Run the second step
+Rscript &quot;02-r_test.R&quot;
+
+## Run a third step
+Rscript -e &quot;rmarkdown::render(&#39;03-make-a-plot.Rmd&#39;)&quot;</code></pre>
+<p>The <code>set -e</code> is actually critical here. We need to make sure that this script will stop if it encounters an error. That is the main point of our GitHub Action here, is we want to know if something failed. (We also want to know if the results remained the same, but that will require a bit more engineering than we are showing in this simple example).</p>
+<p>A very tricky thing about GitHub Actions (and languages called by them) is that GitHub workflows do not always stop when there are errors as we would define them. <strong>When designing a new action, we need to carefully evaluate the steps of the job in the logs to make sure what we think happened and completed actually did complete successfully.</strong></p>
+<p>Returning to our GitHub Action YAML file, we can see that the last step of this job has an <code>if</code> statement. What we are doing here is asking GitHub to evaluate whether the step <code>running</code> (remember the <code>id</code> we set?) had <code>success</code> as its outcome.</p>
+<pre><code># We can have this double check that the last step was successfully run
+- name: Check on re-run outcome
+  if: steps.running.outcome != &#39;success&#39;
+  run: |
+    echo Re-running status ${{steps.running.outcome}}
+    exit 1</code></pre>
+<p>This <code>steps.running.outcome</code> is representative of a whole new world of GitHub Actions Environmental variables that we have not discussed yet but we will now!</p>
 </div>
-<div id="curriculum" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Curriculum</h2>
-<p>The course includes hands-on exercises for how to understand, build, and troubleshoot GitHub Actions as a continuous integration/continuous deployment tool for scientific software projects.</p>
-<p><strong>Goal of this course:</strong><br />
-Equip learners with basics skills and confidence to utilize the concepts of continuous integration in the context of scientific software.</p>
-<p><strong>What is not the goal</strong><br />
-This course is meant to teach learners how to create sophisticated GitHub Actions, but instead introduce learners to basic fundamentals of continuous integration and continuous deployment. This course focuses on GitHub Actions and will not cover any other (perfectly fine) tools for CI/CD.</p>
 </div>
-<div id="how-to-use-the-course" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span> How to use the course</h2>
-<p>Ideally you should follow along with the chapters and perform they activities as they are described. These activities involve using GitHub and GitHub actions. You will need a GitHub account and basic familiarity with GitHub.</p>
+<div id="summary" class="section level3" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> Summary</h3>
+<p><img src="05-gha-run-analysis_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3262.png" width="100%" style="display: block; margin: auto;" /></p>
 
 </div>
-</div>
-<h3> References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-BeaulieuJones2017" class="csl-entry">
-Beaulieu-Jones, Brett K, and Casey S Greene. 2017. <span>“Reproducibility of Computational Workflows Is Automated Using Continuous Analysis.”</span> <em>Nature Biotechnology</em> 35 (4): 342–46. <a href="https://doi.org/10.1038/nbt.3780">https://doi.org/10.1038/nbt.3780</a>.
 </div>
 </div>
 <hr>
@@ -249,8 +320,8 @@ Beaulieu-Jones, Brett K, and Casey S Greene. 2017. <span>“Reproducibility of C
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="programming-practices.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="github-actions-fundamentals.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="github-action-variables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
