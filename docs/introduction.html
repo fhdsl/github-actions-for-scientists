@@ -202,14 +202,19 @@ div.csl-indent {
 <li class="chapter" data-level="3" data-path="a-new-chapter-1.html"><a href="a-new-chapter-1.html"><i class="fa fa-check"></i><b>3</b> A new chapter</a></li>
 <li class="chapter" data-level="4" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html"><i class="fa fa-check"></i><b>4</b> GitHub Actions Fundamentals</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#gha-structure"><i class="fa fa-check"></i><b>4.1</b> GHA structure</a></li>
-<li class="chapter" data-level="4.2" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#on-when-a-thing-should-be-run"><i class="fa fa-check"></i><b>4.2</b> on: When a thing should be run</a></li>
-<li class="chapter" data-level="4.3" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#jobs-what-should-be-run"><i class="fa fa-check"></i><b>4.3</b> jobs: What should be run</a></li>
-<li class="chapter" data-level="4.4" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#runs-on-with-what"><i class="fa fa-check"></i><b>4.4</b> runs-on: with what:</a>
+<li class="chapter" data-level="4.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#gha-structure"><i class="fa fa-check"></i><b>4.1</b> GHA structure</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#containerization"><i class="fa fa-check"></i><b>4.4.1</b> Containerization</a></li>
+<li class="chapter" data-level="4.1.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#on-when-a-thing-should-be-run"><i class="fa fa-check"></i><b>4.1.1</b> on: When a thing should be run</a></li>
+<li class="chapter" data-level="4.1.2" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#jobs-what-should-be-run"><i class="fa fa-check"></i><b>4.1.2</b> jobs: What should be run</a></li>
+<li class="chapter" data-level="4.1.3" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#runs-on-with-what"><i class="fa fa-check"></i><b>4.1.3</b> runs-on: with what:</a></li>
+<li class="chapter" data-level="4.1.4" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#containerization"><i class="fa fa-check"></i><b>4.1.4</b> Containerization</a></li>
+<li class="chapter" data-level="4.1.5" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#summarizing"><i class="fa fa-check"></i><b>4.1.5</b> Summarizing</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#summarizing"><i class="fa fa-check"></i><b>4.5</b> Summarizing</a></li>
+<li class="chapter" data-level="4.2" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#exercise-1---running-your-first-github-action"><i class="fa fa-check"></i><b>4.2</b> Exercise 1 - Running your first GitHub Action</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#checking-results-of-a-github-action"><i class="fa fa-check"></i><b>4.2.1</b> Checking results of a GitHub Action</a></li>
+<li class="chapter" data-level="4.2.2" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#breaking-down-the-yaml"><i class="fa fa-check"></i><b>4.2.2</b> Breaking down the YAML</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="a-new-chapter-2.html"><a href="a-new-chapter-2.html"><i class="fa fa-check"></i><b>5</b> A new chapter</a>
 <ul>
@@ -409,7 +414,7 @@ div.csl-indent {
 <div id="motivation" class="section level2" number="1.3">
 <h2><span class="header-section-number">1.3</span> Motivation</h2>
 <p>Cancer datasets are plentiful, complicated, and hold untold amounts of information regarding cancer biology. Cancer researchers are working to apply their expertise to the analysis of these vast amounts of data but training opportunities to properly equip them in these efforts can be sparse. This includes training in reproducible data analysis methods.</p>
-<p>Data analyses are generally not reproducible without direct contact with the original researchers and a substantial amount of time and effort <span class="citation">(<a href="#ref-BeaulieuJones2017" role="doc-biblioref"><strong>BeaulieuJones2017?</strong></a>)</span>. Reproducibility in cancer informatics (as with other fields) is still not monitored or incentivized despite that it is fundamental to the scientific method. Despite the lack of incentive, many researchers strive for reproducibility in their own work but often lack the skills or training to do so effectively.</p>
+<p>Data analyses are generally not reproducible without direct contact with the original researchers and a substantial amount of time and effort <span class="citation">(<a href="#ref-BeaulieuJones2017" role="doc-biblioref">Beaulieu-Jones and Greene 2017</a>)</span>. Reproducibility in cancer informatics (as with other fields) is still not monitored or incentivized despite that it is fundamental to the scientific method. Despite the lack of incentive, many researchers strive for reproducibility in their own work but often lack the skills or training to do so effectively.</p>
 <p>Equipping researchers with the skills to create reproducible data analyses increases the efficiency of everyone involved. One tool among many for creating reproducible analyses is utilizing automation. Many individuals performing analyses on cancer data may not have formal training in software development and may be unfamiliar with the ideas of continuous integration and continuous deployment. By recognizing that biological data analysis code is a form of software development, we can try to adapt good development practices in scientific analyses and software contexts.</p>
 <p><em>Scientific software projects may include (but aren’t limited to):</em></p>
 <ul>
@@ -432,6 +437,12 @@ This course is meant to teach learners how to create sophisticated GitHub Action
 <h2><span class="header-section-number">1.5</span> How to use the course</h2>
 <p>Ideally you should follow along with the chapters and perform they activities as they are described. These activities involve using GitHub and GitHub actions. You will need a GitHub account and basic familiarity with GitHub.</p>
 
+</div>
+</div>
+<h3> References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-BeaulieuJones2017" class="csl-entry">
+Beaulieu-Jones, Brett K, and Casey S Greene. 2017. <span>“Reproducibility of Computational Workflows Is Automated Using Continuous Analysis.”</span> <em>Nature Biotechnology</em> 35 (4): 342–46. <a href="https://doi.org/10.1038/nbt.3780">https://doi.org/10.1038/nbt.3780</a>.
 </div>
 </div>
 <hr>
