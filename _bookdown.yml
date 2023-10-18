@@ -10,7 +10,7 @@ rmd_files: ["index.Rmd",
             "06-gha-variables.Rmd",
             "07-gha-other-examples.Rmd",
             "08-gha-troubleshooting.Rmd",
-            "09-gha-publishing.Rmd",
+            # "09-gha-publishing.Rmd",
             "About.Rmd",
             "References.Rmd"]
 new_session: yes
