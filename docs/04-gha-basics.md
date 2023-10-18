@@ -1,301 +1,164 @@
 
-# A new chapter
+# GitHub Actions Fundamentals
 
-If you haven't yet read the getting started Wiki pages; [start there](https://www.ottrproject.org/getting_started.html).
 
-To see the rendered version of this chapter and the rest of the template, see here: https://jhudatascience.org/OTTR_Template/.
-
-Every chapter needs to start out with this chunk of code:
+<img src="04-gha-basics_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" width="100%" style="display: block; margin: auto;" />
 
 
 
-
-## Learning Objectives
-
-Every chapter also needs Learning objectives that will look like this:  
-
-This chapter will cover:  
-
-- {You can use https://tips.uark.edu/using-blooms-taxonomy/ to define some learning objectives here}
-- {Another learning objective}
-
-## Libraries
-
-For this chapter, we'll need the following packages attached:
-
-*Remember to add [any additional packages you need to your course's own docker image](https://github.com/jhudsl/OTTR_Template/wiki/Using-Docker#starting-a-new-docker-image).
+Understand the basics of a GitHub Actions structure
+Recognize computing environments as a key tool of reproducibility and automation
+Navigate GitHub to find a details on a GitHub actions run
 
 
-```r
-library(magrittr)
+## GHA structure
+
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2777.png" width="100%" style="display: block; margin: auto;" />
+
+All GitHub Actions involve answering three questions:
+
+1. When should a thing run?
+2. What should be run?
+3. With what environment should the thing be run?
+
+These questions and other specifications are set by writing a [YAML file](https://www.redhat.com/en/topics/automation/what-is-yaml). YAML files are human readable markup language files. Basically its a list that is easy for humans to read and write and computers can read them too. This makes it good for writing a GitHub Action. Essentially, we're going to write a YAML file to make a recipe that GitHub will read to know what/when/with what we are trying to do.
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2781.png" width="100%" style="display: block; margin: auto;" />
+
+The headlines about working with YAML files:
+
+1. Everything is a list (kind of like a JSON file).
+1. Indentations = subsets of a list
+1. Spacing is VERY specific! -- incorrect spacing will definitely result in errors for your GitHub Action run.
+
+Let's take a look at an example YAML.
+Note that the what comes before a `:` is generally a name and indent indicate subsets of a list. So in the overall list of `food` we have sublists of `vegetables` and `fruits`. `#` can be used as a comment and will not be treated as code.
+
+Additionally, `:` are often names. So `citrus` is the name for the item `oranges` and etc.
+```
+# A comment here which is ignored
+food:
+  - vegetables: tomatoes
+  - fruits:
+      citrus: oranges
+      tropical: bananas
 ```
 
-## Topic of Section
 
-You can write all your text in sections like this, using `##` to indicate a new header. you can use additional pound symbols to create lower levels of headers.
+Two items that every GitHub Action YAML must contain is `on:` and `jobs:`.
 
-See [here](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for additional general information about how you can format text within R Markdown files. In addition, see [here](https://pandoc.org/MANUAL.html#pandocs-markdown) for more in depth and advanced options.
+- `on:` tells GitHub when something should be run. For example "whenever a pull request is opened".
+- `jobs:` tells GitHub what should be run. For example "run this bash script".
+- `runs-on`: tells GitHub with what environment should this be run. For example "windows-latest".
 
-### Subtopic
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2787.png" width="100%" style="display: block; margin: auto;" />
 
-Here's a subheading (using three pound symbols) and some text in this subsection!
+## on: When a thing should be run
 
-## Code examples
 
-You can demonstrate code like this:
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2808.png" width="100%" style="display: block; margin: auto;" />
 
 
-```r
-output_dir <- file.path("resources", "code_output")
-if (!dir.exists(output_dir)) {
-  dir.create(output_dir)
-}
-```
 
-And make plots too:
 
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2815.png" width="100%" style="display: block; margin: auto;" />
 
-```r
-hist_plot <- hist(iris$Sepal.Length)
-```
 
-<img src="resources/images/04-gha-basics_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+## jobs: What should be run
 
-You can also save these plots to file:
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2820.png" width="100%" style="display: block; margin: auto;" />
 
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2827.png" width="100%" style="display: block; margin: auto;" />
 
-```r
-png(file.path(output_dir, "test_plot.png"))
-hist_plot
-```
+**Scenario:** You are running an analysis using public data that continually has more samples added
+- You would like the analysis to rerun when new samples are added
+- You would like to be informed of when the analysis got rerun and what the results were on Slack
 
-```
-## $breaks
-## [1] 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5 8.0
-## 
-## $counts
-## [1]  5 27 27 30 31 18  6  6
-## 
-## $density
-## [1] 0.06666667 0.36000000 0.36000000 0.40000000 0.41333333 0.24000000 0.08000000
-## [8] 0.08000000
-## 
-## $mids
-## [1] 4.25 4.75 5.25 5.75 6.25 6.75 7.25 7.75
-## 
-## $xname
-## [1] "iris$Sepal.Length"
-## 
-## $equidist
-## [1] TRUE
-## 
-## attr(,"class")
-## [1] "histogram"
-```
+That's totally a thing a GitHub action can do! We will walk through some examples like it!
 
-```r
-dev.off()
-```
+And here's the good news, you don't have to write things from scratch or know ALL the languages. GitHub marketplace allows you to use really cool actions that other people have created. More on this later.
 
-```
-## quartz_off_screen 
-##                 2
-```
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2843.png" width="100%" style="display: block; margin: auto;" />
 
-## Image example
+## runs-on: with what:
 
-How to include a Google slide. It's simplest to use the `ottrpal` package:
 
+The `runs-on:` tag specifies with what environment the job is going to be run.
 
-<img src="resources/images/04-gha-basics_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" alt="Major point!! example image" width="100%" style="display: block; margin: auto;" />
+What does this mean? Well let's start by discussing that the term "cloud" computing is a tad misleading. When we send a job to an online service like GitHub Actions, its not a mysterious vague mass.
 
-But if you have the slide or some other image locally downloaded you can also use HTML like this:
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2859.png" width="100%" style="display: block; margin: auto;" />
 
-<img src="resources/images/02-chapter_of_course_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" title="Major point!! example image" alt="Major point!! example image" style="display: block; margin: auto;" />
+Instead, its being sent to a real computer somewhere and that computer is setting up a *computing environment* to run your job and sends back the results to you through the GitHub website.
 
-## Video examples
-You may also want to embed videos in your course. If alternatively, you just want to include a link you can do so like this:
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2867.png" width="100%" style="display: block; margin: auto;" />
 
-Check out this [link to a video](https://www.youtube.com/embed/VOCYL-FNbr0) using markdown syntax.
+What do we mean by a computing environment? As just like when you work on your personal computer, you install, update, and sometimes delete software in order to run different things, the GitHub Actions computers need to do the same in order to run your code. Although some person from Microsoft isn't setting up a new physical computer and manually installing software, the specs you give underneath `runs-on:` tell GitHub Actions what kind of set up to use.
 
-### Using `knitr`
+So for example, there are built in operating systems like `windows-latest`, `mac-latest`, and `ubuntu-latest`. You can see more about the [default GitHub runners here](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources).
 
-To embed videos in your course, you can use `knitr::include_url()` like this:
-Note that you should use `echo=FALSE` in the code chunk because we don't want the code part of this to show up. If you are unfamiliar with [how R Markdown code chunks work, read this](https://rmarkdown.rstudio.com/lesson-3.html).
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2843.png" width="100%" style="display: block; margin: auto;" />
 
+But just like a Windows machine straight out of a box is unlikely to have everything you need to run some code, you may need a more specific computing environment. You can also create custom environments using `containerization`.
 
-<iframe src="https://www.youtube.com/embed/VOCYL-FNbr0" width="672" height="400px" data-external="1"></iframe>
+### Containerization
 
-### Using HTML
+A "virtual machine" is basically when your computer creates its own fake computer inside of it. It's acting like a different computer but it doesn't have any additional physical parts.
 
-<iframe src="https://www.youtube.com/embed/VOCYL-FNbr0" width="672" height="400px"></iframe>
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g285ab2029e8_0_2.png" width="100%" style="display: block; margin: auto;" />
 
-## File examples
+Containers aren't virtual machines, but they do a similar thing, which is they spin up a computing environment where you can do things. They are called containers because they are isolated from the rest of your computer.
 
-You can again use simple markdown syntax to just include a link to a file like so:
+Containerization is useful because it allows us to share our computing environments with others. This is useful because it can be a powerful tool for reproducing analyses if we are controlling our computing environments.
 
-[A file]().
+The software you use, and the versions of the software you use can affect the results from an analysis (Beaulieu-Jones and Casey S. Greene, 2017).
 
-Alternatively you can embed files like PDFs.
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2889.png" width="100%" style="display: block; margin: auto;" />
 
-### Using `knitr`
+Real data and experiments have shown this! Below is a figure from Beaulieu-Jones and Casey S. Greene, 2017 that shows how a microarray data analysis had different results depending on the software versions used.
 
-<iframe src="https://drive.google.com/file/d/1mm72K4V7fqpgAfWkr6b7HTZrc3f-T6AV/preview" width="100%" height="400px" data-external="1"></iframe>
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2937.png" width="100%" style="display: block; margin: auto;" />
 
-### Using HTML
+And as time goes on, your computing environment changes; potentially in ways you don't realize!
 
-<iframe src="https://drive.google.com/file/d/1mm72K4V7fqpgAfWkr6b7HTZrc3f-T6AV/preview" width="672" height="800px"></iframe>
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2894.png" width="100%" style="display: block; margin: auto;" />
 
-## Website Examples
+Most languages and programs allow you to print out the specifications of your computing environment. See below a "session info" print out from R. What this shows is two different computing environments. Side by side we can see how they differ.
 
-Yet again you can use a link to a website like so:
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2913.png" width="100%" style="display: block; margin: auto;" />
 
-[A Website](https://yihui.org)
+There's various containerization software programs, that will allow you to share your computing environments but a very popular one is Docker. We can picture how this makes analyses more reproducible.
 
-You might want to have users open a website in a new tab by default, especially if they need to reference both the course and a resource at once.
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2946.png" width="100%" style="display: block; margin: auto;" />
 
-[A Website](https://yihui.org){target="_blank"}
+Docker and other containerization software work by allowing you to take a snapshot of your environment, called an *image*. This image can be shared and others can use this image to build the *container* from which they can run the analysis or whatever it is they plan to do.
 
-Or, you can embed some websites.
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2950.png" width="100%" style="display: block; margin: auto;" />
 
-### Using `knitr`
 
-This works:
 
-<iframe src="https://yihui.org" width="672" height="400px" data-external="1"></iframe>
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2942.png" width="100%" style="display: block; margin: auto;" />
 
-
-### Using HTML
-
-<iframe src="https://yihui.org" width="672" height="400px"></iframe>
-
-
-If you'd like the URL to show up in a new tab you can do this:
-
-```
-<a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
-```
-
-## Citation examples
-
-We can put citations at the end of a sentence like this [@rmarkdown2021].
-Or multiple citations [@rmarkdown2021, @Xie2018].
-
-but they need a ; separator [@rmarkdown2021; @Xie2018].
-
-In text, we can put citations like this @rmarkdown2021.
-
-## Stylized boxes
-
-Occasionally, you might find it useful to emphasize a particular piece of information. To help you do so, we have provided css code and images (no need for you to worry about that!) to create the following stylized boxes.
-
-You can use these boxes in your course with either of two options: using HTML code or Pandoc syntax.
-
-### Using `rmarkdown` container syntax
-
-The `rmarkdown` package allows for a different syntax to be converted to the HTML that you just saw and also allows for conversion to LaTeX. See the [Bookdown](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) documentation for more information [@Xie2020]. Note that Bookdown uses Pandoc.
-
-
-```
-::: {.notice}
-Note using rmarkdown syntax.
-
-:::
-```
-
-::: {.notice}
-Note using rmarkdown syntax.
-
-:::
-
-As an example you might do something like this:
-
-::: {.notice}
-Please click on the subsection headers in the left hand
-navigation bar (e.g., 2.1, 4.3) a second time to expand the
-table of contents and enable the `scroll_highlight` feature
-([see more](introduction.html#scroll-highlight))
-:::
-
-
-### Using HTML
-
-To add a warning box like the following use:
-
-```
-<div class = "notice">
-Followed by the text you want inside
-</div>
-```
-
-This will create the following:
-
-<div class = "notice">
-
-Followed by the text you want inside
-
-</div>
-
-Here is a `<div class = "warning">` box:
+Docker is a whole other world. There's whole conferences, hackathons, and etc devoted to Docker and other containerization software. It can be a lot to learn. To start, we recommend borrowing other people’s Docker images as much as possible instead of trying to build your own And then install the few packages you need. (more on this in a future chapter)
 
 <div class = "warning">
 
-Note text
+Super important side note: DO NOT put data that needs to be secured like Personally Identifiable Information (PII) and Personal Health Information (PHI) data on your Docker images! Especially when you share them! They are not meant for this purpose and this data would be exposed!
 
 </div>
 
-Here is a `<div class = "github">` box:
+#### More resources about Docker
 
-<div class = "github">
+- [Launching a Docker image](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/launching-a-docker-image.html)
+- [Modifying a Docker image](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/modifying-a-docker-image.html)
+- [Docker for data scientists](https://towardsdatascience.com/docker-for-data-scientists-5732501f0ba4)
 
-GitHub text
+## Summarizing
 
-</div>
+- GitHub actions are specified by YAML files in ` .github/workflows/` folder on a GitHub repository.
+- The specs from this YAML are used to run a `job` when an `on` trigger specifies it should be run.
+- The `runs-on` spec tells the server what kind of environment it should be run with.
+- Containers like those made with Docker can help you make custom computing environments.
 
-
-Here is a `<div class = "dictionary">` box:
-
-<div class = "dictionary">
-
-dictionary text
-
-</div>
-
-
-Here is a `<div class = "reflection">` box:
-
-<div class = "reflection">
-
-reflection text
-
-</div>
-
-
-## Dropdown summaries
-
-<details><summary> You can hide additional information in a dropdown menu </summary>
-Here's more words that are hidden.
-</details>
-
-## Print out session info
-
-You should print out session info when you have code for [reproducibility purposes](https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/managing-package-versions.html).
-
-
-```r
-devtools::session_info()
-```
-
-```
-## ─ Session info ───────────────────────────────────────────────────────────────
-##  setting  value
-##  version  R version 4.3.1 (2023-06-16)
-##  os       macOS Ventura 13.5.2
-##  system   x86_64, darwin20
-##  ui       X11
-##  language (EN)
-##  collate  en_US.UTF-8
-##  ctype    en_US.UTF-8
-##  tz       America/New_York
-##  date     2023-09-20
-##  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3054.png" width="100%" style="display: block; margin: auto;" />
