@@ -1,6 +1,10 @@
 
 # GitHub Action Variables
 
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_52")
+```
+
 The GitHub Actions environments have variables that are already set by default in the environment but you can also set environment variables yourself.
 
 ### Types of variables
@@ -241,4 +245,4 @@ It should look like this:
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3358")
 ```
 
-What you should see is that the workflow runs again, tries to print the GitHub secret out but really just shows a `***`. 
+What you should see is that the workflow runs again, tries to print the GitHub secret out but really just shows a `***`.
