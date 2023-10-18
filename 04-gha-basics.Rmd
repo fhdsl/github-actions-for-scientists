@@ -149,13 +149,13 @@ Containers aren't virtual machines, but they do a similar thing, which is they s
 
 Containerization is useful because it allows us to share our computing environments with others. This is useful because it can be a powerful tool for reproducing analyses if we are controlling our computing environments.
 
-The software you use, and the versions of the software you use can affect the results from an analysis (Beaulieu-Jones and Casey S. Greene, 2017).
+The software you use, and the versions of the software you use can affect the results from an analysis [@BeaulieuJones2017].
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2889")
 ```
 
-Real data and experiments have shown this! Below is a figure from Beaulieu-Jones and Casey S. Greene, 2017 that shows how a microarray data analysis had different results depending on the software versions used.
+Real data and experiments have shown this! Below is a figure from [Beaulieu-Jones and Casey S. Greene, 2017](https://pubmed.ncbi.nlm.nih.gov/28288103/) that shows how a microarray data analysis had different results depending on the software versions used [@BeaulieuJones2017].
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_2937")
