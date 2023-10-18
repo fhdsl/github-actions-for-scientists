@@ -7,12 +7,6 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 ```
 
 
-
-Understand the basics of a GitHub Actions structure
-Recognize computing environments as a key tool of reproducibility and automation
-Navigate GitHub to find a details on a GitHub actions run
-
-
 ## GHA structure
 
 
