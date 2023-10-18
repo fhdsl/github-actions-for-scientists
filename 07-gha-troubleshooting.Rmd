@@ -54,7 +54,7 @@ Read carefully what output happened here versus what you expected to happen. You
 
 You may want to Google those messages depending on what they are saying. If the message has to do with a script being called you will want to test those scripts you wrote elsewhere to make sure they are working.
 
-### Add a workflow_dispatch/pull_request triggers for development
+### Use workflow_dispatch/pull_request triggers for development
 
 Regardless of whether you want your final GitHub Action to run on a `pull_request` or `workflow_dispatch` triggers, it can be helpful during development to use these. You can have multiple triggers for a GitHub actions.
 
@@ -84,7 +84,7 @@ This may help you figure out whether a variable or file isn't in the place you t
 1. Create a new branch to work from.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
-ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g2903858106e_0_4")
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_124")
 ```
 From command line:
 ```
@@ -94,14 +94,14 @@ From command line:
 2. For this exercise we are going to copy purposely broken GitHub actions we will fix. Move all three files from the `activity-3-find-the-break` folder to to your `.github/workflows` directories you made in the previous chapter.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
-ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g2903858106e_0_17")
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_116")
 ```
 From command line:
 ```
-mv activity-3-find-the-break/* .github/workflows/*
+mv activity-3-find-the-break/* .github/workflows/
 ```
 
-3. Now follow the same set of steps we used in the previous chapter to Add, Commit, Push the changes.
+3. Now follow the same set of steps we used in the previous chapters to Add, Commit, Push the changes.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g2903858106e_0_25")
@@ -109,16 +109,108 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 From command line:
 ```
 git add .github/*
-git commit -m "adding broken gha variables"
-git push --set-upstream origin troubleshoot-practice
+git commit -m "troubleshooting exercise"
+git push --set-upstream origin troubleshooting
 ```
 
 4. Now create a pull request with the changes you just made. (Refer to the previous chapter if you need reminders on how to do this).
 
-5. On your pull request page on GitHub, click on the `Details` button next to your workflow run. Keep this handy because we will dive into the details of what we just ran.
+Scroll to the bottom of this pull request. You'll notice that only one of the three broken actions have a status here. If you don't see a GitHub Action you expect to be running, you'll need to go to `Actions` tab to see what's happening. We'll dive into this in this next section.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
-ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3250")
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_145")
 ```
 
-#### Most common error messages
+### Broken Action 1 - Upload a file
+
+Let's dive into the broken action 1 first. Let's look into the logs. Go to the `Actions` tab and find the most recent workflow run that indicates its from `.github/workflows/broken-action-1.yml`.
+
+You'll notice that this action and the second one don't show up normally. They both have `startup` issues. Meaning their problems are so fundamental that GitHub can't even process them to the point where they can begin to run.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_150")
+```
+
+Generally `start up issues` have to do with:  
+
+1. An essential specification is missing.
+2. There's a syntax issue
+3. There's a spacing issue
+
+Click on this issue's log and scroll down to the bottom where it says "Annotation".
+
+In this first case we have an error:
+```
+a step cannot have both the `uses` and `run` keys
+```
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_85")
+```
+
+What do you suppose this error means? When thinking about what you believe this error means, take a look at the parts of the yaml file that have `uses` and `run` keys.
+
+To recap, `uses` is a key we use when we are borrowing an action from the marketplace like the following:
+
+```
+- name: Checkout files
+  uses: actions/checkout@v3
+```
+
+And the `run` key we generally use for calling some bash or other language's commands. like this:
+
+```
+- name: Print out a thing
+  run: echo Let's print a thing out!
+```
+
+Both `run` and `uses` are calling commands. So given this information why do you suppose we are getting the error:
+```
+a step cannot have both the `uses` and `run` keys
+```
+
+#### Fixing Action 1
+
+1. Based on what you think is causing this error, attempt to make a change to the `broken-action-1.yml` file.
+2. Then add and commit that change and push it to GitHub.
+3. Return to your logs to see the most recent run of the action from `.github/workflows/broken-action-1.yml`.
+4. Look at the logs to see if the error is different or is fixed. If it ran successfully you'll see it's actual title show up in the logs. But regardless if it fails or succeeds you should check the logs. 
+5. Repeat these steps until you have fixed action 1.
+
+### Broken Action 2 - Create an issue
+
+Let's dive into the broken action 1 first. Let's look into the logs. Go to the `Actions` tab and find the most recent workflow run that indicates its from `.github/workflows/broken-action-2.yml`.
+
+This action, like the first one, has start up issues so it will not have its status shown on the pull request.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_157")
+```
+Click on this issue's log and scroll down to the bottom where it says "Annotation".
+
+In this case we have an error:
+```
+You have an error in your yaml syntax on line 11
+```
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_90")
+```
+
+What do you suppose this error means? What's nice about this error is that it does tell us a specific line to look at. Keep in mind though sometimes when GitHub action tells us a line this may be approximate. We may need to look slightly before or slightly after the line it calls for us to know what to fix.
+
+#### Fixing Action 2
+
+1. Open up the `broken-action-2.yml` file.
+2. Take a look at the code around line 11
+3. What do you notice that is different about these lines as compared to other actions we've looked at?
+4. Formulate a hypothesis on what you think is the problem and change that in `broken-action-2.yml`.
+5. Then add and commit that change and push it to GitHub.
+6. Return to your logs to see the most recent run of the action from `.github/workflows/broken-action-2.yml`. If it ran successfully you'll see it's actual title show up in the logs. But regardless if it fails or succeeds you should check the logs.
+7. Look at the logs to see if the error is different or is fixed.
+8. Repeat these steps until you have fixed action 2!
+
+### Broken Action 3 - Run script
+
+
+## Summary
