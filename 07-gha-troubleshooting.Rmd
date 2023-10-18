@@ -8,7 +8,6 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 Many of your standard programming troubleshooting skills are applicable with GitHub actions. In this chapter we'll five you a few more tips for what might be the most common ways that GitHub Actions can break and what those error messages might look like.
 
-
 ## Tips
 
 ### Look out for silent errors!
@@ -17,6 +16,11 @@ A well designed GitHub Action will:
 
 1. Successfully fail when you should be alerted to something that isn't working
 2. Successfully pass when the test is working as you'd like.
+
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_186")
+```
 
 What makes point 1 tricky is that just because you get a green check mark, doesn't mean that all your steps ran successfully or did what you thought they were doing.
 
@@ -79,7 +83,25 @@ run: |
 
 This may help you figure out whether a variable or file isn't in the place you think it is.
 
+### Use Marketplace actions
+
+The great part about using GitHub Actions is that you can use other people's actions from the marketplace so you don't have to write everything from scratch!
+
+This however, does mean that you are dependent on the developers and maintainers of these GitHub Actions.
+
+There are two tips for troubleshooting a problematic GitHub Action that is borrowed from marketplace:
+
+1. Read their docs carefully and make sure you are using it as specified.
+2. Try bumping up to a later version if it looks like there's a bug that may have been addressed.
+3. Try not to use Marketplace actions that don't show evidence of being maintained or don't have fully fledged documentation!
+
 ## Activity: Troubleshooting GitHub Actions
+
+**What to know about these activities:**  
+
+- None of these broken actions will require more than 1 simple line to fix it. So don't spend too much time writing lots of code to fix these.
+- There are clues in our descriptions here about what you should look out for in fixing these actions. So look out for these clues.
+- Use standard troubleshooting tips to figure this out -- Googling and iterative work and attempts is encouraged!
 
 1. Create a new branch to work from.
 
@@ -174,12 +196,12 @@ a step cannot have both the `uses` and `run` keys
 1. Based on what you think is causing this error, attempt to make a change to the `broken-action-1.yml` file.
 2. Then add and commit that change and push it to GitHub.
 3. Return to your logs to see the most recent run of the action from `.github/workflows/broken-action-1.yml`.
-4. Look at the logs to see if the error is different or is fixed. If it ran successfully you'll see it's actual title show up in the logs. But regardless if it fails or succeeds you should check the logs. 
+4. Look at the logs to see if the error is different or is fixed. If it ran successfully you'll see it's actual title show up in the logs. But regardless if it fails or succeeds you should check the logs.
 5. Repeat these steps until you have fixed action 1.
 
 ### Broken Action 2 - Create an issue
 
-Let's dive into the broken action 1 first. Let's look into the logs. Go to the `Actions` tab and find the most recent workflow run that indicates its from `.github/workflows/broken-action-2.yml`.
+Let's look into Action 2's logs to try to fix it. Go to the `Actions` tab and find the most recent workflow run that indicates its from `.github/workflows/broken-action-2.yml`.
 
 This action, like the first one, has start up issues so it will not have its status shown on the pull request.
 
@@ -212,5 +234,60 @@ What do you suppose this error means? What's nice about this error is that it do
 
 ### Broken Action 3 - Run script
 
+Finally, let's look into `Broken Action 3 - Run script`. Go to the logs and look for a recent workflow run of that title.  
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_163")
+```
+
+In this case, the `Annotations` might tell us `Process completed with exit code 127`. If we look online we can see that this means that either a script doesn't exist or it can't run.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_95")
+```
+
+This is moderately helpful but doesn't really help us identify the problem. So we have to dig into the log some more.
+When we click on the log it will likely open up the step that this workflow failed on.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_174")
+```
+
+In this case we have an error:
+```
+/__w/_temp/36dfc03e-56ed-43fa-9019-85d8b151f42a.sh: 2: python3: not found
+Running python here
+```
+
+The `/__w/_temp/36dfc03e-56ed-43fa-9019-85d8b151f42a.sh` bit just tells us information about where this was being ran in the temporary workspace that GitHub was using to run our workflow. And if we look at our yaml file we can see the message: `Running python here` is just something we had echoed.
+
+What we're going to want to zero in on here is the `python3: not found`.
+
+#### Fixing Action 3
+
+1. Open up the `broken-action-3.yml` file.
+2. It looks like Python is not able to be found. Look at the yaml file and try to figure out why that might be.
+3. Formulate a hypothesis on what you think is the problem and change that in `broken-action-3.yml`.
+4. Then add and commit that change and push it to GitHub.
+5. Return to your logs to see the most recent run of the action from `.github/workflows/broken-action-3.yml`.
+6. Look at the logs to see if the error is different or is fixed.
+7. Repeat these steps until you have fixed action 2!
+
+
+<details>
+
+<summary> For a further hint about fixing this problem look here </summary>
+
+You're going to want to look into what software packages the docker image referenced on in the `image:` key has. Does `rocker/r-base` image have Python?
+
+If not, you may need to look for a Docker image to use that has python. We've used one in a previous example that you could borrow.
+
+</details>
 
 ## Summary
+
+In this activity, we practiced troubleshooting GitHub Actions. We discussed some of the most common ways that GitHub Actions can be broken. Here's a summary of troubleshooting tips covered in this chapter/
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_67")
+```
