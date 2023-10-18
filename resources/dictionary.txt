@@ -1,4 +1,14 @@
+amidst
+uncomment
 YAML
+yaml
+Yay
+GitHub
+cansavvy
+repo
+github
+env
+PATs
 JSON
 PII
 GHA

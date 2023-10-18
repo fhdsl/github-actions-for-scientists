@@ -86,7 +86,7 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 #### env:
 
-There are different ways to set variables. The simplest way to set variables is within a step you can set them using `env:`. Underneath `env:` you write the `name` of the variable on one side of the colon and then the definition on the otherside. For example, in our yaml file we had:
+There are different ways to set variables. The simplest way to set variables is within a step you can set them using `env:`. Underneath `env:` you write the `name` of the variable on one side of the colon and then the definition on the other side. For example, in our yaml file we had:
 
 ```
 - name: Hello, but make it personal
