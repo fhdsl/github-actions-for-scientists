@@ -10,7 +10,7 @@ In the beginning of this course we discussed the benefits of using continuous in
 
 In this chapter we will go through example code that shows how this can be set up. We highly encourage you to take this code and adapt it to your own project's needs.
 
-## Exercise 2
+## Exercise 2 - Re-run analysis example
 
 For this exercise, we are going to continue to use the example repository that we set up in the previous chapter.
 

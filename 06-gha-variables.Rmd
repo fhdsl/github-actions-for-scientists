@@ -21,7 +21,7 @@ echo ${{ github.repository }}
 
 In this next exercise we'll explore different ways to use variables.
 
-## Exercise 3
+## Exercise 3 - Exploring Variables
 
 For this exercise, we are going to continue to use the example repository that we set up in the previous chapter.
 
