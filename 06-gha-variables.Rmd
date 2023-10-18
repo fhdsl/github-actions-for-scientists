@@ -174,6 +174,12 @@ For GitHub actions that are doing things that require authorization or particula
 
 Let's practice this by setting a GitHub Access token as a secret!
 
+#### Make a Personal Access token
+
+You can store any alphanumeric string as your GitHub secret. It may be an API key or authorization keys from some other software program. But for this example, we will use an authorization key for GitHub.
+
+Recall we have may have to give authorization to a GitHub action some times, because we are not actually running this with our user account, this job is being sent to GitHub for them to run on their servers somewhere.
+
 1. First make your own personal access token by going here: https://github.com/settings/tokens You can find this page by going to your own profile, and then to `Settings` and `Developer settings`.
 
 The GitHub Documentation for how to make PATs is here: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
@@ -186,11 +192,16 @@ You will likely have to enter your password at this point.
 
 4. Scroll to the bottom of the page and click `Generate`. Your token will be shown on the next page. You'll keep this handy because they won't show it to you again. Be careful not to share this any place publicly because it will give someone authorization to you GitHub account!
 
+#### Creating a GitHub Secret
+
+1. Return to your repository that we were using for these activities.
+2. `Settings` > `Secrets and variables` > `Actions` > `New Repository Secret`.
+3. Name your secret something. In this example, let's call it `GH_PAT`. You'll want to name your secret something that relates to what it is.
+4. Now copy and paste in the secret section.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
-ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_22")
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_38")
 ```
-
 
 ##### Referencing a GitHub secret in a GitHub action
 
@@ -209,3 +220,25 @@ run: echo ${ secrets.GH_PAT }
 ```
 
 But, you don't have to worry about that part, in your logs your secrets will show as `***` and will not be displayed.
+
+##### Activity: Using a GitHub secret
+
+1. On your repository, go to your `01-exploring-var-and-secrets.yml` file from your working branch.
+2. Click the `edit this file` button.
+3. Scroll to the bottom. Uncomment the last step step.
+It should look like this:
+```
+# Here's how we'd reference a secret
+- name: How do we reference a GITHUB secret?
+  run: ${ secrets.SECRET_NAME }
+```
+4. Replace `SECRET_NAME` with what you named your secret (probably `GH_PAT`).
+5. Commit that change to your file.
+6. Push that change to your file.  
+7. Take a look at the log by clicking `Details`.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3358")
+```
+
+What you should see is that the workflow runs again, tries to print the GitHub secret out but really just shows a `***`. 
