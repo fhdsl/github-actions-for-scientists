@@ -5,12 +5,6 @@
 <img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_982.png" width="100%" style="display: block; margin: auto;" />
 
 
-
-Understand the basics of a GitHub Actions structure
-Recognize computing environments as a key tool of reproducibility and automation
-Navigate GitHub to find a details on a GitHub actions run
-
-
 ## GHA structure
 
 

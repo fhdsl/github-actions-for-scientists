@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 GitHub Action Variables | GitHub Automation for Scientists</title>
+  <meta name="description" content="Chapter 6 GitHub Action Variables | GitHub Automation for Scientists" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 GitHub Action Variables | GitHub Automation for Scientists" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 GitHub Action Variables | GitHub Automation for Scientists" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="assets/ITN_favicon.ico" type="image/x-icon" />
+<link rel="prev" href="automating-re-running-analyses.html"/>
+<link rel="next" href="more-github-actions-examples.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="assets/style_ITN.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<a href="https://www.itcrtraining.org/"><img src="assets/ITN_logo.png" style="padding-left: 15px; padding-top: 8px;"</a>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About this Course</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#target-audience"><i class="fa fa-check"></i><b>1.1</b> Target Audience</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#topics-covered"><i class="fa fa-check"></i><b>1.2</b> Topics covered</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#motivation"><i class="fa fa-check"></i><b>1.3</b> Motivation</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#curriculum"><i class="fa fa-check"></i><b>1.4</b> Curriculum</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#how-to-use-the-course"><i class="fa fa-check"></i><b>1.5</b> How to use the course</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="programming-practices.html"><a href="programming-practices.html"><i class="fa fa-check"></i><b>2</b> Programming Practices</a></li>
+<li class="chapter" data-level="3" data-path="why-automation.html"><a href="why-automation.html"><i class="fa fa-check"></i><b>3</b> Why Automation</a></li>
+<li class="chapter" data-level="4" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html"><i class="fa fa-check"></i><b>4</b> GitHub Actions Fundamentals</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#gha-structure"><i class="fa fa-check"></i><b>4.1</b> GHA structure</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#on-when-a-thing-should-be-run"><i class="fa fa-check"></i><b>4.1.1</b> on: When a thing should be run</a></li>
+<li class="chapter" data-level="4.1.2" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#jobs-what-should-be-run"><i class="fa fa-check"></i><b>4.1.2</b> jobs: What should be run</a></li>
+<li class="chapter" data-level="4.1.3" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#runs-on-with-what"><i class="fa fa-check"></i><b>4.1.3</b> runs-on: with what:</a></li>
+<li class="chapter" data-level="4.1.4" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#containerization"><i class="fa fa-check"></i><b>4.1.4</b> Containerization</a></li>
+<li class="chapter" data-level="4.1.5" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#summarizing"><i class="fa fa-check"></i><b>4.1.5</b> Summarizing</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#exercise-1---running-your-first-github-action"><i class="fa fa-check"></i><b>4.2</b> Exercise 1 - Running your first GitHub Action</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#checking-results-of-a-github-action"><i class="fa fa-check"></i><b>4.2.1</b> Checking results of a GitHub Action</a></li>
+<li class="chapter" data-level="4.2.2" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#breaking-down-the-yaml"><i class="fa fa-check"></i><b>4.2.2</b> Breaking down the YAML</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html"><i class="fa fa-check"></i><b>5</b> Automating Re-running Analyses</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html#exercise-2---re-run-analysis-example"><i class="fa fa-check"></i><b>5.1</b> Exercise 2 - Re-run analysis example</a></li>
+<li class="chapter" data-level="5.2" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html#diving-into-the-details"><i class="fa fa-check"></i><b>5.2</b> Diving into the details</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html#name-and-on"><i class="fa fa-check"></i><b>5.2.1</b> name and on</a></li>
+<li class="chapter" data-level="5.2.2" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html#jobs"><i class="fa fa-check"></i><b>5.2.2</b> jobs</a></li>
+<li class="chapter" data-level="5.2.3" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html#summary"><i class="fa fa-check"></i><b>5.2.3</b> Summary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="github-action-variables.html"><a href="github-action-variables.html"><i class="fa fa-check"></i><b>6</b> GitHub Action Variables</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="github-action-variables.html"><a href="github-action-variables.html#types-of-variables"><i class="fa fa-check"></i><b>6.0.1</b> Types of variables</a></li>
+<li class="chapter" data-level="6.1" data-path="github-action-variables.html"><a href="github-action-variables.html#exercise-3---exploring-variables"><i class="fa fa-check"></i><b>6.1</b> Exercise 3 - Exploring Variables</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="github-action-variables.html"><a href="github-action-variables.html#default-variables"><i class="fa fa-check"></i><b>6.1.1</b> Default variables</a></li>
+<li class="chapter" data-level="6.1.2" data-path="github-action-variables.html"><a href="github-action-variables.html#user-set-variables"><i class="fa fa-check"></i><b>6.1.2</b> User set variables</a></li>
+<li class="chapter" data-level="6.1.3" data-path="github-action-variables.html"><a href="github-action-variables.html#activity-setting-github-secrets"><i class="fa fa-check"></i><b>6.1.3</b> Activity: Setting GitHub secrets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="more-github-actions-examples.html"><a href="more-github-actions-examples.html"><i class="fa fa-check"></i><b>7</b> More GitHub Actions Examples</a></li>
+<li class="chapter" data-level="8" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html"><i class="fa fa-check"></i><b>8</b> Troubleshooting GitHub Actions</a></li>
+<li class="chapter" data-level="9" data-path="publishing-github-actions-to-the-marketplace.html"><a href="publishing-github-actions-to-the-marketplace.html"><i class="fa fa-check"></i><b>9</b> Publishing GitHub Actions to the Marketplace</a></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="10" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>10</b> References</a></li>
+<li class="divider"></li>
+<p style="text-align:center;"> <a href="https://github.com/jhudsl/OTTR_Template" target="blank" > This content was published with</a> <a href="https://bookdown.org/" target="blank"> bookdown by: </a> </p>
+<p style="text-align:center;"> <a href="http://jhudatascience.org/"> The Johns Hopkins Data Science Lab </a></p>
+<a href="http://jhudatascience.org/"><img src="https://jhudatascience.org/images/dasl.png" style=" width: 80%; filter: grayscale(100%); padding-left: 40px; padding-top: 8px; vertical-align: top "</a>
+<p style="text-align:center; font-size: 12px;"> <a href="https://github.com/rstudio4edu/rstudio4edu-book/"> Style adapted from: rstudio4edu-book </a> <a href ="https://creativecommons.org/licenses/by/2.0/"> (CC-BY 2.0) </a></p>
+<p style="padding-left: 40px;"><div class="trapezoid" style = "padding-left: 40px;"><span>  <a href="https://forms.gle/hc8Xt3Y2Znjb6M4Y7"> Click here to provide feedback</a> <img src="assets/itcr_arrow.png" style=" width: 10%" ></span></div></p>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GitHub Automation for Scientists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0">
+  <!--script src="https://kit.fontawesome.com/6a26f47516.js"></script-->
+  <!--<script src="assets/hideOutput.js"></script>-->
+  <link href="assets/style_ITN.css" rel="stylesheet">
+</head>
+        
+
+
+<div class="hero-image-container"> 
+  <img class= "hero-image" src="assets/itcr_main_image.png">
+</div>
+<div id="github-action-variables" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> GitHub Action Variables</h1>
+<p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_52.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>The GitHub Actions environments have variables that are already set by default in the environment but you can also set environment variables yourself.</p>
+<div id="types-of-variables" class="section level3" number="6.0.1">
+<h3><span class="header-section-number">6.0.1</span> Types of variables</h3>
+<p>There are two types of variables in GitHub Actions.</p>
+<ol style="list-style-type: decimal">
+<li><code>Default</code> - Ones GitHub already sets for you.</li>
+<li><code>User set</code> - Ones you set yourself.</li>
+</ol>
+<p>To print things out, you can use this kind of notation in bash or other contexts in the yaml file.</p>
+<pre><code>echo ${{ github.repository }}</code></pre>
+<p>In this next exercise we’ll explore different ways to use variables.</p>
+</div>
+<div id="exercise-3---exploring-variables" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Exercise 3 - Exploring Variables</h2>
+<p>For this exercise, we are going to continue to use the example repository that we set up in the previous chapter.</p>
+<ol style="list-style-type: decimal">
+<li>Create a new branch to work from.</li>
+</ol>
+<p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g2903858106e_0_4.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>`git checkout -b &quot;env-var&quot;`</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>For this exercise we are going to copy over another GHA yaml to explore. This time, move the <code>exploring-var-and-secrets.yml</code> file to your <code>.github/workflows</code> directories you made in the previous chapter.</li>
+</ol>
+<p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g2903858106e_0_17.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>mv activity-1-sample-github-actions/exploring-var-and-secrets.yml .github/workflows/exploring-var-and-secrets.yml</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Now follow the same set of steps we used in the previous chapter to Add, Commit, Push the changes.</li>
+</ol>
+<p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g2903858106e_0_25.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>git add .github/*
+git commit -m &quot;exploring gha variables&quot;
+git push --set-upstream origin env-var</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Now create a pull request with the changes you just made. (Refer to the previous chapter if you need reminders on how to do this).</p></li>
+<li><p>On your pull request page on GitHub, click on the <code>Details</code> button next to your workflow run. Keep this handy because we will dive into the details of what we just ran.</p></li>
+</ol>
+<p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3250.png" width="100%" style="display: block; margin: auto;" /></p>
+<div id="default-variables" class="section level3" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Default variables</h3>
+<p>You can read <a href="https://docs.github.com/en/actions/learn-github-actions/variables">the latest documentation about GitHub Action default variables here</a>. But here’s some highlights.</p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="45%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>name</th>
+<th>example output</th>
+<th>explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GITHUB_REPOSITORY</td>
+<td>username/repository_name</td>
+<td>This prints out what repo this is run from</td>
+</tr>
+<tr class="even">
+<td>GITHUB_REF</td>
+<td>refs/pull/1/merge</td>
+<td>The branch or tag that triggered this workflow. But note that this will be blank if the trigger is not based or related to branches or tags. For example a <code>workflow_dispatch</code> wouldn’t have this</td>
+</tr>
+<tr class="odd">
+<td>GITHUB_ACTOR</td>
+<td>cansavvy</td>
+<td>The GitHub handle of the person who caused this workflow to run</td>
+</tr>
+</tbody>
+</table>
+<p>Below shows an example of the log of the where we printed out these default GitHub variables.</p>
+<p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g2903858106e_0_53.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="user-set-variables" class="section level3" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> User set variables</h3>
+<div id="env" class="section level4" number="6.1.2.1">
+<h4><span class="header-section-number">6.1.2.1</span> env:</h4>
+<p>There are different ways to set variables. The simplest way to set variables is within a step you can set them using <code>env:</code>. Underneath <code>env:</code> you write the <code>name</code> of the variable on one side of the colon and then the definition on the other side. For example, in our yaml file we had:</p>
+<pre><code>- name: Hello, but make it personal
+  run: echo &quot;Hello $First_Name.&quot;
+  env:
+    First_Name: Candace</code></pre>
+<p>This set up printed out <code>Hello Candace</code> in the logs as our output.</p>
+<p>This might be useful, but if we want an environmental variable to be stored and retrieved between steps we’ll need to use something different.</p>
+</div>
+<div id="setting-output-variables" class="section level4" number="6.1.2.2">
+<h4><span class="header-section-number">6.1.2.2</span> Setting output variables</h4>
+<p>If we’d like one step to be able to retrieve information from another step we’ll need to send a variable to the GITHUB_OUTPUT.</p>
+<p>To do this we can use this sort of set up:</p>
+<p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_2.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Step that sets a variable depending on some output</p>
+<pre><code># How to export a variable to a next step
+- name: Setting output to the environment at large
+  id: step_name
+  run: echo &quot;results=5&quot; &gt;&gt; $GITHUB_OUTPUT</code></pre>
+<p>Here we are naming the variable <code>results</code> and the notation <code>&gt;&gt; $GITHUB_OUTPUT</code> is always there.</p>
+<p>In this example, <code>results</code> is only set equal to <code>5</code> but you could see how this might be made to be more complicated. Like perhaps the results are a bash command output like:</p>
+<pre><code>&quot;time=$(date +&#39;%Y-%m-%d&#39;)&quot; &gt;&gt; $GITHUB_OUTPUT</code></pre>
+<p>This would allow us to have a time stamp of when this step was run.</p>
+<p>Or perhaps we are running a script that outputs a result:</p>
+<pre><code>results=$(Rscript utils/script.R)</code></pre>
+</div>
+<div id="using-output-variables" class="section level4" number="6.1.2.3">
+<h4><span class="header-section-number">6.1.2.3</span> Using output variables</h4>
+<p>To use this output variable in a subsequent step we have to use this kind of setup:</p>
+<p><code>steps.step_name.outputs.results</code> where <code>step_name</code> is the <code>id:</code> we set for the step that set this variable (see above) and <code>results</code> is the name of the variable we set. And, as is typical we need the <code>${{ }}</code> notation.</p>
+<pre><code># How to print out the variable we just saved
+- name: Print out that variable in a later step
+  run: echo ${{ steps.step_name.outputs.results &gt; 3 }}</code></pre>
+<p>This is nifty because now we can use the result of one step to determine whether or not we run a subsequent step. GitHub Action steps can have conditional or <code>if</code> statements.</p>
+<p>Maybe we only want a step to run if the result is something specific:</p>
+<pre><code>- name: Conditional step
+  # Here we are only going to do this step if the results from the previous step are bigger than 3
+  if: ${{ steps.step_name.outputs.results &gt; 3 }}
+  run: echo &#39;the results are greater than 3!&#39;</code></pre>
+<p>Or, maybe we want to make sure the whole workflow shuts down if a variable is something in particular like this example below.</p>
+<pre><code>- name: Shut it down
+  # Here we are only going to do this step if the results from the previous step are bigger than 3
+  if: ${{ steps.step_name.outputs.results =&lt; 3 }}
+  run: |
+    echo &#39;the results are less than or equal to 3! -- going to exit!&#39;
+    exit 1
+</code></pre>
+</div>
+<div id="setting-and-grabbing-secrets" class="section level4" number="6.1.2.4">
+<h4><span class="header-section-number">6.1.2.4</span> Setting and grabbing secrets</h4>
+<p>What if the string or variable we need is not something we can supply in the YAML itself? Perhaps we have credentials or something that cannot be shared publicly but that we need it to complete our steps. That’s where GitHub secrets come in handy!</p>
+<p><a href="https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions">Read more about GitHub secrets here.</a>.</p>
+<p>One very common type of GitHub secret you may need to add is a GitHub Personal Access Token (sometimes abbreviated PAT). A personal access token is a string set that, when provided, gives access to a user’s GitHub account. <a href="https://github.com/settings/tokens">Read more about tokens here</a>.</p>
+<p>For GitHub actions that are doing things that require authorization or particular permissions levels, you will need to provide your GitHub action with your personal access token (PAT) that you store as a GitHub secret.</p>
+</div>
+</div>
+<div id="activity-setting-github-secrets" class="section level3" number="6.1.3">
+<h3><span class="header-section-number">6.1.3</span> Activity: Setting GitHub secrets</h3>
+<p>Let’s practice this by setting a GitHub Access token as a secret!</p>
+<div id="make-a-personal-access-token" class="section level4" number="6.1.3.1">
+<h4><span class="header-section-number">6.1.3.1</span> Make a Personal Access token</h4>
+<p>You can store any alphanumeric string as your GitHub secret. It may be an API key or authorization keys from some other software program. But for this example, we will use an authorization key for GitHub.</p>
+<p>Recall we have may have to give authorization to a GitHub action some times, because we are not actually running this with our user account, this job is being sent to GitHub for them to run on their servers somewhere.</p>
+<ol style="list-style-type: decimal">
+<li>First make your own personal access token by going here: <a href="https://github.com/settings/tokens" class="uri">https://github.com/settings/tokens</a> You can find this page by going to your own profile, and then to <code>Settings</code> and <code>Developer settings</code>.</li>
+</ol>
+<p>The GitHub Documentation for how to make PATs is here: <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" class="uri">https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</a>
+But we’ll walk through it together now.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Underneath <code>Tokens (classic)</code> click <code>Generate new token</code> and pick <code>Generate new token (classic)</code>.
+You will likely have to enter your password at this point.</p></li>
+<li><p>Underneath <code>Note</code> write something that will remind you about where you are using this PAT. Check the <code>repo</code> workflow. (Depending on what you are trying to do you may have to check other boxes but for a lot of the permissions you’ll need <code>repo</code> will do).</p></li>
+<li><p>Scroll to the bottom of the page and click <code>Generate</code>. Your token will be shown on the next page. You’ll keep this handy because they won’t show it to you again. Be careful not to share this any place publicly because it will give someone authorization to you GitHub account!</p></li>
+</ol>
+</div>
+<div id="creating-a-github-secret" class="section level4" number="6.1.3.2">
+<h4><span class="header-section-number">6.1.3.2</span> Creating a GitHub Secret</h4>
+<ol style="list-style-type: decimal">
+<li>Return to your repository that we were using for these activities.</li>
+<li><code>Settings</code> &gt; <code>Secrets and variables</code> &gt; <code>Actions</code> &gt; <code>New Repository Secret</code>.</li>
+<li>Name your secret something. In this example, let’s call it <code>GH_PAT</code>. You’ll want to name your secret something that relates to what it is.</li>
+<li>Now copy and paste in the secret section.</li>
+</ol>
+<p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_38.png" width="100%" style="display: block; margin: auto;" /></p>
+<div id="referencing-a-github-secret-in-a-github-action" class="section level5" number="6.1.3.2.1">
+<h5><span class="header-section-number">6.1.3.2.1</span> Referencing a GitHub secret in a GitHub action</h5>
+<p>To retrieve a GitHub secret amidst a GitHub Action workflow run, you do this sort of notation: <code>${{ secrets.SECRET_NAME}}</code> Where <code>SECRET_NAME</code> directly is the name you used for your GitHub secret.</p>
+<pre><code># Here&#39;s how we&#39;d reference a secret
+- name: How do we reference a GITHUB secret?
+  run: ${ secrets.SECRET_NAME }</code></pre>
+<p>In the previous step we named our secret <code>GH_PAT</code> so if we needed to use it in our workflow we would use <code>${ secrets.GH_PAT }</code>.</p>
+<p>Perhaps at this point you are worried that your logs may accidentally display your GitHub secret if you did something like:</p>
+<pre><code>run: echo ${ secrets.GH_PAT }</code></pre>
+<p>But, you don’t have to worry about that part, in your logs your secrets will show as <code>***</code> and will not be displayed.</p>
+</div>
+<div id="activity-using-a-github-secret" class="section level5" number="6.1.3.2.2">
+<h5><span class="header-section-number">6.1.3.2.2</span> Activity: Using a GitHub secret</h5>
+<ol style="list-style-type: decimal">
+<li>On your repository, go to your <code>01-exploring-var-and-secrets.yml</code> file from your working branch.</li>
+<li>Click the <code>edit this file</code> button.</li>
+<li>Scroll to the bottom. Uncomment the last step step.
+It should look like this:</li>
+</ol>
+<pre><code># Here&#39;s how we&#39;d reference a secret
+- name: How do we reference a GITHUB secret?
+  run: ${ secrets.SECRET_NAME }</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Replace <code>SECRET_NAME</code> with what you named your secret (probably <code>GH_PAT</code>).</li>
+<li>Commit that change to your file.</li>
+<li>Push that change to your file.<br />
+</li>
+<li>Take a look at the log by clicking <code>Details</code>.</li>
+</ol>
+<p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3358.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>What you should see is that the workflow runs again, tries to print the GitHub secret out but really just shows a <code>***</code>.</p>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<hr>
+<center> 
+  <div class="footer">
+      All illustrations <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY. </a>
+      <br>
+      All other materials <a href= "https://creativecommons.org/licenses/by/4.0/"> CC-BY </a> unless noted otherwise.
+  </div>
+</center>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="automating-re-running-analyses.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="more-github-actions-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
