@@ -35,6 +35,9 @@ runs-on-with-what
 containerization
 more-resources-about-docker
 summarizing
+exercise-1---running-your-first-github-action
+checking-results-of-a-github-action
+breaking-down-the-yaml
 a-new-chapter-2
 learning-objectives-1
 libraries-1
