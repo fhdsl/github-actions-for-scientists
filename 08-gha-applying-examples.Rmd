@@ -1,0 +1,202 @@
+
+# Applying GitHub Actions Examples
+
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_57")
+```
+
+A great way to learn GitHub Actions is to borrow a yaml file someone else has written to your own project. In this chapter we will introduce you to two GitHub Actions and encourage you to adapt one or both of them to one of your own projects. We encourage you to follow these similar steps and tips for other actions that are written on the internet that you may find that you can use for your project.
+
+The two action examples we have in this chapter both work on `pull_request` triggers and do the following:
+
+1. Spell checks markdown and R Markdown files and saves the spelling errors in a file uploaded to GitHub .
+2. Style R code and commit it back to a branch. This option will take more work to adapt if you do not use R but is totally doable and we'll walk you through some guidance on how to adapt it.
+
+## Explore the actions
+
+1. To get a sense of how these actions work, you guessed it, we are once again going to create a new branch and open a pull request.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_192")
+```
+From command line:
+```
+`git checkout -b "example-ghas"`
+```
+
+2. For this exercise we are going to copy over a second GitHub Action YAML file from the folder. This time, move the `spell-check.yml` and `style-code.yml` files to your `.github/workflows` directories.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3293")
+```
+From command line:
+```
+mv activity-4-sample-github-actions/* .github/workflows/
+```
+
+3. Now follow the same set of steps we used in the previous chapter to Add, Commit, Push the changes.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_205")
+```
+From command line:
+```
+git add .github/*
+git commit -m "adding even more ghas"
+git push --set-upstream origin example-ghas
+```
+
+4. Now create a pull request with the changes you just made.
+
+
+5. On your pull request page on GitHub, click on the Details button next to your workflow run.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3301")
+```
+
+### Diving deeper
+
+In this section, we'll give you the basic recipe of these GitHub Actions. Hopefully by having a basic idea of what is in these actions you'll be able to adapt them for your own purposes.
+
+#### Spell Check Overview
+
+Here's the basic set up of the steps here with links that are included with more information about the resources used at each step.
+
+```
+spell-check:
+  runs-on: ubuntu-latest
+  # We will run this on a Docker image so it has most of the things we need
+  container:
+    image: rocker/tidyverse:4.0.2
+```
+
+We're using a Docker image that has some R packages we will use so we don't have to install everything individually: [`rocker/tidyverse:4.0.2`](https://hub.docker.com/r/rocker/tidyverse/tags)
+
+```
+# Need to get the files specific to our branch from our pull request
+- uses: actions/checkout@v3
+  with:
+    ref: ${{ github.event.pull_request.head.ref }}
+```
+Checking out the files we need using [`actions/checkout@v3`](https://github.com/actions/checkout)
+
+
+```
+# Our docker image doesn't have this one package though so we'll install it
+- name: Install packages
+  run: Rscript -e "install.packages('spelling')"
+```
+
+Install a [`spelling` package](https://cran.r-project.org/web/packages/spelling/index.html) we need that wasn't on the Docker image already. This is a reasonable strategy if we only need one or two packages that don't take long to install.
+
+```
+- name: Run spell check
+  id: spell_check_run
+  run: |
+    sp_chk_results=$(Rscript "utils/spell-check.R")
+    # This is where we are going to store output from this step to the environment so we can retrieve it in a later step
+    echo "sp_chk_results=$sp_chk_results" >> $GITHUB_OUTPUT
+    cat spell_check_results.tsv
+```
+
+Run custom spell check script -- this is where you'd really have to personalize this. We're calling this [custom R script](https://github.com/fhdsl/github-actions-workshop/blob/main/utils/spell-check.R) that looks for the R Markdown and markdown files and spell checks them. **Note that this means this script must be available to this GitHub Action if you are to use it.** You'll either need to download it or add it to whatever repo you add this to.  
+
+We also have this print out the results in the log and save these results to the GITHUB_OUTPUT variable as discussed in the previous chapter. This allows us to retrieve the number of misspellings identified in a future step.
+
+```
+# We want to retrieve this file after this runs so we can see what spell check errors were detected
+- name: Archive spelling errors
+  uses: actions/upload-artifact@v3
+  # These arguments underneath `with` are generally action specific so we have to check the documentation: https://github.com/marketplace/actions/upload-a-build-artifact
+  with:
+    name: spell-check-results
+    path: spell_check_results.tsv
+```
+Archive spelling errors using [`actions/upload-artifact@v3`](https://github.com/actions/upload-artifact). For Archived files, we can see them by going to `Summary` on the left side of the log page and scrolling down to the `Artifacts` section. This file we uploaded will tell us the spell check error our script detected.
+
+
+```
+# If there are too many spelling errors, this will stop the workflow
+- name: Check spell check results - fail if too many errors
+  # Here we are only going to through an error if there's more than 3 spell check errors detected
+  if: ${{ steps.spell_check_run.outputs.sp_chk_results > 3 }}
+  run: exit 1
+```
+
+We've discussed in previous chapters about conditional statements and using GitHub variables. Here we are using a conditional statement that will fail this GitHub Action if there are too many spelling errors (which here we've said is `3`).
+
+
+#### Style Code Overview
+
+Here's the basic set up of the steps of the styling code GitHub action with links that are included with more information about the resources used at each step.
+
+```
+style-code:
+  runs-on: ubuntu-latest
+  # This image has R and basic R packages
+  container:
+    image: rocker/tidyverse:4.0.2
+```
+We're using a Docker image that has some R packages we will use so we don't have to install everything individually: [`rocker/tidyverse:4.0.2`](https://hub.docker.com/r/rocker/tidyverse/tags)
+
+```
+# Need to get the files specific to our branch from our pull request
+- name: Checkout files
+  uses: actions/checkout@v3
+  with:
+    ref: ${{ github.event.pull_request.head.ref }}
+```
+We need this files in this repo. So we are checking out the files we need using [`actions/checkout@v3`](https://github.com/actions/checkout)
+
+```
+# Our docker image doesn't have this one package though so we'll install it
+- name: Install packages
+  run: Rscript -e "install.packages('styler')"
+```
+
+Install a [`styler` package](https://www.tidyverse.org/blog/2017/12/styler-1.0.0/) we need that wasn't on the Docker image already. This is a reasonable strategy if we only need one or two packages that don't take long to install.
+
+```
+# Here's the main thing we are running: styling R file code
+- name: Run styler on Rmd and R files
+  run: Rscript -e "styler::style_file(list.files(pattern = 'Rmd$|R$', recursive = TRUE, full.names = TRUE));warnings()"
+```
+
+Run a code styling command -- this is where you'd need to customize this step. For example, if you wish to style Python code, you may look into [this pycodestyle GitHub Action](https://github.com/marketplace/actions/pycodestyle) or perhaps other GitHub marketplace actions for your particular languages and needs.
+
+```
+# We will automatically commit back our styled R files
+- name: Commit styled files
+  run: |
+
+    # Some config set up to establish creds
+    git config --global --add safe.directory $GITHUB_WORKSPACE
+    git config --global user.email "itcrtrainingnetwork@gmail.com"
+    git config --global user.name "jhudsl-robot"
+
+    # Now commit the styled files
+    git add \*.Rmd
+    git add \*.R
+    git commit -m 'Style R files' || echo "No changes to commit"
+    git push origin || echo "No changes to commit"
+```
+In this step we are immediately merging any changed files that were styled back to the original branch that this pull request was on.
+
+The `||` allow these steps an alternative if there are no changes to commit. Without the `||` the action would break if the styling did not result in changes.
+
+What you'll need to change here is the `git config` steps to use your own credentials. (aka `git config --global user.email "itcrtrainingnetwork@gmail.com"` should be your email).
+
+### Tips for adapting these to your own repository
+
+Here's how you can adapt these to your own repository.
+
+First, you'll want to add them to your own repository with a pull request. These actions will both be triggered by a pull request so you won't need to edit them at all to start developing them to adapt them to your project needs.
+
+Note that for the spell check action, if you are deciding to use the customized script we included, you will need to copy that to the same file path as called in this action.
+
+Besides the points of customization you may need to work on that we discussed; you may also need to edit the Docker images used depending on what steps and uses you need.
+
+
+From here, its basically good luck! Take it one troubleshooting tactic at a time, Google your problems and look for GitHub Action marketplace actions that fit your needs. Best of luck!

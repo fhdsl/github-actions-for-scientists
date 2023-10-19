@@ -9,7 +9,7 @@ rmd_files: ["index.Rmd",
             "05-gha-run-analysis.Rmd",
             "06-gha-variables.Rmd",
             "07-gha-troubleshooting.Rmd",
-            "08-gha-other-examples.Rmd",
+            "08-gha-applying-examples.Rmd",
             # "09-gha-publishing.Rmd",
             "About.Rmd",
             "References.Rmd"]
