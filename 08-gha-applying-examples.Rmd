@@ -130,7 +130,7 @@ We've discussed in previous chapters about conditional statements and using GitH
 
 #### Style Code Overview
 
-Here's the basic set up of the steps of the styling code GitHub action with links that are included with more information about the resources used at each step.
+Just as we did with the spell check action, we'll run through the yaml file and explain the basic set up here. We also have included links about the resources used at each step. We encourage you to poke around with these resources and with this yaml file to really learn about what these actions are doing. 
 
 ```
 style-code:
