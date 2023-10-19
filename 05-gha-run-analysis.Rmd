@@ -1,260 +1,181 @@
 
-# A new chapter
-
-If you haven't yet read the getting started Wiki pages; [start there](https://www.ottrproject.org/getting_started.html).
-
-To see the rendered version of this chapter and the rest of the template, see here: https://jhudatascience.org/OTTR_Template/.
-
-Every chapter needs to start out with this chunk of code:
+# Automating Re-running Analyses
 
 
-```{r, include = FALSE}
-ottrpal::set_knitr_image_path()
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3819")
 ```
 
-## Learning Objectives
+In the beginning of this course we discussed the benefits of using continuous integration/continuous deployment principles for scientific code including analyses.
 
-Every chapter also needs Learning objectives that will look like this:  
+In this chapter we will go through example code that shows how this can be set up. We highly encourage you to take this code and adapt it to your own project's needs.
 
-This chapter will cover:  
+## Exercise 2 - Re-run analysis example
 
-- {You can use https://tips.uark.edu/using-blooms-taxonomy/ to define some learning objectives here}
-- {Another learning objective}
+For this exercise, we are going to continue to use the example repository that we set up in the previous chapter.
 
-## Libraries
+1. Create a new branch to work from.
 
-For this chapter, we'll need the following packages attached:
+As is good practice for adapting a GitHub workflow, we will create a new branch for us to work from. In GitHub Desktop you can click the branch button and follow the same steps we did in the previous exercise.
 
-*Remember to add [any additional packages you need to your course's own docker image](https://github.com/jhudsl/OTTR_Template/wiki/Using-Docker#starting-a-new-docker-image).
-
-```{r}
-library(magrittr)
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3213")
+```
+From command line:
+```
+`git checkout -b "more-ghas"`
 ```
 
-## Topic of Section
+2. For this exercise we are going to copy over a second GitHub Action YAML file from the folder. This time, move the `01-re-run-analysis.yml` file to your `.github/workflows` directories you made in the previous chapter.
 
-You can write all your text in sections like this, using `##` to indicate a new header. you can use additional pound symbols to create lower levels of headers.
-
-See [here](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for additional general information about how you can format text within R Markdown files. In addition, see [here](https://pandoc.org/MANUAL.html#pandocs-markdown) for more in depth and advanced options.
-
-### Subtopic
-
-Here's a subheading (using three pound symbols) and some text in this subsection!
-
-## Code examples
-
-You can demonstrate code like this:
-
-```{r}
-output_dir <- file.path("resources", "code_output")
-if (!dir.exists(output_dir)) {
-  dir.create(output_dir)
-}
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3226")
+```
+From command line:
+```
+mv activity-1-sample-github-actions/01-re-run-analysis.yml .github/workflows/01-re-run-analysis.yml
 ```
 
-And make plots too:
+3. Now follow the same set of steps we used in the previous chapter to Add, Commit, Push the changes.
 
-```{r}
-hist_plot <- hist(iris$Sepal.Length)
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3234")
+```
+From command line:
+```
+git add .github/*
+git commit -m "adding more ghas"
+git push --set-upstream origin more-ghas
 ```
 
-You can also save these plots to file:
+4. Now create a pull request with the changes you just made. (Refer to the previous chapter if you need reminders on how to do this).
 
-```{r}
-png(file.path(output_dir, "test_plot.png"))
-hist_plot
-dev.off()
+After you open your pull request, scroll down to the bottom of the page. If all went as expected, you should see a status message that shows a GitHub Action is running after opening your pull request.
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3239")
 ```
 
-## Image example
+Think about it.
 
-How to include a Google slide. It's simplest to use the `ottrpal` package:
+Without looking at the YAML file… What do you suppose the on: value (the when) might be for these actions?
 
-
-```{r, fig.align='center', out.width="100%", echo = FALSE, fig.alt= "Major point!! example image"}
-ottrpal::include_slide("https://docs.google.com/presentation/d/1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ/edit#slide=id.gcc4fbee202_0_141")
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3246")
 ```
 
-But if you have the slide or some other image locally downloaded you can also use HTML like this:
+Take a look at the file, `.github/workflows/01-re-run-analysis.yml`, to see if you are right!
 
-<img src="resources/images/02-chapter_of_course_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" title="Major point!! example image" alt="Major point!! example image" style="display: block; margin: auto;" />
+5. On your pull request page on GitHub, click on the Details button next to your workflow run.
 
-## Video examples
-You may also want to embed videos in your course. If alternatively, you just want to include a link you can do so like this:
-
-Check out this [link to a video](https://www.youtube.com/embed/VOCYL-FNbr0) using markdown syntax.
-
-### Using `knitr`
-
-To embed videos in your course, you can use `knitr::include_url()` like this:
-Note that you should use `echo=FALSE` in the code chunk because we don't want the code part of this to show up. If you are unfamiliar with [how R Markdown code chunks work, read this](https://rmarkdown.rstudio.com/lesson-3.html).
-
-
-```{r, echo=FALSE}
-knitr::include_url("https://www.youtube.com/embed/VOCYL-FNbr0")
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3250")
 ```
 
-### Using HTML
+You can navigate to this same page by going to the `Actions` tab, then Scrolling down to see the most recent workflow run which should be named `Re-run analysis` and clicking on that.
 
-<iframe src="https://www.youtube.com/embed/VOCYL-FNbr0" width="672" height="400px"></iframe>
+## Diving into the details
 
-## File examples
+Let's break down what is in this GitHub Action YAML file and what this workflow run did.
 
-You can again use simple markdown syntax to just include a link to a file like so:
+### name and on
 
-[A file]().
-
-Alternatively you can embed files like PDFs.
-
-### Using `knitr`
-
-```{r, fig.align="center", echo=FALSE, out.width="100%"}
-knitr::include_url("https://drive.google.com/file/d/1mm72K4V7fqpgAfWkr6b7HTZrc3f-T6AV/preview")
+- At the top of the file we have: `name: Re-run analysis`. This is what our workflow run shows up in the `Actions` tab log as and helps us differentiate it from other GitHub Action Workflows.
+- Below that, there is the `on:` trigger. This workflow of re-running this analysis will only run when a pull request is open or pushed to. And further we've specified with `branches:` it will only run if the pull request is targeted to branches named `main` or `staging`.
+```
+# Run this workflow when a pull request is opened or pushed to.
+on:
+  pull_request:
+    branches: [ main, staging ]
 ```
 
-### Using HTML
+### jobs
 
-<iframe src="https://drive.google.com/file/d/1mm72K4V7fqpgAfWkr6b7HTZrc3f-T6AV/preview" width="672" height="800px"></iframe>
+In our `jobs:` we've named this job `R run analysis`.
 
-## Website Examples
+Additionally we are running this on a `ubuntu-latest` operating system, but as opposed to our first GitHub Action workflow from the previous chapter, where we didn't need any additional packages or software to run our job, this job, the analysis script we are running, requires things like R, python, and some specific packages.
 
-Yet again you can use a link to a website like so:
+We could, attempt to write a script that installs everything we need. However, that would likely be a lot of work, may not work reliably, and would be hard to track changes. Instead, we are using a custom made docker image that has R, python, and other packages we need already installed.
 
-[A Website](https://yihui.org)
-
-You might want to have users open a website in a new tab by default, especially if they need to reference both the course and a resource at once.
-
-[A Website](https://yihui.org){target="_blank"}
-
-Or, you can embed some websites.
-
-### Using `knitr`
-
-This works:
-
-```{r, fig.align="center", echo=FALSE}
-knitr::include_url("https://yihui.org")
+This custom made docker image is pulled from [Dockerhub and it exists here](https://hub.docker.com/r/jhudsl/ottr_python). If you wish to make a custom Docker image to use in your analysis, easiest way to do this is to make a Dockerfile, build a Docker image from this file and then push it to Dockerhub. We have some Dockerfiles for this image and others [managed and version controlled here on this GitHub repository](https://github.com/jhudsl/ottr_docker). You may note we use GitHub Actions on this repository to help us manage these Docker images.
+```
+jobs:
+  re-run:
+    name: Re run analysis
+    runs-on: ubuntu-latest
+    # This image has python, R and other things we need to run our mock analysis
+    container:
+      image: jhudsl/ottr_python:main
 ```
 
+#### actions/checkout
 
-### Using HTML
-
-<iframe src="https://yihui.org" width="672" height="400px"></iframe>
-
-
-If you'd like the URL to show up in a new tab you can do this:
+One of the most frequently use GitHub Actions [from the GitHub Action Marketplace is `actions/checkout`](https://github.com/actions/checkout). This action will grab all the files from a GitHub repository so you can do things with those files in your workflow. (Recall that when you spin up a GitHub Action Environment it is a blank slate, so we have to put our files there too if we want to use them).
 
 ```
-<a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
+steps:
+  # Need to get the files specific to our branch from our pull request
+  - name: Checkout files
+    uses: actions/checkout@v3
+    with:
+      fetch-depth: 0
 ```
 
-## Citation examples
+By default, it will checkout the files from the repository where this action is being run, but we could specify other repository and other branches.
 
-We can put citations at the end of a sentence like this [@rmarkdown2021].
-Or multiple citations [@rmarkdown2021, @Xie2018].
-
-but they need a ; separator [@rmarkdown2021; @Xie2018].
-
-In text, we can put citations like this @rmarkdown2021.
-
-## Stylized boxes
-
-Occasionally, you might find it useful to emphasize a particular piece of information. To help you do so, we have provided css code and images (no need for you to worry about that!) to create the following stylized boxes.
-
-You can use these boxes in your course with either of two options: using HTML code or Pandoc syntax.
-
-### Using `rmarkdown` container syntax
-
-The `rmarkdown` package allows for a different syntax to be converted to the HTML that you just saw and also allows for conversion to LaTeX. See the [Bookdown](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) documentation for more information [@Xie2020]. Note that Bookdown uses Pandoc.
+`fetch-depth: 0` means we will grab all the file.
 
 
+#### sh run_analysis.sh
+
+Now the main objective we were building to. We are going to run a script that re-runs our entire analysis. We've named this file `run_analysis.sh` to be clear about what it does. We're giving this step an `id` of `running` (this will become clear in the next paragraph).
+
+Additionally the `|` tells `run:` to expect multiple lines of a command. We didn't need this to be a multiple line command, but we thought it would be good to show you this.
 ```
-::: {.notice}
-Note using rmarkdown syntax.
+# We can call our main script then to re-run it to make sure it works
+- name: Run it
+  id: running
+  run: |
+    sh run_analysis.sh
+```  
+We have three steps in this fake analysis and the files are numbered in which order they are run. If you open up the [run_analysis.sh](https://github.com/fhdsl/github-actions-workshop/blob/main/run_analysis.sh) file, you will see its basically simple workflow step calling file.
 
-:::
+It looks like this:
 ```
+# This is a mock script that shows how you could have your whole analysis ran by one script call.
+## Usage: To re-run this whole analysis, go to bash and
 
-::: {.notice}
-Note using rmarkdown syntax.
+# These specs will make sure that if one script fails this will fail the script
+set -e
 
-:::
+## Run the first step
+python3 "01-python_test.py"
 
-As an example you might do something like this:
+## Run the second step
+Rscript "02-r_test.R"
 
-::: {.notice}
-Please click on the subsection headers in the left hand
-navigation bar (e.g., 2.1, 4.3) a second time to expand the
-table of contents and enable the `scroll_highlight` feature
-([see more](introduction.html#scroll-highlight))
-:::
-
-
-### Using HTML
-
-To add a warning box like the following use:
-
-```
-<div class = "notice">
-Followed by the text you want inside
-</div>
+## Run a third step
+Rscript -e "rmarkdown::render('03-make-a-plot.Rmd')"
 ```
 
-This will create the following:
+The `set -e` is actually critical here. We need to make sure that this script will stop if it encounters an error. That is the main point of our GitHub Action here, is we want to know if something failed. (We also want to know if the results remained the same, but that will require a bit more engineering than we are showing in this simple example).
 
-<div class = "notice">
+A very tricky thing about GitHub Actions (and languages called by them) is that GitHub workflows do not always stop when there are errors as we would define them. **When designing a new action, we need to carefully evaluate the steps of the job in the logs to make sure what we think happened and completed actually did complete successfully.**
 
-Followed by the text you want inside
-
-</div>
-
-Here is a `<div class = "warning">` box:
-
-<div class = "warning">
-
-Note text
-
-</div>
-
-Here is a `<div class = "github">` box:
-
-<div class = "github">
-
-GitHub text
-
-</div>
-
-
-Here is a `<div class = "dictionary">` box:
-
-<div class = "dictionary">
-
-dictionary text
-
-</div>
-
-
-Here is a `<div class = "reflection">` box:
-
-<div class = "reflection">
-
-reflection text
-
-</div>
-
-
-## Dropdown summaries
-
-<details><summary> You can hide additional information in a dropdown menu </summary>
-Here's more words that are hidden.
-</details>
-
-## Print out session info
-
-You should print out session info when you have code for [reproducibility purposes](https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/managing-package-versions.html).
-
-```{r}
-devtools::session_info()
+Returning to our GitHub Action YAML file, we can see that the last step of this job has an `if` statement. What we are doing here is asking GitHub to evaluate whether the step `running` (remember the `id` we set?) had `success` as its outcome.
+```
+# We can have this double check that the last step was successfully run
+- name: Check on re-run outcome
+  if: steps.running.outcome != 'success'
+  run: |
+    echo Re-running status ${{steps.running.outcome}}
+    exit 1
 ```
 
-[many links]: https://github.com/jhudsl/OTTR_Template
+This `steps.running.outcome` is representative of a whole new world of GitHub Actions Environmental variables that we have not discussed yet but we will now!
+
+### Summary
+
+```{r, fig.align='center', out.width="100%", echo = FALSE }
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3262")
+```

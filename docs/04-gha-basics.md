@@ -1,362 +1,300 @@
 
-# A new chapter
-
-If you haven't yet read the getting started Wiki pages; [start there](https://www.ottrproject.org/getting_started.html).
-
-To see the rendered version of this chapter and the rest of the template, see here: https://jhudatascience.org/OTTR_Template/.
-
-Every chapter needs to start out with this chunk of code:
+# GitHub Actions Fundamentals
 
 
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_982.png" width="100%" style="display: block; margin: auto;" />
 
 
-## Learning Objectives
-
-Every chapter also needs Learning objectives that will look like this:  
-
-This chapter will cover:  
-
-- {You can use https://tips.uark.edu/using-blooms-taxonomy/ to define some learning objectives here}
-- {Another learning objective}
-
-## Libraries
-
-For this chapter, we'll need the following packages attached:
-
-*Remember to add [any additional packages you need to your course's own docker image](https://github.com/jhudsl/OTTR_Template/wiki/Using-Docker#starting-a-new-docker-image).
+## GHA structure
 
 
-```r
-library(magrittr)
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2777.png" width="100%" style="display: block; margin: auto;" />
+
+All GitHub Actions involve answering three questions:
+
+1. When should a thing run?
+2. What should be run?
+3. With what environment should the thing be run?
+
+These questions and other specifications are set by writing a [YAML file](https://www.redhat.com/en/topics/automation/what-is-yaml). YAML files are human readable markup language files. Basically its a list that is easy for humans to read and write and computers can read them too. This makes it good for writing a GitHub Action. Essentially, we're going to write a YAML file to make a recipe that GitHub will read to know what/when/with what we are trying to do.
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2781.png" width="100%" style="display: block; margin: auto;" />
+
+The headlines about working with YAML files:
+
+1. Everything is a list (kind of like a JSON file).
+1. Indentations = subsets of a list
+1. Spacing is VERY specific! -- incorrect spacing will definitely result in errors for your GitHub Action run.
+
+Let's take a look at an example YAML.
+Note that the what comes before a `:` is generally a name and indent indicate subsets of a list. So in the overall list of `food` we have sublists of `vegetables` and `fruits`. `#` can be used as a comment and will not be treated as code.
+
+Additionally, `:` are often names. So `citrus` is the name for the item `oranges` and etc.
+```
+# A comment here which is ignored
+food:
+  - vegetables: tomatoes
+  - fruits:
+      citrus: oranges
+      tropical: bananas
 ```
 
-## Topic of Section
 
-You can write all your text in sections like this, using `##` to indicate a new header. you can use additional pound symbols to create lower levels of headers.
+Two items that every GitHub Action YAML must contain is `on:` and `jobs:`.
 
-See [here](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for additional general information about how you can format text within R Markdown files. In addition, see [here](https://pandoc.org/MANUAL.html#pandocs-markdown) for more in depth and advanced options.
+- `on:` tells GitHub when something should be run. For example "whenever a pull request is opened".
+- `jobs:` tells GitHub what should be run. For example "run this bash script".
+- `runs-on`: tells GitHub with what environment should this be run. For example "windows-latest".
 
-### Subtopic
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2787.png" width="100%" style="display: block; margin: auto;" />
 
-Here's a subheading (using three pound symbols) and some text in this subsection!
+### on: When a thing should be run
 
-## Code examples
+If you are to automate something, step one is to figure out when do you want the thing to happen.
 
-You can demonstrate code like this:
+What should trigger your action? For that we use `on:` in a GitHub Action.
 
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2808.png" width="100%" style="display: block; margin: auto;" />
 
-```r
-output_dir <- file.path("resources", "code_output")
-if (!dir.exists(output_dir)) {
-  dir.create(output_dir)
-}
-```
+There's lots of possible answers for when something should be run. The triggers can be a lot of different events on GitHub: pull requests, issues, comments, times of day, etc.
 
-And make plots too:
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2815.png" width="100%" style="display: block; margin: auto;" />
 
 
-```r
-hist_plot <- hist(iris$Sepal.Length)
-```
+### jobs: What should be run
 
-<img src="resources/images/04-gha-basics_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+Perhaps even more important, what is the job that this automated task needs to do?
 
-You can also save these plots to file:
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2820.png" width="100%" style="display: block; margin: auto;" />
 
+|Description |Trigger term |
+|------------|-------------|
+|When you click a button| [workflow_dispatch:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch)|
+|When its a certain time of day|[schedule:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule)|
+|When a pull request is opened or has a new commit |[pull_request:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request)|
+|When a branch is merged|[push:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#push)|
+|When something happens with an issue|[issue:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#issues)|
+|When a different github action runs|[workflow_call:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_call)|
+|When someone comments on a pull request |[pull_request_review_comment:](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_review_comment)|
 
-```r
-png(file.path(output_dir, "test_plot.png"))
-hist_plot
-```
 
-```
-## $breaks
-## [1] 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5 8.0
-## 
-## $counts
-## [1]  5 27 27 30 31 18  6  6
-## 
-## $density
-## [1] 0.06666667 0.36000000 0.36000000 0.40000000 0.41333333 0.24000000 0.08000000
-## [8] 0.08000000
-## 
-## $mids
-## [1] 4.25 4.75 5.25 5.75 6.25 6.75 7.25 7.75
-## 
-## $xname
-## [1] "iris$Sepal.Length"
-## 
-## $equidist
-## [1] TRUE
-## 
-## attr(,"class")
-## [1] "histogram"
-```
+**Scenario:** You are running an analysis using public data that continually has more samples added
+- You would like the analysis to rerun when new samples are added
+- You would like to be informed of when the analysis got rerun and what the results were on Slack
 
-```r
-dev.off()
-```
+That's totally a thing a GitHub action can do! We will walk through some examples like it!
 
-```
-## png 
-##   2
-```
+And here's the good news, you don't have to write things from scratch or know ALL the languages. GitHub marketplace allows you to use really cool actions that other people have created. More on this later.
 
-## Image example
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2843.png" width="100%" style="display: block; margin: auto;" />
 
-How to include a Google slide. It's simplest to use the `ottrpal` package:
+### runs-on: with what:
 
 
-<img src="resources/images/04-gha-basics_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" title="Major point!! example image" alt="Major point!! example image" width="100%" style="display: block; margin: auto;" />
+The `runs-on:` tag specifies with what environment the job is going to be run.
 
-But if you have the slide or some other image locally downloaded you can also use HTML like this:
+What does this mean? Well let's start by discussing that the term "cloud" computing is a tad misleading. When we send a job to an online service like GitHub Actions, its not a mysterious vague mass.
 
-<img src="resources/images/02-chapter_of_course_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" title="Major point!! example image" alt="Major point!! example image" style="display: block; margin: auto;" />
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2859.png" width="100%" style="display: block; margin: auto;" />
 
-## Video examples
-You may also want to embed videos in your course. If alternatively, you just want to include a link you can do so like this:
+Instead, its being sent to a real computer somewhere and that computer is setting up a *computing environment* to run your job and sends back the results to you through the GitHub website.
 
-Check out this [link to a video](https://www.youtube.com/embed/VOCYL-FNbr0) using markdown syntax.
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2867.png" width="100%" style="display: block; margin: auto;" />
 
-### Using `knitr`
+What do we mean by a computing environment? As just like when you work on your personal computer, you install, update, and sometimes delete software in order to run different things, the GitHub Actions computers need to do the same in order to run your code. Although some person from Microsoft isn't setting up a new physical computer and manually installing software, the specs you give underneath `runs-on:` tell GitHub Actions what kind of set up to use.
 
-To embed videos in your course, you can use `knitr::include_url()` like this:
-Note that you should use `echo=FALSE` in the code chunk because we don't want the code part of this to show up. If you are unfamiliar with [how R Markdown code chunks work, read this](https://rmarkdown.rstudio.com/lesson-3.html).
+So for example, there are built in operating systems like `windows-latest`, `mac-latest`, and `ubuntu-latest`. You can see more about the [default GitHub runners here](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources).
 
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2843.png" width="100%" style="display: block; margin: auto;" />
 
-<iframe src="https://www.youtube.com/embed/VOCYL-FNbr0" width="672" height="400px"></iframe>
+But just like a Windows machine straight out of a box is unlikely to have everything you need to run some code, you may need a more specific computing environment. You can also create custom environments using `containerization`.
 
-### Using HTML
+### Containerization
 
-<iframe src="https://www.youtube.com/embed/VOCYL-FNbr0" width="672" height="400px"></iframe>
+A "virtual machine" is basically when your computer creates its own fake computer inside of it. It's acting like a different computer but it doesn't have any additional physical parts.
 
-## File examples
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g285ab2029e8_0_2.png" width="100%" style="display: block; margin: auto;" />
 
-You can again use simple markdown syntax to just include a link to a file like so:
+Containers aren't virtual machines, but they do a similar thing, which is they spin up a computing environment where you can do things. They are called containers because they are isolated from the rest of your computer.
 
-[A file](https://www.bgsu.edu/content/dam/BGSU/center-for-faculty-excellence/docs/TLGuides/TLGuide-Learning-Objectives.pdf).
+Containerization is useful because it allows us to share our computing environments with others. This is useful because it can be a powerful tool for reproducing analyses if we are controlling our computing environments.
 
-Alternatively you can embed files like PDFs.
+The software you use, and the versions of the software you use can affect the results from an analysis [@BeaulieuJones2017].
 
-### Using `knitr`
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2889.png" width="100%" style="display: block; margin: auto;" />
 
-<iframe src="https://drive.google.com/file/d/1mm72K4V7fqpgAfWkr6b7HTZrc3f-T6AV/preview" width="100%" height="400px"></iframe>
+Real data and experiments have shown this! Below is a figure from [Beaulieu-Jones and Casey S. Greene, 2017](https://pubmed.ncbi.nlm.nih.gov/28288103/) that shows how a microarray data analysis had different results depending on the software versions used [@BeaulieuJones2017].
 
-### Using HTML
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2937.png" width="100%" style="display: block; margin: auto;" />
 
-<iframe src="https://drive.google.com/file/d/1mm72K4V7fqpgAfWkr6b7HTZrc3f-T6AV/preview" width="672" height="800px"></iframe>
+And as time goes on, your computing environment changes; potentially in ways you don't realize!
 
-## Website Examples
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2894.png" width="100%" style="display: block; margin: auto;" />
 
-Yet again you can use a link to a website like so:
+Most languages and programs allow you to print out the specifications of your computing environment. See below a "session info" print out from R. What this shows is two different computing environments. Side by side we can see how they differ.
 
-[A Website](https://yihui.org)
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2913.png" width="100%" style="display: block; margin: auto;" />
 
-You might want to have users open a website in a new tab by default, especially if they need to reference both the course and a resource at once.
+There's various containerization software programs, that will allow you to share your computing environments but a very popular one is Docker. We can picture how this makes analyses more reproducible.
 
-[A Website](https://yihui.org){target="_blank"}
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2946.png" width="100%" style="display: block; margin: auto;" />
 
-Or, you can embed some websites.
+Docker and other containerization software work by allowing you to take a snapshot of your environment, called an *image*. This image can be shared and others can use this image to build the *container* from which they can run the analysis or whatever it is they plan to do.
 
-### Using `knitr`
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2950.png" width="100%" style="display: block; margin: auto;" />
 
-This works:
 
-<iframe src="https://yihui.org" width="672" height="400px"></iframe>
 
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2942.png" width="100%" style="display: block; margin: auto;" />
 
-### Using HTML
-
-<iframe src="https://yihui.org" width="672" height="400px"></iframe>
-
-
-If you'd like the URL to show up in a new tab you can do this:
-
-```
-<a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
-```
-
-## Citation examples
-
-We can put citations at the end of a sentence like this [@rmarkdown2021].
-Or multiple citations [@rmarkdown2021, @Xie2018].
-
-but they need a ; separator [@rmarkdown2021; @Xie2018].
-
-In text, we can put citations like this @rmarkdown2021.
-
-## Stylized boxes
-
-Occasionally, you might find it useful to emphasize a particular piece of information. To help you do so, we have provided css code and images (no need for you to worry about that!) to create the following stylized boxes.
-
-You can use these boxes in your course with either of two options: using HTML code or Pandoc syntax.
-
-### Using `rmarkdown` container syntax
-
-The `rmarkdown` package allows for a different syntax to be converted to the HTML that you just saw and also allows for conversion to LaTeX. See the [Bookdown](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) documentation for more information [@Xie2020]. Note that Bookdown uses Pandoc.
-
-
-```
-::: {.notice}
-Note using rmarkdown syntax.
-
-:::
-```
-
-::: {.notice}
-Note using rmarkdown syntax.
-
-:::
-
-As an example you might do something like this:
-
-::: {.notice}
-Please click on the subsection headers in the left hand
-navigation bar (e.g., 2.1, 4.3) a second time to expand the
-table of contents and enable the `scroll_highlight` feature
-([see more](introduction.html#scroll-highlight))
-:::
-
-
-### Using HTML
-
-To add a warning box like the following use:
-
-```
-<div class = "notice">
-Followed by the text you want inside
-</div>
-```
-
-This will create the following:
-
-<div class = "notice">
-
-Followed by the text you want inside
-
-</div>
-
-Here is a `<div class = "warning">` box:
+Docker is a whole other world. There's whole conferences, hackathons, and etc devoted to Docker and other containerization software. It can be a lot to learn. To start, we recommend borrowing other people’s Docker images as much as possible instead of trying to build your own And then install the few packages you need. (more on this in a future chapter)
 
 <div class = "warning">
 
-Note text
+Super important side note: DO NOT put data that needs to be secured like Personally Identifiable Information (PII) and Personal Health Information (PHI) data on your Docker images! Especially when you share them! They are not meant for this purpose and this data would be exposed!
 
 </div>
 
-Here is a `<div class = "github">` box:
+#### More resources about Docker
 
-<div class = "github">
+- [Launching a Docker image](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/launching-a-docker-image.html)
+- [Modifying a Docker image](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/modifying-a-docker-image.html)
+- [Docker for data scientists](https://towardsdatascience.com/docker-for-data-scientists-5732501f0ba4)
 
-GitHub text
+### Summarizing
 
-</div>
+- GitHub actions are specified by YAML files in ` .github/workflows/` folder on a GitHub repository.
+- The specs from this YAML are used to run a `job` when an `on` trigger specifies it should be run.
+- The `runs-on` spec tells the server what kind of environment it should be run with.
+- Containers like those made with Docker can help you make custom computing environments.
 
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3054.png" width="100%" style="display: block; margin: auto;" />
 
-Here is a `<div class = "dictionary">` box:
+## Exercise 1 - Running your first GitHub Action
 
-<div class = "dictionary">
+Let's apply what we've learned about GitHub Actions by running one!
 
-dictionary text
-
-</div>
-
-
-Here is a `<div class = "reflection">` box:
-
-<div class = "reflection">
-
-reflection text
-
-</div>
+1. If you don't have a standard workflow for how you use GitHub locally, or are unhappy with your current methods for this activity we recommend [installing GitHub Desktop](https://desktop.github.com/)
 
 
-## Dropdown summaries
+2. First we need to create a copy of the exercise GitHub repository we will use for this course.
+Go to [`https://github.com/fhdsl/github-action-workshop`](https://github.com/fhdsl/github-action-workshop) and click on the `Use this template` button.
 
-<details><summary> You can hide additional information in a dropdown menu </summary>
-Here's more words that are hidden.
-</details>
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3070.png" width="100%" style="display: block; margin: auto;" />
 
-## Print out session info
+3. Fill out the form on this page about where you want this repository to be and what description you want it to have. And click `Create Repository`.
 
-You should print out session info when you have code for [reproducibility purposes](https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/managing-package-versions.html).
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3076.png" width="100%" style="display: block; margin: auto;" />
 
+4. Clone this repository to your local computer.
 
-```r
-devtools::session_info()
-```
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3080.png" width="100%" style="display: block; margin: auto;" />
+In GitHub Desktop you can do this by clicking the `Clone Repository button`.
+But from command line you can use this kind of command:
 
 ```
-## ─ Session info ───────────────────────────────────────────────────────────────
-##  setting  value                       
-##  version  R version 4.0.2 (2020-06-22)
-##  os       Ubuntu 20.04.5 LTS          
-##  system   x86_64, linux-gnu           
-##  ui       X11                         
-##  language (EN)                        
-##  collate  en_US.UTF-8                 
-##  ctype    en_US.UTF-8                 
-##  tz       Etc/UTC                     
-##  date     2023-09-19                  
-## 
-## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package     * version date       lib source                            
-##  assertthat    0.2.1   2019-03-21 [1] RSPM (R 4.0.5)                    
-##  bookdown      0.24    2023-03-28 [1] Github (rstudio/bookdown@88bc4ea) 
-##  bslib         0.4.2   2022-12-16 [1] CRAN (R 4.0.2)                    
-##  cachem        1.0.7   2023-02-24 [1] CRAN (R 4.0.2)                    
-##  callr         3.5.0   2020-10-08 [1] RSPM (R 4.0.2)                    
-##  cli           3.6.1   2023-03-23 [1] CRAN (R 4.0.2)                    
-##  crayon        1.3.4   2017-09-16 [1] RSPM (R 4.0.0)                    
-##  curl          4.3     2019-12-02 [1] RSPM (R 4.0.3)                    
-##  desc          1.2.0   2018-05-01 [1] RSPM (R 4.0.3)                    
-##  devtools      2.3.2   2020-09-18 [1] RSPM (R 4.0.3)                    
-##  digest        0.6.25  2020-02-23 [1] RSPM (R 4.0.0)                    
-##  ellipsis      0.3.1   2020-05-15 [1] RSPM (R 4.0.3)                    
-##  evaluate      0.20    2023-01-17 [1] CRAN (R 4.0.2)                    
-##  fansi         0.4.1   2020-01-08 [1] RSPM (R 4.0.0)                    
-##  fastmap       1.1.1   2023-02-24 [1] CRAN (R 4.0.2)                    
-##  fs            1.5.0   2020-07-31 [1] RSPM (R 4.0.3)                    
-##  glue          1.4.2   2020-08-27 [1] RSPM (R 4.0.5)                    
-##  highr         0.8     2019-03-20 [1] RSPM (R 4.0.3)                    
-##  hms           0.5.3   2020-01-08 [1] RSPM (R 4.0.0)                    
-##  htmltools     0.5.5   2023-03-23 [1] CRAN (R 4.0.2)                    
-##  httr          1.4.2   2020-07-20 [1] RSPM (R 4.0.3)                    
-##  jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.0.2)                    
-##  jsonlite      1.7.1   2020-09-07 [1] RSPM (R 4.0.2)                    
-##  knitr         1.33    2023-03-28 [1] Github (yihui/knitr@a1052d1)      
-##  lifecycle     1.0.3   2022-10-07 [1] CRAN (R 4.0.2)                    
-##  magrittr    * 2.0.3   2022-03-30 [1] CRAN (R 4.0.2)                    
-##  memoise       2.0.1   2021-11-26 [1] CRAN (R 4.0.2)                    
-##  ottrpal       1.0.1   2023-03-28 [1] Github (jhudsl/ottrpal@151e412)   
-##  pillar        1.9.0   2023-03-22 [1] CRAN (R 4.0.2)                    
-##  pkgbuild      1.1.0   2020-07-13 [1] RSPM (R 4.0.2)                    
-##  pkgconfig     2.0.3   2019-09-22 [1] RSPM (R 4.0.3)                    
-##  pkgload       1.1.0   2020-05-29 [1] RSPM (R 4.0.3)                    
-##  prettyunits   1.1.1   2020-01-24 [1] RSPM (R 4.0.3)                    
-##  processx      3.4.4   2020-09-03 [1] RSPM (R 4.0.2)                    
-##  ps            1.4.0   2020-10-07 [1] RSPM (R 4.0.2)                    
-##  R6            2.4.1   2019-11-12 [1] RSPM (R 4.0.0)                    
-##  readr         1.4.0   2020-10-05 [1] RSPM (R 4.0.2)                    
-##  remotes       2.2.0   2020-07-21 [1] RSPM (R 4.0.3)                    
-##  rlang         1.1.0   2023-03-14 [1] CRAN (R 4.0.2)                    
-##  rmarkdown     2.10    2023-03-28 [1] Github (rstudio/rmarkdown@02d3c25)
-##  rprojroot     2.0.3   2022-04-02 [1] CRAN (R 4.0.2)                    
-##  sass          0.4.5   2023-01-24 [1] CRAN (R 4.0.2)                    
-##  sessioninfo   1.1.1   2018-11-05 [1] RSPM (R 4.0.3)                    
-##  stringi       1.5.3   2020-09-09 [1] RSPM (R 4.0.3)                    
-##  stringr       1.4.0   2019-02-10 [1] RSPM (R 4.0.3)                    
-##  testthat      3.0.1   2023-03-28 [1] Github (R-lib/testthat@e99155a)   
-##  tibble        3.2.1   2023-03-20 [1] CRAN (R 4.0.2)                    
-##  usethis       1.6.3   2020-09-17 [1] RSPM (R 4.0.2)                    
-##  utf8          1.1.4   2018-05-24 [1] RSPM (R 4.0.3)                    
-##  vctrs         0.6.1   2023-03-22 [1] CRAN (R 4.0.2)                    
-##  withr         2.3.0   2020-09-22 [1] RSPM (R 4.0.2)                    
-##  xfun          0.26    2023-03-28 [1] Github (yihui/xfun@74c2a66)       
-##  yaml          2.2.1   2020-02-01 [1] RSPM (R 4.0.3)                    
-## 
-## [1] /usr/local/lib/R/site-library
-## [2] /usr/local/lib/R/library
+git clone https://github.com/<your-username>/github-actions-workshop
 ```
 
-[many links]: https://github.com/jhudsl/OTTR_Template
+5. Create a new branch by clicking the buttons as shown here or using the command line examples below
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3088.png" width="100%" style="display: block; margin: auto;" />
+
+```
+cd github-actions-workshop
+git checkout -b "first-gha"
+```
+
+6. Create the specific GitHub Actions folders. Recall that in order to run a GitHub action, GitHub will look for YAML files in a specific location. We will need to create these folders to get going. Use your operating system to create a `.github` folder and then inside that folder, a `workflows` folder. Don't forget the `s` in workflows or the `.` in `.github` -- these folder names have to be *exactly* written this way for your GitHub Action to be found and recognized by GitHub.
+
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3101.png" width="100%" style="display: block; margin: auto;" />
+
+You can use this command to do this:
+```
+mkdir -p .github/workflows
+```
+
+7. Now you will want to move the `00-my-first-action.yml` file into the `.github/workflows` folder.
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3107.png" width="100%" style="display: block; margin: auto;" />
+
+In command line you can do this by using this command:
+```
+mv activity-1-sample-github-actions/00-my-first-action.yml .github/workflows/00-my-first-action.yml
+```
+
+8. Add and commit these changes to your branch. Then you will want to push your branch to the online GitHub repository.
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3115.png" width="100%" style="display: block; margin: auto;" />
+
+In command line this can be done like this:
+```
+git add .github/*
+git commit -m "adding first gha"
+git push --set-upstream origin first-gha
+```
+
+9. Open a pull request. In GitHub Desktop you can click this button:
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3132.png" width="100%" style="display: block; margin: auto;" />
+
+Or just navigate to your GitHub repository online and [open a pull request through the website](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
+
+
+10. Check your pull request to make sure the changes are what you expect. Then merge it!
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3139.png" width="100%" style="display: block; margin: auto;" />
+
+11. After merging, go to the `Actions` tab on GitHub
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3146.png" width="100%" style="display: block; margin: auto;" />
+
+You'll be come very acquainted with this page if you use GitHub actions. On the left shows the workflows that are available or have been run before.
+
+We should see our new GitHub Action we just merged from our pull request here called "Basic GitHub Action". Click on that. Underneath this we should now see a blue banner that allows us to click "Run workflow".
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3152.png" width="100%" style="display: block; margin: auto;" />
+
+12. Click `Run workflow ` and then `Run workflow` again. Because we made our `on:` trigger `workflow_dispatch` this means we have to tell the GitHub Action when to run (which means its not really automated in this case).
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3161.png" width="100%" style="display: block; margin: auto;" />
+
+Yay!
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3168.png" width="100%" style="display: block; margin: auto;" />
+
+
+### Checking results of a GitHub Action
+
+Go to the `Action` tab. You'll see your newest run of your GitHub Action is logged here. All future GitHub Action runs will have their logs here.
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3173.png" width="100%" style="display: block; margin: auto;" />
+
+Click on the workflow run log so we can look into it.
+To see more run details we'll click on the job name which in this case is `hello`.
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3179.png" width="100%" style="display: block; margin: auto;" />
+
+Click on the dropdown arrows to see even more details on each step.
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3188.png" width="100%" style="display: block; margin: auto;" />
+
+### Breaking down the YAML
+
+We can break down how what we wrote in the YAML lead to what is shown in this run's log.
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3193.png" width="100%" style="display: block; margin: auto;" />
+
+- We named this Action `Basic GitHub Action` and the log was named that.
+- The only job being ran was named `hello` so in the log it shows up this way underneath the `Jobs` header. If we had more than one job, those jobs' names would show up here too.
+- Each job can contain as many steps as we want. Our one step is named `Hello World`.
+- This step involved running some code using the `run:` tag which by default uses bash.
+- The bash code just [echoed "hello world"](https://linuxhint.com/bash_echo/).
+
+
+Congrats! You've ran your first GitHub Action!
+
+<img src="04-gha-basics_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3204.png" width="100%" style="display: block; margin: auto;" />
+
+In the next chapter we'll run something a little more automated and a little more fun to build on what we've learned here.

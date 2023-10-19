@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Troubleshooting GitHub Actions | GitHub Automation for Scientists</title>
+  <meta name="description" content="Chapter 7 Troubleshooting GitHub Actions | GitHub Automation for Scientists" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Troubleshooting GitHub Actions | GitHub Automation for Scientists" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Troubleshooting GitHub Actions | GitHub Automation for Scientists" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="assets/ITN_favicon.ico" type="image/x-icon" />
+<link rel="prev" href="github-action-variables.html"/>
+<link rel="next" href="more-github-actions-examples.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="assets/style_ITN.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<a href="https://www.itcrtraining.org/"><img src="assets/ITN_logo.png" style="padding-left: 15px; padding-top: 8px;"</a>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About this Course</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#target-audience"><i class="fa fa-check"></i><b>1.1</b> Target Audience</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#topics-covered"><i class="fa fa-check"></i><b>1.2</b> Topics covered</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#motivation"><i class="fa fa-check"></i><b>1.3</b> Motivation</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#curriculum"><i class="fa fa-check"></i><b>1.4</b> Curriculum</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#how-to-use-the-course"><i class="fa fa-check"></i><b>1.5</b> How to use the course</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="programming-practices.html"><a href="programming-practices.html"><i class="fa fa-check"></i><b>2</b> Programming Practices</a></li>
+<li class="chapter" data-level="3" data-path="why-automation.html"><a href="why-automation.html"><i class="fa fa-check"></i><b>3</b> Why Automation</a></li>
+<li class="chapter" data-level="4" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html"><i class="fa fa-check"></i><b>4</b> GitHub Actions Fundamentals</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#gha-structure"><i class="fa fa-check"></i><b>4.1</b> GHA structure</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#on-when-a-thing-should-be-run"><i class="fa fa-check"></i><b>4.1.1</b> on: When a thing should be run</a></li>
+<li class="chapter" data-level="4.1.2" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#jobs-what-should-be-run"><i class="fa fa-check"></i><b>4.1.2</b> jobs: What should be run</a></li>
+<li class="chapter" data-level="4.1.3" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#runs-on-with-what"><i class="fa fa-check"></i><b>4.1.3</b> runs-on: with what:</a></li>
+<li class="chapter" data-level="4.1.4" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#containerization"><i class="fa fa-check"></i><b>4.1.4</b> Containerization</a></li>
+<li class="chapter" data-level="4.1.5" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#summarizing"><i class="fa fa-check"></i><b>4.1.5</b> Summarizing</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#exercise-1---running-your-first-github-action"><i class="fa fa-check"></i><b>4.2</b> Exercise 1 - Running your first GitHub Action</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#checking-results-of-a-github-action"><i class="fa fa-check"></i><b>4.2.1</b> Checking results of a GitHub Action</a></li>
+<li class="chapter" data-level="4.2.2" data-path="github-actions-fundamentals.html"><a href="github-actions-fundamentals.html#breaking-down-the-yaml"><i class="fa fa-check"></i><b>4.2.2</b> Breaking down the YAML</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html"><i class="fa fa-check"></i><b>5</b> Automating Re-running Analyses</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html#exercise-2---re-run-analysis-example"><i class="fa fa-check"></i><b>5.1</b> Exercise 2 - Re-run analysis example</a></li>
+<li class="chapter" data-level="5.2" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html#diving-into-the-details"><i class="fa fa-check"></i><b>5.2</b> Diving into the details</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html#name-and-on"><i class="fa fa-check"></i><b>5.2.1</b> name and on</a></li>
+<li class="chapter" data-level="5.2.2" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html#jobs"><i class="fa fa-check"></i><b>5.2.2</b> jobs</a></li>
+<li class="chapter" data-level="5.2.3" data-path="automating-re-running-analyses.html"><a href="automating-re-running-analyses.html#summary"><i class="fa fa-check"></i><b>5.2.3</b> Summary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="github-action-variables.html"><a href="github-action-variables.html"><i class="fa fa-check"></i><b>6</b> GitHub Action Variables</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="github-action-variables.html"><a href="github-action-variables.html#types-of-variables"><i class="fa fa-check"></i><b>6.0.1</b> Types of variables</a></li>
+<li class="chapter" data-level="6.1" data-path="github-action-variables.html"><a href="github-action-variables.html#exercise-3---exploring-variables"><i class="fa fa-check"></i><b>6.1</b> Exercise 3 - Exploring Variables</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="github-action-variables.html"><a href="github-action-variables.html#default-variables"><i class="fa fa-check"></i><b>6.1.1</b> Default variables</a></li>
+<li class="chapter" data-level="6.1.2" data-path="github-action-variables.html"><a href="github-action-variables.html#user-set-variables"><i class="fa fa-check"></i><b>6.1.2</b> User set variables</a></li>
+<li class="chapter" data-level="6.1.3" data-path="github-action-variables.html"><a href="github-action-variables.html#activity-setting-github-secrets"><i class="fa fa-check"></i><b>6.1.3</b> Activity: Setting GitHub secrets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html"><i class="fa fa-check"></i><b>7</b> Troubleshooting GitHub Actions</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#tips"><i class="fa fa-check"></i><b>7.1</b> Tips</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#look-out-for-silent-errors"><i class="fa fa-check"></i><b>7.1.1</b> Look out for silent errors!</a></li>
+<li class="chapter" data-level="7.1.2" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#look-at-the-logs-closely"><i class="fa fa-check"></i><b>7.1.2</b> Look at the logs closely!</a></li>
+<li class="chapter" data-level="7.1.3" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-workflow_dispatchpull_request-triggers-for-development"><i class="fa fa-check"></i><b>7.1.3</b> Use workflow_dispatch/pull_request triggers for development</a></li>
+<li class="chapter" data-level="7.1.4" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#print-out-things-to-test-your-assumptions"><i class="fa fa-check"></i><b>7.1.4</b> Print out things to test your assumptions</a></li>
+<li class="chapter" data-level="7.1.5" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-marketplace-actions"><i class="fa fa-check"></i><b>7.1.5</b> Use Marketplace actions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#activity-troubleshooting-github-actions"><i class="fa fa-check"></i><b>7.2</b> Activity: Troubleshooting GitHub Actions</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#broken-action-1---upload-a-file"><i class="fa fa-check"></i><b>7.2.1</b> Broken Action 1 - Upload a file</a></li>
+<li class="chapter" data-level="7.2.2" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#broken-action-2---create-an-issue"><i class="fa fa-check"></i><b>7.2.2</b> Broken Action 2 - Create an issue</a></li>
+<li class="chapter" data-level="7.2.3" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#broken-action-3---run-script"><i class="fa fa-check"></i><b>7.2.3</b> Broken Action 3 - Run script</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#summary-1"><i class="fa fa-check"></i><b>7.3</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="more-github-actions-examples.html"><a href="more-github-actions-examples.html"><i class="fa fa-check"></i><b>8</b> More GitHub Actions Examples</a></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="9" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>9</b> References</a></li>
+<li class="divider"></li>
+<p style="text-align:center;"> <a href="https://github.com/jhudsl/OTTR_Template" target="blank" > This content was published with</a> <a href="https://bookdown.org/" target="blank"> bookdown by: </a> </p>
+<p style="text-align:center;"> <a href="http://jhudatascience.org/"> The Johns Hopkins Data Science Lab </a></p>
+<a href="http://jhudatascience.org/"><img src="https://jhudatascience.org/images/dasl.png" style=" width: 80%; filter: grayscale(100%); padding-left: 40px; padding-top: 8px; vertical-align: top "</a>
+<p style="text-align:center; font-size: 12px;"> <a href="https://github.com/rstudio4edu/rstudio4edu-book/"> Style adapted from: rstudio4edu-book </a> <a href ="https://creativecommons.org/licenses/by/2.0/"> (CC-BY 2.0) </a></p>
+<p style="padding-left: 40px;"><div class="trapezoid" style = "padding-left: 40px;"><span>  <a href="https://forms.gle/hc8Xt3Y2Znjb6M4Y7"> Click here to provide feedback</a> <img src="assets/itcr_arrow.png" style=" width: 10%" ></span></div></p>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GitHub Automation for Scientists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0">
+  <!--script src="https://kit.fontawesome.com/6a26f47516.js"></script-->
+  <!--<script src="assets/hideOutput.js"></script>-->
+  <link href="assets/style_ITN.css" rel="stylesheet">
+</head>
+        
+
+
+<div class="hero-image-container"> 
+  <img class= "hero-image" src="assets/itcr_main_image.png">
+</div>
+<div id="troubleshooting-github-actions" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Troubleshooting GitHub Actions</h1>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_62.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Many of your standard programming troubleshooting skills are applicable with GitHub actions. In this chapter we’ll five you a few more tips for what might be the most common ways that GitHub Actions can break and what those error messages might look like.</p>
+<div id="tips" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Tips</h2>
+<div id="look-out-for-silent-errors" class="section level3" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Look out for silent errors!</h3>
+<p>A well designed GitHub Action will:</p>
+<ol style="list-style-type: decimal">
+<li>Successfully fail when you should be alerted to something that isn’t working</li>
+<li>Successfully pass when the test is working as you’d like.</li>
+</ol>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_186.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>What makes point 1 tricky is that just because you get a green check mark, doesn’t mean that all your steps ran successfully or did what you thought they were doing.</p>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_71.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Especially when you are first developing a GitHub Action, it is a good idea to look through the logs and click on the dropdown arrows for each step to see what was printed out.</p>
+<p>It’s a great idea to add a test or evaluation that will be more specific to what you need to be done in your GitHub Actions. This is where the variable setting we discussed in the previous chapter can come in handy.</p>
+<p>Sometimes you might be able to do something as simple as this:</p>
+<pre><code>- name: Check on re-run outcome
+  if: steps.running.outcome != &#39;success&#39;
+  run: |
+    echo Re-running status ${{steps.running.outcome}}
+    exit 1</code></pre>
+<p>Where <code>running</code> is the <code>id:</code> of the step you want to evaluate. However this will have limited success and evaluations like this should always be made as specific as possible to what your GitHub Action is testing.</p>
+<p>In order to design these steps you are going to need to look closely at your logs to see when things are</p>
+</div>
+<div id="look-at-the-logs-closely" class="section level3" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Look at the logs closely!</h3>
+<p>Whether you GitHub Action fails or not, go to the logs to see how they ran. You can get there by going to Actions tab and clicking on the workflow you want to check on.</p>
+<p>You should start by scrolling down on the Actions page to look at the <code>Annotations</code>. This is GitHub Action’s summary of how the workflow ran. However, the summary is often unlikely to give you enough information to troubleshoot a failed action.</p>
+<p>In order to find out what the error message really is, you may need to dig into the logs deeper than that. Usually when you open up the log it will open up the step that it detects has failed.</p>
+<p>Read carefully what output happened here versus what you expected to happen. You may want to use the arrow to show what commands were specifically run. Sometimes you may need to look in earlier steps to really pinpoint what has happened.</p>
+<p>You may want to Google those messages depending on what they are saying. If the message has to do with a script being called you will want to test those scripts you wrote elsewhere to make sure they are working.</p>
+</div>
+<div id="use-workflow_dispatchpull_request-triggers-for-development" class="section level3" number="7.1.3">
+<h3><span class="header-section-number">7.1.3</span> Use workflow_dispatch/pull_request triggers for development</h3>
+<p>Regardless of whether you want your final GitHub Action to run on a <code>pull_request</code> or <code>workflow_dispatch</code> triggers, it can be helpful during development to use these. You can have multiple triggers for a GitHub actions.</p>
+<p>The <code>pull_request</code> trigger is helpful for development so that every time you push to your pull request your action will be re-run automatically so you can see if what you tried worked.</p>
+<p>The <code>workflow_dispatch</code> trigger is useful so you can re-trigger the workflow run whenever you need to test the next thing you tried for troubleshooting purposes.</p>
+<p>There’s two caveats to this strategy:</p>
+<ol style="list-style-type: decimal">
+<li>If you don’t want these triggers long term, make sure you delete them before you merge to main.</li>
+<li>Recall that if you are using default environment variables in your workflow runs that those change depending on the triggers, so those may not always be representative of the workflow run as you it will be run with the final version.</li>
+</ol>
+</div>
+<div id="print-out-things-to-test-your-assumptions" class="section level3" number="7.1.4">
+<h3><span class="header-section-number">7.1.4</span> Print out things to test your assumptions</h3>
+<p>You can check your assumptions about GitHub Actions is running things by printing out pieces of the action. For example, if you are using variables or file paths and suspect they are part of the issue, you can run <code>ls</code> or print out a variable with <code>echo</code>.</p>
+<pre><code>run: |
+  echo ${GITHUB_ACTION_PATH}
+  ls</code></pre>
+<p>This may help you figure out whether a variable or file isn’t in the place you think it is.</p>
+</div>
+<div id="use-marketplace-actions" class="section level3" number="7.1.5">
+<h3><span class="header-section-number">7.1.5</span> Use Marketplace actions</h3>
+<p>The great part about using GitHub Actions is that you can use other people’s actions from the marketplace so you don’t have to write everything from scratch!</p>
+<p>This however, does mean that you are dependent on the developers and maintainers of these GitHub Actions.</p>
+<p>There are two tips for troubleshooting a problematic GitHub Action that is borrowed from marketplace:</p>
+<ol style="list-style-type: decimal">
+<li>Read their docs carefully and make sure you are using it as specified.</li>
+<li>Try bumping up to a later version if it looks like there’s a bug that may have been addressed.</li>
+<li>Try not to use Marketplace actions that don’t show evidence of being maintained or don’t have fully fledged documentation!</li>
+</ol>
+</div>
+</div>
+<div id="activity-troubleshooting-github-actions" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Activity: Troubleshooting GitHub Actions</h2>
+<p><strong>What to know about these activities:</strong></p>
+<ul>
+<li>None of these broken actions will require more than 1 simple line to fix it. So don’t spend too much time writing lots of code to fix these.</li>
+<li>There are clues in our descriptions here about what you should look out for in fixing these actions. So look out for these clues.</li>
+<li>Use standard troubleshooting tips to figure this out – Googling and iterative work and attempts is encouraged!</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>Create a new branch to work from.</li>
+</ol>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_124.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>`git checkout -b &quot;troubleshoot-practice&quot;`</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>For this exercise we are going to copy purposely broken GitHub actions we will fix. Move all three files from the <code>activity-3-find-the-break</code> folder to to your <code>.github/workflows</code> directories you made in the previous chapter.</li>
+</ol>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_116.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>mv activity-3-find-the-break/* .github/workflows/</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Now follow the same set of steps we used in the previous chapters to Add, Commit, Push the changes.</li>
+</ol>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g2903858106e_0_25.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>git add .github/*
+git commit -m &quot;troubleshooting exercise&quot;
+git push --set-upstream origin troubleshooting</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Now create a pull request with the changes you just made. (Refer to the previous chapter if you need reminders on how to do this).</li>
+</ol>
+<p>Scroll to the bottom of this pull request. You’ll notice that only one of the three broken actions have a status here. If you don’t see a GitHub Action you expect to be running, you’ll need to go to <code>Actions</code> tab to see what’s happening. We’ll dive into this in this next section.</p>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_145.png" width="100%" style="display: block; margin: auto;" /></p>
+<div id="broken-action-1---upload-a-file" class="section level3" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Broken Action 1 - Upload a file</h3>
+<p>Let’s dive into the broken action 1 first. Let’s look into the logs. Go to the <code>Actions</code> tab and find the most recent workflow run that indicates its from <code>.github/workflows/broken-action-1.yml</code>.</p>
+<p>You’ll notice that this action and the second one don’t show up normally. They both have <code>startup</code> issues. Meaning their problems are so fundamental that GitHub can’t even process them to the point where they can begin to run.</p>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_150.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Generally <code>start up issues</code> have to do with:</p>
+<ol style="list-style-type: decimal">
+<li>An essential specification is missing.</li>
+<li>There’s a syntax issue</li>
+<li>There’s a spacing issue</li>
+</ol>
+<p>Click on this issue’s log and scroll down to the bottom where it says “Annotation”.</p>
+<p>In this first case we have an error:</p>
+<pre><code>a step cannot have both the `uses` and `run` keys</code></pre>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_85.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>What do you suppose this error means? When thinking about what you believe this error means, take a look at the parts of the yaml file that have <code>uses</code> and <code>run</code> keys.</p>
+<p>To recap, <code>uses</code> is a key we use when we are borrowing an action from the marketplace like the following:</p>
+<pre><code>- name: Checkout files
+  uses: actions/checkout@v3</code></pre>
+<p>And the <code>run</code> key we generally use for calling some bash or other language’s commands. like this:</p>
+<pre><code>- name: Print out a thing
+  run: echo Let&#39;s print a thing out!</code></pre>
+<p>Both <code>run</code> and <code>uses</code> are calling commands. So given this information why do you suppose we are getting the error:</p>
+<pre><code>a step cannot have both the `uses` and `run` keys</code></pre>
+<div id="fixing-action-1" class="section level4" number="7.2.1.1">
+<h4><span class="header-section-number">7.2.1.1</span> Fixing Action 1</h4>
+<ol style="list-style-type: decimal">
+<li>Based on what you think is causing this error, attempt to make a change to the <code>broken-action-1.yml</code> file.</li>
+<li>Then add and commit that change and push it to GitHub.</li>
+<li>Return to your logs to see the most recent run of the action from <code>.github/workflows/broken-action-1.yml</code>.</li>
+<li>Look at the logs to see if the error is different or is fixed. If it ran successfully you’ll see it’s actual title show up in the logs. But regardless if it fails or succeeds you should check the logs.</li>
+<li>Repeat these steps until you have fixed action 1.</li>
+</ol>
+</div>
+</div>
+<div id="broken-action-2---create-an-issue" class="section level3" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> Broken Action 2 - Create an issue</h3>
+<p>Let’s look into Action 2’s logs to try to fix it. Go to the <code>Actions</code> tab and find the most recent workflow run that indicates its from <code>.github/workflows/broken-action-2.yml</code>.</p>
+<p>This action, like the first one, has start up issues so it will not have its status shown on the pull request.</p>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_157.png" width="100%" style="display: block; margin: auto;" />
+Click on this issue’s log and scroll down to the bottom where it says “Annotation”.</p>
+<p>In this case we have an error:</p>
+<pre><code>You have an error in your yaml syntax on line 11</code></pre>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_90.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>What do you suppose this error means? What’s nice about this error is that it does tell us a specific line to look at. Keep in mind though sometimes when GitHub action tells us a line this may be approximate. We may need to look slightly before or slightly after the line it calls for us to know what to fix.</p>
+<div id="fixing-action-2" class="section level4" number="7.2.2.1">
+<h4><span class="header-section-number">7.2.2.1</span> Fixing Action 2</h4>
+<ol style="list-style-type: decimal">
+<li>Open up the <code>broken-action-2.yml</code> file.</li>
+<li>Take a look at the code around line 11</li>
+<li>What do you notice that is different about these lines as compared to other actions we’ve looked at?</li>
+<li>Formulate a hypothesis on what you think is the problem and change that in <code>broken-action-2.yml</code>.</li>
+<li>Then add and commit that change and push it to GitHub.</li>
+<li>Return to your logs to see the most recent run of the action from <code>.github/workflows/broken-action-2.yml</code>. If it ran successfully you’ll see it’s actual title show up in the logs. But regardless if it fails or succeeds you should check the logs.</li>
+<li>Look at the logs to see if the error is different or is fixed.</li>
+<li>Repeat these steps until you have fixed action 2!</li>
+</ol>
+</div>
+</div>
+<div id="broken-action-3---run-script" class="section level3" number="7.2.3">
+<h3><span class="header-section-number">7.2.3</span> Broken Action 3 - Run script</h3>
+<p>Finally, let’s look into <code>Broken Action 3 - Run script</code>. Go to the logs and look for a recent workflow run of that title.</p>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_163.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>In this case, the <code>Annotations</code> might tell us <code>Process completed with exit code 127</code>. If we look online we can see that this means that either a script doesn’t exist or it can’t run.</p>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_95.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>This is moderately helpful but doesn’t really help us identify the problem. So we have to dig into the log some more.
+When we click on the log it will likely open up the step that this workflow failed on.</p>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_174.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>In this case we have an error:</p>
+<pre><code>/__w/_temp/36dfc03e-56ed-43fa-9019-85d8b151f42a.sh: 2: python3: not found
+Running python here</code></pre>
+<p>The <code>/__w/_temp/36dfc03e-56ed-43fa-9019-85d8b151f42a.sh</code> bit just tells us information about where this was being ran in the temporary workspace that GitHub was using to run our workflow. And if we look at our yaml file we can see the message: <code>Running python here</code> is just something we had echoed.</p>
+<p>What we’re going to want to zero in on here is the <code>python3: not found</code>.</p>
+<div id="fixing-action-3" class="section level4" number="7.2.3.1">
+<h4><span class="header-section-number">7.2.3.1</span> Fixing Action 3</h4>
+<ol style="list-style-type: decimal">
+<li>Open up the <code>broken-action-3.yml</code> file.</li>
+<li>It looks like Python is not able to be found. Look at the yaml file and try to figure out why that might be.</li>
+<li>Formulate a hypothesis on what you think is the problem and change that in <code>broken-action-3.yml</code>.</li>
+<li>Then add and commit that change and push it to GitHub.</li>
+<li>Return to your logs to see the most recent run of the action from <code>.github/workflows/broken-action-3.yml</code>.</li>
+<li>Look at the logs to see if the error is different or is fixed.</li>
+<li>Repeat these steps until you have fixed action 2!</li>
+</ol>
+<details>
+<summary>
+For a further hint about fixing this problem look here
+</summary>
+<p>You’re going to want to look into what software packages the docker image referenced on in the <code>image:</code> key has. Does <code>rocker/r-base</code> image have Python?</p>
+<p>If not, you may need to look for a Docker image to use that has python. We’ve used one in a previous example that you could borrow.</p>
+</details>
+</div>
+</div>
+</div>
+<div id="summary-1" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Summary</h2>
+<p>In this activity, we practiced troubleshooting GitHub Actions. We discussed some of the most common ways that GitHub Actions can be broken. Here’s a summary of troubleshooting tips covered in this chapter/</p>
+<p><img src="07-gha-troubleshooting_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_67.png" width="100%" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+<hr>
+<center> 
+  <div class="footer">
+      All illustrations <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY. </a>
+      <br>
+      All other materials <a href= "https://creativecommons.org/licenses/by/4.0/"> CC-BY </a> unless noted otherwise.
+  </div>
+</center>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="github-action-variables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="more-github-actions-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
