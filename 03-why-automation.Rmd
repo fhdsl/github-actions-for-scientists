@@ -49,6 +49,67 @@ Returning to those 10 researchers, if instead of having those 10 people manually
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g27a5d68b667_0_1764")
 ```
 
+
+## Continuous integration / Continous deployment
+
+Before we discuss the concept of Continous integration / Continuous deployment (often abbreviated CI/CD), let's use an analogy.
+
+
+```{r, out.width = "100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3844")
+```
+
+Obviously we are getting at here, that generally its a good idea to check work along the way instead of waiting until something is completely finished to test it.
+
+Software is no exception to this idea. Often if we send a collaborator an enormous amount of code to review; they are likely to feel overwhelmed and may not be able to give useful feedback.
+
+```{r, out.width = "100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g27a8d088b93_0_23")
+```
+
+But if you send a manageable, small chunk of code to review, they are likely to give more feedback.
+
+Continuous Integration / Continuous Deployment then is a manner of working that means we will have changes checked as they are being integrated and before the changes are deployed. This allows for continuous monitoring of the project and hopefully early catching of bugs!
+
+Bugs/mistakes are an unavoidable part of software development because software developers and researchers are generally humans and humans make mistakes! Let's assume over the course of developing a project, bugs are introduced at a certain rate.
+
+```{r, out.width = "100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_223")
+```
+
+Without using CI/CD you may find yourself trying to fix many bugs at once! This will make the bugs harder to isolate and harder to fix and pinpoint. The amount of time it will take to fix 3 bugs at once may be exponentially higher than if you caught these bugs one at a time. Additionally, the longer amount of time that goes on before you catch a bug, it may be more likely it will get accidentally incorporated into your published results -- this will be a lot more work for you and others to rectify.
+
+However with CI/CD you will likely catch these bugs earlier and have an easier time fixing them before they truly run a muck! A good continuous integration / continuous deployment pipeline will help you identify these bugs early and save time and stress!
+
+```{r, out.width = "100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g286f0c8db1a_0_68")
+```
+
+This is not only true for classic "my script won't run" bugs but also "silent" bugs -- bugs where the analysis still ran to completion but perhaps the results were slightly different.
+
+```{r, out.width = "100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g286f0c8db1a_0_33")
+```
+
+### Continous Integration / Continous Deployment
+
+A workflow that uses CI/CD principles may look like this:
+
+```{r, out.width = "100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_277")
+```
+The idea is we use version control and build aspects of our software. Before what we've built is incorporated into the published version, we will stage it and test it. By staging we mean that perhaps we keep it stored on a different branch and have ways that we can play around with the [beta version](https://en.wiktionary.org/wiki/beta_version) of the analysis or product before our most recent adds are incorporated.
+
+The above diagram is in reference to more traditional software products but CI/CD can also be thought of in the context of an scientific data analysis:
+
+```{r, out.width = "100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g27a5d68b667_0_48")
+```
+
+In the case of a scientific analysis, we may modify or add to the analysis, but we'll want to test that these changes work -- aka we may want to re-run the analysis before we merge it into the `main` branch or public facing version.
+
+In this instance we may think of the final product as being a published manuscript as opposed to deployed website or app. But the same principles here apply. We'll want to re-run the analysis and build tests that check if the results make sense.
+
 ### A real world example
 
 Let's bring this into the terms of a very common story for science. Let's say you are a researcher who submitted a manuscript and a reviewer comes back and asks you to re run the analysis with a minor tweak; perhaps a parameter change.
