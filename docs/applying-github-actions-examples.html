@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Programming Practices | GitHub Automation for Scientists</title>
-  <meta name="description" content="Chapter 2 Programming Practices | GitHub Automation for Scientists" />
+  <title>Chapter 8 Applying GitHub Actions Examples | GitHub Automation for Scientists</title>
+  <meta name="description" content="Chapter 8 Applying GitHub Actions Examples | GitHub Automation for Scientists" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Programming Practices | GitHub Automation for Scientists" />
+  <meta property="og:title" content="Chapter 8 Applying GitHub Actions Examples | GitHub Automation for Scientists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Programming Practices | GitHub Automation for Scientists" />
+  <meta name="twitter:title" content="Chapter 8 Applying GitHub Actions Examples | GitHub Automation for Scientists" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/ITN_favicon.ico" type="image/x-icon" />
-<link rel="prev" href="introduction.html"/>
-<link rel="next" href="why-automation.html"/>
+<link rel="prev" href="troubleshooting-github-actions.html"/>
+<link rel="next" href="about-the-authors.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -213,9 +213,139 @@ div.csl-indent {
 <div class="hero-image-container"> 
   <img class= "hero-image" src="assets/itcr_main_image.png">
 </div>
-<div id="programming-practices" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Programming Practices</h1>
+<div id="applying-github-actions-examples" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Applying GitHub Actions Examples</h1>
+<p><img src="08-gha-applying-examples_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_57.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>A great way to learn GitHub Actions is to borrow a yaml file someone else has written and incorporate it into your own project. In this chapter we will introduce you to two GitHub Actions and encourage you to adapt one or both of them to one of your own projects. We encourage you to follow these similar steps and tips for other actions that are written on the internet that you may find that you can use for your project.</p>
+<p>The two action examples we have in this chapter both work on <code>pull_request</code> triggers and do the following:</p>
+<ol style="list-style-type: decimal">
+<li>Spell checks markdown and R Markdown files and saves the spelling errors in a file uploaded to GitHub .</li>
+<li>Style R code and commit it back to a branch. This option will take more work to adapt if you do not use R but is totally doable and we’ll walk you through some guidance on how to adapt it.</li>
+</ol>
+<div id="explore-the-actions" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Explore the actions</h2>
+<ol style="list-style-type: decimal">
+<li>To get a sense of how these actions work, you guessed it, we are once again going to create a new branch and open a pull request.</li>
+</ol>
+<p><img src="08-gha-applying-examples_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_192.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>`git checkout -b &quot;example-ghas&quot;`</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>For this exercise we are going to copy over a second GitHub Action YAML file from the folder. This time, move the <code>spell-check.yml</code> and <code>style-code.yml</code> files to your <code>.github/workflows</code> directories.</li>
+</ol>
+<p><img src="08-gha-applying-examples_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3293.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>mv activity-4-sample-github-actions/* .github/workflows/</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Now follow the same set of steps we used in the previous chapter to Add, Commit, Push the changes.</li>
+</ol>
+<p><img src="08-gha-applying-examples_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_205.png" width="100%" style="display: block; margin: auto;" />
+From command line:</p>
+<pre><code>git add .github/*
+git commit -m &quot;adding even more ghas&quot;
+git push --set-upstream origin example-ghas</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Now create a pull request with the changes you just made.</p></li>
+<li><p>On your pull request page on GitHub, click on the Details button next to each of these workflow runs. Before moving on to the next section, take a look at the logs and yaml files and practice getting an idea of what these GitHub Actions are doing.</p></li>
+</ol>
+<p><img src="08-gha-applying-examples_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3301.png" width="100%" style="display: block; margin: auto;" /></p>
+<div id="diving-deeper" class="section level3" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Diving deeper</h3>
+<p>In this section, we’ll give you the basic recipe of these GitHub Actions. Hopefully by having a basic idea of what is in these actions you’ll be able to adapt them for your own purposes.</p>
+<div id="spell-check-overview" class="section level4" number="8.1.1.1">
+<h4><span class="header-section-number">8.1.1.1</span> Spell Check Overview</h4>
+<p>We’ll run through the yaml file and explain the basic set up here. We also have included links about the resources used at each step. We encourage you to poke around with these resources and with this yaml file to really learn about what these actions are doing.</p>
+<pre><code>spell-check:
+  runs-on: ubuntu-latest
+  # We will run this on a Docker image so it has most of the things we need
+  container:
+    image: rocker/tidyverse:4.0.2</code></pre>
+<p>We’re using a Docker image that has some R packages we will use so we don’t have to install everything individually: <a href="https://hub.docker.com/r/rocker/tidyverse/tags"><code>rocker/tidyverse:4.0.2</code></a></p>
+<pre><code># Need to get the files specific to our branch from our pull request
+- uses: actions/checkout@v3
+  with:
+    ref: ${{ github.event.pull_request.head.ref }}</code></pre>
+<p>Checking out the files we need using <a href="https://github.com/actions/checkout"><code>actions/checkout@v3</code></a></p>
+<pre><code># Our docker image doesn&#39;t have this one package though so we&#39;ll install it
+- name: Install packages
+  run: Rscript -e &quot;install.packages(&#39;spelling&#39;)&quot;</code></pre>
+<p>Install a <a href="https://cran.r-project.org/web/packages/spelling/index.html"><code>spelling</code> package</a> we need that wasn’t on the Docker image already. This is a reasonable strategy if we only need one or two packages that don’t take long to install.</p>
+<pre><code>- name: Run spell check
+  id: spell_check_run
+  run: |
+    sp_chk_results=$(Rscript &quot;utils/spell-check.R&quot;)
+    # This is where we are going to store output from this step to the environment so we can retrieve it in a later step
+    echo &quot;sp_chk_results=$sp_chk_results&quot; &gt;&gt; $GITHUB_OUTPUT
+    cat spell_check_results.tsv</code></pre>
+<p>Run custom spell check script – this is where you’d really have to personalize this. We’re calling this <a href="https://github.com/fhdsl/github-actions-workshop/blob/main/utils/spell-check.R">custom R script</a> that looks for the R Markdown and markdown files and spell checks them. <strong>Note that this means this script must be available to this GitHub Action if you are to use it.</strong> You’ll either need to download it or add it to whatever repo you add this to.</p>
+<p>We also have this print out the results in the log and save these results to the GITHUB_OUTPUT variable as discussed in the previous chapter. This allows us to retrieve the number of misspellings identified in a future step.</p>
+<pre><code># We want to retrieve this file after this runs so we can see what spell check errors were detected
+- name: Archive spelling errors
+  uses: actions/upload-artifact@v3
+  # These arguments underneath `with` are generally action specific so we have to check the documentation: https://github.com/marketplace/actions/upload-a-build-artifact
+  with:
+    name: spell-check-results
+    path: spell_check_results.tsv</code></pre>
+<p>Archive spelling errors using <a href="https://github.com/actions/upload-artifact"><code>actions/upload-artifact@v3</code></a>. For Archived files, we can see them by going to <code>Summary</code> on the left side of the log page and scrolling down to the <code>Artifacts</code> section. This file we uploaded will tell us the spell check error our script detected.</p>
+<pre><code># If there are too many spelling errors, this will stop the workflow
+- name: Check spell check results - fail if too many errors
+  # Here we are only going to through an error if there&#39;s more than 3 spell check errors detected
+  if: ${{ steps.spell_check_run.outputs.sp_chk_results &gt; 3 }}
+  run: exit 1</code></pre>
+<p>We’ve discussed in previous chapters about conditional statements and using GitHub variables. Here we are using a conditional statement that will fail this GitHub Action if there are too many spelling errors (which here we’ve said is <code>3</code>).</p>
+</div>
+<div id="style-code-overview" class="section level4" number="8.1.1.2">
+<h4><span class="header-section-number">8.1.1.2</span> Style Code Overview</h4>
+<p>Just as we did with the spell check action, we’ll run through the yaml file and explain the basic set up here. We also have included links about the resources used at each step. We encourage you to poke around with these resources and with this yaml file to really learn about what these actions are doing.</p>
+<pre><code>style-code:
+  runs-on: ubuntu-latest
+  # This image has R and basic R packages
+  container:
+    image: rocker/tidyverse:4.0.2</code></pre>
+<p>We’re using a Docker image that has some R packages we will use so we don’t have to install everything individually: <a href="https://hub.docker.com/r/rocker/tidyverse/tags"><code>rocker/tidyverse:4.0.2</code></a></p>
+<pre><code># Need to get the files specific to our branch from our pull request
+- name: Checkout files
+  uses: actions/checkout@v3
+  with:
+    ref: ${{ github.event.pull_request.head.ref }}</code></pre>
+<p>We need this files in this repo. So we are checking out the files we need using <a href="https://github.com/actions/checkout"><code>actions/checkout@v3</code></a>.</p>
+<pre><code># Our docker image doesn&#39;t have this one package though so we&#39;ll install it
+- name: Install packages
+  run: Rscript -e &quot;install.packages(&#39;styler&#39;)&quot;</code></pre>
+<p>Install a <a href="https://www.tidyverse.org/blog/2017/12/styler-1.0.0/"><code>styler</code> package</a> we need that wasn’t on the Docker image already. This is a reasonable strategy if we only need one or two packages that don’t take long to install.</p>
+<pre><code># Here&#39;s the main thing we are running: styling R file code
+- name: Run styler on Rmd and R files
+  run: Rscript -e &quot;styler::style_file(list.files(pattern = &#39;Rmd$|R$&#39;, recursive = TRUE, full.names = TRUE));warnings()&quot;</code></pre>
+<p>Run a code styling command – this is where you’d need to customize this step. For example, if you wish to style Python code, you may look into <a href="https://github.com/marketplace/actions/pycodestyle">this pycodestyle GitHub Action</a> or perhaps other GitHub marketplace actions for your particular languages and needs.</p>
+<pre><code># We will automatically commit back our styled R files
+- name: Commit styled files
+  run: |
 
+    # Some config set up to establish creds
+    git config --global --add safe.directory $GITHUB_WORKSPACE
+    git config --global user.email &quot;itcrtrainingnetwork@gmail.com&quot;
+    git config --global user.name &quot;jhudsl-robot&quot;
+
+    # Now commit the styled files
+    git add \*.Rmd
+    git add \*.R
+    git commit -m &#39;Style R files&#39; || echo &quot;No changes to commit&quot;
+    git push origin || echo &quot;No changes to commit&quot;</code></pre>
+<p>In this step we are immediately merging any changed files that were styled back to the original branch that this pull request was on.</p>
+<p>The <code>||</code> allow these steps an alternative if there are no changes to commit. Without the <code>||</code> the action would break if the styling did not result in changes.</p>
+<p>What you’ll need to change here is the <code>git config</code> steps to use your own credentials. (aka <code>git config --global user.email "itcrtrainingnetwork@gmail.com"</code> should be your email).</p>
+</div>
+</div>
+<div id="tips-for-adapting-these-to-your-own-repository" class="section level3" number="8.1.2">
+<h3><span class="header-section-number">8.1.2</span> Tips for adapting these to your own repository</h3>
+<p>Here’s how you can adapt these to your own repository.</p>
+<p>First, you’ll want to add them to your own repository with a pull request. These actions will both be triggered by a pull request so you won’t need to edit them at all to start developing them to adapt them to your project needs.</p>
+<p>Note that for the spell check action, if you are deciding to use the customized script we included, you will need to copy that to the same file path as called in this action.</p>
+<p>Besides the points of customization you may need to work on that we discussed; you may also need to edit the Docker images used depending on what steps and uses you need.</p>
+<p>From here, its basically good luck! Take it one troubleshooting tactic at a time, Google your problems and look for GitHub Action marketplace actions that fit your needs. Best of luck!</p>
+
+</div>
+</div>
 </div>
 <hr>
 <center> 
@@ -230,8 +360,8 @@ div.csl-indent {
           </div>
         </div>
       </div>
-<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="why-automation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="troubleshooting-github-actions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="about-the-authors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
