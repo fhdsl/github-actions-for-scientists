@@ -50,7 +50,7 @@ git push --set-upstream origin example-ghas
 4. Now create a pull request with the changes you just made.
 
 
-5. On your pull request page on GitHub, click on the Details button next to your workflow run.
+5. On your pull request page on GitHub, click on the Details button next to each of these workflow runs. Before moving on to the next section, take a look at the logs and yaml files and practice getting an idea of what these GitHub Actions are doing. 
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3301")
