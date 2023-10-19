@@ -6,6 +6,12 @@ curriculum
 how-to-use-the-course
 programming-practices
 why-automation
+why-reproducibility-is-so-important.
+automation-as-a-reproducibility-tool
+continuous-integration-continous-deployment
+continous-integration-continuous-deployment
+a-real-world-example
+other-cicd-services
 github-actions-fundamentals
 gha-structure
 on-when-a-thing-should-be-run
