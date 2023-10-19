@@ -62,7 +62,7 @@ In this section, we'll give you the basic recipe of these GitHub Actions. Hopefu
 
 #### Spell Check Overview
 
-Here's the basic set up of the steps here with links that are included with more information about the resources used at each step.
+We'll run through the yaml file and explain the basic set up here. We also have included links about the resources used at each step. We encourage you to poke around with these resources and with this yaml file to really learn about what these actions are doing. 
 
 ```
 spell-check:
