@@ -1,362 +1,263 @@
 
-# A new chapter
-
-If you haven't yet read the getting started Wiki pages; [start there](https://www.ottrproject.org/getting_started.html).
-
-To see the rendered version of this chapter and the rest of the template, see here: https://jhudatascience.org/OTTR_Template/.
-
-Every chapter needs to start out with this chunk of code:
+# Troubleshooting GitHub Actions
 
 
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_62.png" width="100%" style="display: block; margin: auto;" />
+
+Many of your standard programming troubleshooting skills are applicable with GitHub actions. In this chapter we'll five you a few more tips for what might be the most common ways that GitHub Actions can break and what those error messages might look like.
+
+## Tips
+
+### Look out for silent errors!
+
+A well designed GitHub Action will:
+
+1. Successfully fail when you should be alerted to something that isn't working
+2. Successfully pass when the test is working as you'd like.
 
 
-## Learning Objectives
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_186.png" width="100%" style="display: block; margin: auto;" />
 
-Every chapter also needs Learning objectives that will look like this:  
+What makes point 1 tricky is that just because you get a green check mark, doesn't mean that all your steps ran successfully or did what you thought they were doing.
 
-This chapter will cover:  
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_71.png" width="100%" style="display: block; margin: auto;" />
 
-- {You can use https://tips.uark.edu/using-blooms-taxonomy/ to define some learning objectives here}
-- {Another learning objective}
+Especially when you are first developing a GitHub Action, it is a good idea to look through the logs and click on the dropdown arrows for each step to see what was printed out.
 
-## Libraries
+It's a great idea to add a test or evaluation that will be more specific to what you need to be done in your GitHub Actions. This is where the variable setting we discussed in the previous chapter can come in handy.
 
-For this chapter, we'll need the following packages attached:
-
-*Remember to add [any additional packages you need to your course's own docker image](https://github.com/jhudsl/OTTR_Template/wiki/Using-Docker#starting-a-new-docker-image).
-
-
-```r
-library(magrittr)
-```
-
-## Topic of Section
-
-You can write all your text in sections like this, using `##` to indicate a new header. you can use additional pound symbols to create lower levels of headers.
-
-See [here](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for additional general information about how you can format text within R Markdown files. In addition, see [here](https://pandoc.org/MANUAL.html#pandocs-markdown) for more in depth and advanced options.
-
-### Subtopic
-
-Here's a subheading (using three pound symbols) and some text in this subsection!
-
-## Code examples
-
-You can demonstrate code like this:
-
-
-```r
-output_dir <- file.path("resources", "code_output")
-if (!dir.exists(output_dir)) {
-  dir.create(output_dir)
-}
-```
-
-And make plots too:
-
-
-```r
-hist_plot <- hist(iris$Sepal.Length)
-```
-
-<img src="resources/images/07-gha-troubleshooting_files/figure-html/unnamed-chunk-4-1.png" width="672" />
-
-You can also save these plots to file:
-
-
-```r
-png(file.path(output_dir, "test_plot.png"))
-hist_plot
-```
+Sometimes you might be able to do something as simple as this:
 
 ```
-## $breaks
-## [1] 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5 8.0
-## 
-## $counts
-## [1]  5 27 27 30 31 18  6  6
-## 
-## $density
-## [1] 0.06666667 0.36000000 0.36000000 0.40000000 0.41333333 0.24000000 0.08000000
-## [8] 0.08000000
-## 
-## $mids
-## [1] 4.25 4.75 5.25 5.75 6.25 6.75 7.25 7.75
-## 
-## $xname
-## [1] "iris$Sepal.Length"
-## 
-## $equidist
-## [1] TRUE
-## 
-## attr(,"class")
-## [1] "histogram"
+- name: Check on re-run outcome
+  if: steps.running.outcome != 'success'
+  run: |
+    echo Re-running status ${{steps.running.outcome}}
+    exit 1
 ```
 
-```r
-dev.off()
-```
+Where `running` is the `id:` of the step you want to evaluate. However this will have limited success and evaluations like this should always be made as specific as possible to what your GitHub Action is testing.
+
+In order to design these steps you are going to need to look closely at your logs to see when things are
+
+### Look at the logs closely!
+
+Whether you GitHub Action fails or not, go to the logs to see how they ran. You can get there by going to Actions tab and clicking on the workflow you want to check on.
+
+You should start by scrolling down on the Actions page to look at the `Annotations`. This is GitHub Action's summary of how the workflow ran. However, the summary is often unlikely to give you enough information to troubleshoot a failed action.
+
+In order to find out what the error message really is, you may need to dig into the logs deeper than that. Usually when you open up the log it will open up the step that it detects has failed.
+
+Read carefully what output happened here versus what you expected to happen. You may want to use the arrow to show what commands were specifically run. Sometimes you may need to look in earlier steps to really pinpoint what has happened.
+
+You may want to Google those messages depending on what they are saying. If the message has to do with a script being called you will want to test those scripts you wrote elsewhere to make sure they are working.
+
+### Use workflow_dispatch/pull_request triggers for development
+
+Regardless of whether you want your final GitHub Action to run on a `pull_request` or `workflow_dispatch` triggers, it can be helpful during development to use these. You can have multiple triggers for a GitHub actions.
+
+The `pull_request` trigger is helpful for development so that every time you push to your pull request your action will be re-run automatically so you can see if what you tried worked.
+
+The `workflow_dispatch` trigger is useful so you can re-trigger the workflow run whenever you need to test the next thing you tried for troubleshooting purposes.
+
+There's two caveats to this strategy:
+
+1. If you don't want these triggers long term, make sure you delete them before you merge to main.
+2. Recall that if you are using default environment variables in your workflow runs that those change depending on the triggers, so those may not always be representative of the workflow run as you it will be run with the final version.
+
+### Print out things to test your assumptions
+
+You can check your assumptions about GitHub Actions is running things by printing out pieces of the action. For example, if you are using variables or file paths and suspect they are part of the issue, you can run `ls` or print out a variable with `echo`.
 
 ```
-## png 
-##   2
+run: |
+  echo ${GITHUB_ACTION_PATH}
+  ls
 ```
 
-## Image example
+This may help you figure out whether a variable or file isn't in the place you think it is.
 
-How to include a Google slide. It's simplest to use the `ottrpal` package:
+### Use Marketplace actions
 
+The great part about using GitHub Actions is that you can use other people's actions from the marketplace so you don't have to write everything from scratch!
 
-<img src="resources/images/07-gha-troubleshooting_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" title="Major point!! example image" alt="Major point!! example image" width="100%" style="display: block; margin: auto;" />
+This however, does mean that you are dependent on the developers and maintainers of these GitHub Actions.
 
-But if you have the slide or some other image locally downloaded you can also use HTML like this:
+There are two tips for troubleshooting a problematic GitHub Action that is borrowed from marketplace:
 
-<img src="resources/images/02-chapter_of_course_files/figure-html//1YmwKdIy9BeQ3EShgZhvtb3MgR8P6iDX4DfFD65W_gdQ_gcc4fbee202_0_141.png" title="Major point!! example image" alt="Major point!! example image" style="display: block; margin: auto;" />
+1. Read their docs carefully and make sure you are using it as specified.
+2. Try bumping up to a later version if it looks like there's a bug that may have been addressed.
+3. Try not to use Marketplace actions that don't show evidence of being maintained or don't have fully fledged documentation!
 
-## Video examples
-You may also want to embed videos in your course. If alternatively, you just want to include a link you can do so like this:
+## Activity: Troubleshooting GitHub Actions
 
-Check out this [link to a video](https://www.youtube.com/embed/VOCYL-FNbr0) using markdown syntax.
+**What to know about these activities:**  
 
-### Using `knitr`
+- None of these broken actions will require more than 1 simple line to fix it. So don't spend too much time writing lots of code to fix these.
+- There are clues in our descriptions here about what you should look out for in fixing these actions. So look out for these clues.
+- Use standard troubleshooting tips to figure this out -- Googling and iterative work and attempts is encouraged!
 
-To embed videos in your course, you can use `knitr::include_url()` like this:
-Note that you should use `echo=FALSE` in the code chunk because we don't want the code part of this to show up. If you are unfamiliar with [how R Markdown code chunks work, read this](https://rmarkdown.rstudio.com/lesson-3.html).
+1. Create a new branch to work from.
 
-
-<iframe src="https://www.youtube.com/embed/VOCYL-FNbr0" width="672" height="400px"></iframe>
-
-### Using HTML
-
-<iframe src="https://www.youtube.com/embed/VOCYL-FNbr0" width="672" height="400px"></iframe>
-
-## File examples
-
-You can again use simple markdown syntax to just include a link to a file like so:
-
-[A file]().
-
-Alternatively you can embed files like PDFs.
-
-### Using `knitr`
-
-<iframe src="https://drive.google.com/file/d/1mm72K4V7fqpgAfWkr6b7HTZrc3f-T6AV/preview" width="100%" height="400px"></iframe>
-
-### Using HTML
-
-<iframe src="https://drive.google.com/file/d/1mm72K4V7fqpgAfWkr6b7HTZrc3f-T6AV/preview" width="672" height="800px"></iframe>
-
-## Website Examples
-
-Yet again you can use a link to a website like so:
-
-[A Website](https://yihui.org)
-
-You might want to have users open a website in a new tab by default, especially if they need to reference both the course and a resource at once.
-
-[A Website](https://yihui.org){target="_blank"}
-
-Or, you can embed some websites.
-
-### Using `knitr`
-
-This works:
-
-<iframe src="https://yihui.org" width="672" height="400px"></iframe>
-
-
-### Using HTML
-
-<iframe src="https://yihui.org" width="672" height="400px"></iframe>
-
-
-If you'd like the URL to show up in a new tab you can do this:
-
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_124.png" width="100%" style="display: block; margin: auto;" />
+From command line:
 ```
-<a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
+`git checkout -b "troubleshoot-practice"`
 ```
 
-## Citation examples
+2. For this exercise we are going to copy purposely broken GitHub actions we will fix. Move all three files from the `activity-3-find-the-break` folder to to your `.github/workflows` directories you made in the previous chapter.
 
-We can put citations at the end of a sentence like this [@rmarkdown2021].
-Or multiple citations [@rmarkdown2021, @Xie2018].
-
-but they need a ; separator [@rmarkdown2021; @Xie2018].
-
-In text, we can put citations like this @rmarkdown2021.
-
-## Stylized boxes
-
-Occasionally, you might find it useful to emphasize a particular piece of information. To help you do so, we have provided css code and images (no need for you to worry about that!) to create the following stylized boxes.
-
-You can use these boxes in your course with either of two options: using HTML code or Pandoc syntax.
-
-### Using `rmarkdown` container syntax
-
-The `rmarkdown` package allows for a different syntax to be converted to the HTML that you just saw and also allows for conversion to LaTeX. See the [Bookdown](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) documentation for more information [@Xie2020]. Note that Bookdown uses Pandoc.
-
-
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_116.png" width="100%" style="display: block; margin: auto;" />
+From command line:
 ```
-::: {.notice}
-Note using rmarkdown syntax.
-
-:::
+mv activity-3-find-the-break/* .github/workflows/
 ```
 
-::: {.notice}
-Note using rmarkdown syntax.
+3. Now follow the same set of steps we used in the previous chapters to Add, Commit, Push the changes.
 
-:::
-
-As an example you might do something like this:
-
-::: {.notice}
-Please click on the subsection headers in the left hand
-navigation bar (e.g., 2.1, 4.3) a second time to expand the
-table of contents and enable the `scroll_highlight` feature
-([see more](introduction.html#scroll-highlight))
-:::
-
-
-### Using HTML
-
-To add a warning box like the following use:
-
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g2903858106e_0_25.png" width="100%" style="display: block; margin: auto;" />
+From command line:
 ```
-<div class = "notice">
-Followed by the text you want inside
-</div>
+git add .github/*
+git commit -m "troubleshooting exercise"
+git push --set-upstream origin troubleshooting
 ```
 
-This will create the following:
+4. Now create a pull request with the changes you just made. (Refer to the previous chapter if you need reminders on how to do this).
 
-<div class = "notice">
+Scroll to the bottom of this pull request. You'll notice that only one of the three broken actions have a status here. If you don't see a GitHub Action you expect to be running, you'll need to go to `Actions` tab to see what's happening. We'll dive into this in this next section.
 
-Followed by the text you want inside
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_145.png" width="100%" style="display: block; margin: auto;" />
 
-</div>
+### Broken Action 1 - Upload a file
 
-Here is a `<div class = "warning">` box:
+Let's dive into the broken action 1 first. Let's look into the logs. Go to the `Actions` tab and find the most recent workflow run that indicates its from `.github/workflows/broken-action-1.yml`.
 
-<div class = "warning">
+You'll notice that this action and the second one don't show up normally. They both have `startup` issues. Meaning their problems are so fundamental that GitHub can't even process them to the point where they can begin to run.
 
-Note text
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_150.png" width="100%" style="display: block; margin: auto;" />
 
-</div>
+Generally `start up issues` have to do with:  
 
-Here is a `<div class = "github">` box:
+1. An essential specification is missing.
+2. There's a syntax issue
+3. There's a spacing issue
 
-<div class = "github">
+Click on this issue's log and scroll down to the bottom where it says "Annotation".
 
-GitHub text
+In this first case we have an error:
+```
+a step cannot have both the `uses` and `run` keys
+```
 
-</div>
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_85.png" width="100%" style="display: block; margin: auto;" />
+
+What do you suppose this error means? When thinking about what you believe this error means, take a look at the parts of the yaml file that have `uses` and `run` keys.
+
+To recap, `uses` is a key we use when we are borrowing an action from the marketplace like the following:
+
+```
+- name: Checkout files
+  uses: actions/checkout@v3
+```
+
+And the `run` key we generally use for calling some bash or other language's commands. like this:
+
+```
+- name: Print out a thing
+  run: echo Let's print a thing out!
+```
+
+Both `run` and `uses` are calling commands. So given this information why do you suppose we are getting the error:
+```
+a step cannot have both the `uses` and `run` keys
+```
+
+#### Fixing Action 1
+
+1. Based on what you think is causing this error, attempt to make a change to the `broken-action-1.yml` file.
+2. Then add and commit that change and push it to GitHub.
+3. Return to your logs to see the most recent run of the action from `.github/workflows/broken-action-1.yml`.
+4. Look at the logs to see if the error is different or is fixed. If it ran successfully you'll see it's actual title show up in the logs. But regardless if it fails or succeeds you should check the logs.
+5. Repeat these steps until you have fixed action 1.
+
+### Broken Action 2 - Create an issue
+
+Let's look into Action 2's logs to try to fix it. Go to the `Actions` tab and find the most recent workflow run that indicates its from `.github/workflows/broken-action-2.yml`.
+
+This action, like the first one, has start up issues so it will not have its status shown on the pull request.
+
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_157.png" width="100%" style="display: block; margin: auto;" />
+Click on this issue's log and scroll down to the bottom where it says "Annotation".
+
+In this case we have an error:
+```
+You have an error in your yaml syntax on line 11
+```
+
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_90.png" width="100%" style="display: block; margin: auto;" />
+
+What do you suppose this error means? What's nice about this error is that it does tell us a specific line to look at. Keep in mind though sometimes when GitHub action tells us a line this may be approximate. We may need to look slightly before or slightly after the line it calls for us to know what to fix.
+
+#### Fixing Action 2
+
+1. Open up the `broken-action-2.yml` file.
+2. Take a look at the code around line 11
+3. What do you notice that is different about these lines as compared to other actions we've looked at?
+4. Formulate a hypothesis on what you think is the problem and change that in `broken-action-2.yml`.
+5. Then add and commit that change and push it to GitHub.
+6. Return to your logs to see the most recent run of the action from `.github/workflows/broken-action-2.yml`. If it ran successfully you'll see it's actual title show up in the logs. But regardless if it fails or succeeds you should check the logs.
+7. Look at the logs to see if the error is different or is fixed.
+8. Repeat these steps until you have fixed action 2!
+
+### Broken Action 3 - Run script
+
+Finally, let's look into `Broken Action 3 - Run script`. Go to the logs and look for a recent workflow run of that title.  
+
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_163.png" width="100%" style="display: block; margin: auto;" />
+
+In this case, the `Annotations` might tell us `Process completed with exit code 127`. If we look online we can see that this means that either a script doesn't exist or it can't run.
+
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_95.png" width="100%" style="display: block; margin: auto;" />
+
+This is moderately helpful but doesn't really help us identify the problem. So we have to dig into the log some more.
+When we click on the log it will likely open up the step that this workflow failed on.
+
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_174.png" width="100%" style="display: block; margin: auto;" />
+
+In this case we have an error:
+```
+/__w/_temp/36dfc03e-56ed-43fa-9019-85d8b151f42a.sh: 2: python3: not found
+Running python here
+```
+
+The `/__w/_temp/36dfc03e-56ed-43fa-9019-85d8b151f42a.sh` bit just tells us information about where this was being ran in the temporary workspace that GitHub was using to run our workflow. And if we look at our yaml file we can see the message: `Running python here` is just something we had echoed.
+
+What we're going to want to zero in on here is the `python3: not found`.
+
+#### Fixing Action 3
+
+1. Open up the `broken-action-3.yml` file.
+2. It looks like Python is not able to be found. Look at the yaml file and try to figure out why that might be.
+3. Formulate a hypothesis on what you think is the problem and change that in `broken-action-3.yml`.
+4. Then add and commit that change and push it to GitHub.
+5. Return to your logs to see the most recent run of the action from `.github/workflows/broken-action-3.yml`.
+6. Look at the logs to see if the error is different or is fixed.
+7. Repeat these steps until you have fixed action 2!
 
 
-Here is a `<div class = "dictionary">` box:
+<details>
 
-<div class = "dictionary">
+<summary> For a further hint about fixing this problem look here </summary>
 
-dictionary text
+You're going to want to look into what software packages the docker image referenced on in the `image:` key has. Does `rocker/r-base` image have Python?
 
-</div>
+If not, you may need to look for a Docker image to use that has python. We've used one in a previous example that you could borrow.
 
-
-Here is a `<div class = "reflection">` box:
-
-<div class = "reflection">
-
-reflection text
-
-</div>
-
-
-## Dropdown summaries
-
-<details><summary> You can hide additional information in a dropdown menu </summary>
-Here's more words that are hidden.
 </details>
 
-## Print out session info
+## Summary
 
-You should print out session info when you have code for [reproducibility purposes](https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/managing-package-versions.html).
+In this activity, we practiced troubleshooting GitHub Actions. We discussed some of the most common ways that GitHub Actions can be broken. Here's a summary of troubleshooting tips covered in this chapter/
 
-
-```r
-devtools::session_info()
-```
-
-```
-## ─ Session info ───────────────────────────────────────────────────────────────
-##  setting  value                       
-##  version  R version 4.0.2 (2020-06-22)
-##  os       Ubuntu 20.04.5 LTS          
-##  system   x86_64, linux-gnu           
-##  ui       X11                         
-##  language (EN)                        
-##  collate  en_US.UTF-8                 
-##  ctype    en_US.UTF-8                 
-##  tz       Etc/UTC                     
-##  date     2023-10-18                  
-## 
-## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package     * version date       lib source                            
-##  assertthat    0.2.1   2019-03-21 [1] RSPM (R 4.0.5)                    
-##  bookdown      0.24    2023-03-28 [1] Github (rstudio/bookdown@88bc4ea) 
-##  bslib         0.4.2   2022-12-16 [1] CRAN (R 4.0.2)                    
-##  cachem        1.0.7   2023-02-24 [1] CRAN (R 4.0.2)                    
-##  callr         3.5.0   2020-10-08 [1] RSPM (R 4.0.2)                    
-##  cli           3.6.1   2023-03-23 [1] CRAN (R 4.0.2)                    
-##  crayon        1.3.4   2017-09-16 [1] RSPM (R 4.0.0)                    
-##  curl          4.3     2019-12-02 [1] RSPM (R 4.0.3)                    
-##  desc          1.2.0   2018-05-01 [1] RSPM (R 4.0.3)                    
-##  devtools      2.3.2   2020-09-18 [1] RSPM (R 4.0.3)                    
-##  digest        0.6.25  2020-02-23 [1] RSPM (R 4.0.0)                    
-##  ellipsis      0.3.1   2020-05-15 [1] RSPM (R 4.0.3)                    
-##  evaluate      0.20    2023-01-17 [1] CRAN (R 4.0.2)                    
-##  fansi         0.4.1   2020-01-08 [1] RSPM (R 4.0.0)                    
-##  fastmap       1.1.1   2023-02-24 [1] CRAN (R 4.0.2)                    
-##  fs            1.5.0   2020-07-31 [1] RSPM (R 4.0.3)                    
-##  glue          1.4.2   2020-08-27 [1] RSPM (R 4.0.5)                    
-##  highr         0.8     2019-03-20 [1] RSPM (R 4.0.3)                    
-##  hms           0.5.3   2020-01-08 [1] RSPM (R 4.0.0)                    
-##  htmltools     0.5.5   2023-03-23 [1] CRAN (R 4.0.2)                    
-##  httr          1.4.2   2020-07-20 [1] RSPM (R 4.0.3)                    
-##  jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.0.2)                    
-##  jsonlite      1.7.1   2020-09-07 [1] RSPM (R 4.0.2)                    
-##  knitr         1.33    2023-03-28 [1] Github (yihui/knitr@a1052d1)      
-##  lifecycle     1.0.3   2022-10-07 [1] CRAN (R 4.0.2)                    
-##  magrittr    * 2.0.3   2022-03-30 [1] CRAN (R 4.0.2)                    
-##  memoise       2.0.1   2021-11-26 [1] CRAN (R 4.0.2)                    
-##  ottrpal       1.0.1   2023-03-28 [1] Github (jhudsl/ottrpal@151e412)   
-##  pillar        1.9.0   2023-03-22 [1] CRAN (R 4.0.2)                    
-##  pkgbuild      1.1.0   2020-07-13 [1] RSPM (R 4.0.2)                    
-##  pkgconfig     2.0.3   2019-09-22 [1] RSPM (R 4.0.3)                    
-##  pkgload       1.1.0   2020-05-29 [1] RSPM (R 4.0.3)                    
-##  prettyunits   1.1.1   2020-01-24 [1] RSPM (R 4.0.3)                    
-##  processx      3.4.4   2020-09-03 [1] RSPM (R 4.0.2)                    
-##  ps            1.4.0   2020-10-07 [1] RSPM (R 4.0.2)                    
-##  R6            2.4.1   2019-11-12 [1] RSPM (R 4.0.0)                    
-##  readr         1.4.0   2020-10-05 [1] RSPM (R 4.0.2)                    
-##  remotes       2.2.0   2020-07-21 [1] RSPM (R 4.0.3)                    
-##  rlang         1.1.0   2023-03-14 [1] CRAN (R 4.0.2)                    
-##  rmarkdown     2.10    2023-03-28 [1] Github (rstudio/rmarkdown@02d3c25)
-##  rprojroot     2.0.3   2022-04-02 [1] CRAN (R 4.0.2)                    
-##  sass          0.4.5   2023-01-24 [1] CRAN (R 4.0.2)                    
-##  sessioninfo   1.1.1   2018-11-05 [1] RSPM (R 4.0.3)                    
-##  stringi       1.5.3   2020-09-09 [1] RSPM (R 4.0.3)                    
-##  stringr       1.4.0   2019-02-10 [1] RSPM (R 4.0.3)                    
-##  testthat      3.0.1   2023-03-28 [1] Github (R-lib/testthat@e99155a)   
-##  tibble        3.2.1   2023-03-20 [1] CRAN (R 4.0.2)                    
-##  usethis       1.6.3   2020-09-17 [1] RSPM (R 4.0.2)                    
-##  utf8          1.1.4   2018-05-24 [1] RSPM (R 4.0.3)                    
-##  vctrs         0.6.1   2023-03-22 [1] CRAN (R 4.0.2)                    
-##  withr         2.3.0   2020-09-22 [1] RSPM (R 4.0.2)                    
-##  xfun          0.26    2023-03-28 [1] Github (yihui/xfun@74c2a66)       
-##  yaml          2.2.1   2020-02-01 [1] RSPM (R 4.0.3)                    
-## 
-## [1] /usr/local/lib/R/site-library
-## [2] /usr/local/lib/R/library
-```
-
-[many links]: https://github.com/jhudsl/OTTR_Template
+<img src="07-gha-troubleshooting_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_67.png" width="100%" style="display: block; margin: auto;" />
