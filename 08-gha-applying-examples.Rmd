@@ -6,7 +6,7 @@
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_57")
 ```
 
-A great way to learn GitHub Actions is to borrow a yaml file someone else has written to your own project. In this chapter we will introduce you to two GitHub Actions and encourage you to adapt one or both of them to one of your own projects. We encourage you to follow these similar steps and tips for other actions that are written on the internet that you may find that you can use for your project.
+A great way to learn GitHub Actions is to borrow a yaml file someone else has written and incorporate it into your own project. In this chapter we will introduce you to two GitHub Actions and encourage you to adapt one or both of them to one of your own projects. We encourage you to follow these similar steps and tips for other actions that are written on the internet that you may find that you can use for your project.
 
 The two action examples we have in this chapter both work on `pull_request` triggers and do the following:
 
