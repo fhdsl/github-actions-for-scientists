@@ -1,5 +1,5 @@
 
-# Why Automation?
+# Why Automation
 
 ```{r, out.width = "100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.gd422c5de97_0_0")
