@@ -17,9 +17,10 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 However, the modern process of _doing_ science, itself, is rarely linear.
 It is not realistic to do an experiment, and write a manuscript, and publish the paper, in that order and with no other complications -- usually, there is some amount of iteration involved on one or more of these steps:
-* You might do an experiment, then summarize it, then run more experiments based on the results to confirm/test/extend your findings
-* You might do an experiment, write a manuscript, then revise the manuscript based on feedback from other scientists
-* You might submit a manuscript, then a reviewer may request revisions or additional experiments, which will require you to go back and revisit your experimental setup and conclusions
+
+- You might do an experiment, then summarize it, then run more experiments based on the results to confirm/test/extend your findings
+- You might do an experiment, write a manuscript, then revise the manuscript based on feedback from other scientists
+- You might submit a manuscript, then a reviewer may request revisions or additional experiments, which will require you to go back and revisit your experimental setup and conclusions
 
 As scientists, we don't generally expect science to be a static, "write once and forget" process.
 
@@ -35,7 +36,7 @@ But more often, you’ll write a script (or join several of them together in a m
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g287bcb243d2_0_46")
 ```
 
-In this course, through the lens of automation, we hope to familiarize you with some of the skills necessary to think about research software iteratively, from the beginning of a research project.
+In this course, through the lens of automation, we hope to familiarize you with some of the skills necessary to think about research software in an iterative way, from the beginning of a research project.
 It is almost always easier to put good software development practices in place proactively, before a project has matured, rather than adding them on once the project is sufficiently complex that they are necessary.
 
 Although software development is not generally rewarded directly in academia, it turns out that writing good software does have less obvious rewards, even within the traditional academic structure.
@@ -45,8 +46,9 @@ For example, software that is easy to install tends to be cited more often [@man
 
 Not all software is complex, and not all software requires complex infrastructure (or automation, for that matter)!
 It can be useful to think about the complexity of software engineering infrastructure necessary for a project proportionally to the complexity of the software itself:
-* Simple software (math, data transformations, procedural/rule-based scripts) requires simpler infrastructure.
-* Complex software (e.g. "pipelines" composed of many commands/software packages chained together, "libraries" that are intended to be reused in many different applications) requires more complex infrastructure, to check assumptions and test reproducibility at each step.
+
+- Simple software (math, data transformations, procedural/rule-based scripts) requires simpler infrastructure.
+- Complex software (e.g. "pipelines" composed of many commands/software packages chained together, "libraries" that are intended to be reused in many different applications) requires more complex infrastructure, to check assumptions and test reproducibility at each step.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g287bcb243d2_0_153")
