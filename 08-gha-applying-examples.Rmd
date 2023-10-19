@@ -148,7 +148,7 @@ We're using a Docker image that has some R packages we will use so we don't have
   with:
     ref: ${{ github.event.pull_request.head.ref }}
 ```
-We need this files in this repo. So we are checking out the files we need using [`actions/checkout@v3`](https://github.com/actions/checkout)
+We need this files in this repo. So we are checking out the files we need using [`actions/checkout@v3`](https://github.com/actions/checkout).
 
 ```
 # Our docker image doesn't have this one package though so we'll install it
@@ -200,3 +200,4 @@ Besides the points of customization you may need to work on that we discussed; y
 
 
 From here, its basically good luck! Take it one troubleshooting tactic at a time, Google your problems and look for GitHub Action marketplace actions that fit your needs. Best of luck!
+
