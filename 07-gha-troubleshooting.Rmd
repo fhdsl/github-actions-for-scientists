@@ -62,9 +62,9 @@ You may want to Google those messages depending on what they are saying. If the 
 
 Regardless of whether you want your final GitHub Action to run on a `pull_request` or `workflow_dispatch` triggers, it can be helpful during development to use these. You can have multiple triggers for a GitHub actions.
 
-The `pull_request` trigger is helpful for development so that every time you push to your pull request your action will be re-run automatically so you can see if what you tried worked.
+The `pull_request` trigger is helpful for development so that every time you push to your pull request your action will be re-run automatically so you can see if what you tried worked. This is the default method (in my mind) for developing a GitHub action. The only instance you may not want to use this method is if you are using GitHub default variables that are different in pull requests than they will be in your final version of the GitHub Action. In that instance a `pull_request` may not be a representative test for you.
 
-The `workflow_dispatch` trigger is useful so you can re-trigger the workflow run whenever you need to test the next thing you tried for troubleshooting purposes.
+The `workflow_dispatch` trigger is useful so you can re-trigger the workflow run whenever you need to test the next thing you tried for troubleshooting purposes. You might consider doing this if your testing as a pull request isn't appropriate. You can also initiate `workflow_dispatch` workflow runs from any branch -- so you don't have to merge it before you've polished it.
 
 There's two caveats to this strategy:
 
@@ -89,7 +89,7 @@ The great part about using GitHub Actions is that you can use other people's act
 
 This however, does mean that you are dependent on the developers and maintainers of these GitHub Actions.
 
-There are two tips for troubleshooting a problematic GitHub Action that is borrowed from marketplace:
+There are three tips for troubleshooting a problematic GitHub Action that is borrowed from marketplace:
 
 1. Read their docs carefully and make sure you are using it as specified.
 2. Try bumping up to a later version if it looks like there's a bug that may have been addressed.
