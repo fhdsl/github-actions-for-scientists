@@ -6,6 +6,12 @@ curriculum
 how-to-use-the-course
 programming-practices
 why-automation
+why-reproducibility-is-so-important.
+automation-as-a-reproducibility-tool
+continuous-integration-continous-deployment
+continous-integration-continuous-deployment
+a-real-world-example
+other-cicd-services
 github-actions-fundamentals
 gha-structure
 on-when-a-thing-should-be-run
@@ -54,5 +60,10 @@ fixing-action-2
 broken-action-3---run-script
 fixing-action-3
 summary-1
-more-github-actions-examples
+applying-github-actions-examples
+explore-the-actions
+diving-deeper
+spell-check-overview
+style-code-overview
+tips-for-adapting-these-to-your-own-repository
 references
