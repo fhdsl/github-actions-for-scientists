@@ -81,25 +81,22 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 Most sequencing analyses require multiple steps (i.e. different programs or scripts), and generate multiple intermediate files (e.g. read counts, normalized counts, quality information) that can be checked to verify that the pipeline is proceeding as expected.
 Sequencing analyses can also take hours or days to run, as compared to the _t_-test example which runs effectively instantaneously.
-All of these potential axes of variation mean that having infrastructure to check that everything is running smoothly is 1) more complex than our previous example, and 2) more necessary than our previous example, especially in the case where the sequencing pipeline needs to be rerun or modified to generate different output.
+All of these potential axes of variation mean that 1) the set of steps that need to take place is more complex than our previous example, and 2) having infrastructure to check that everything is running smoothly will be more beneficial than our previous example.
+This is especially true in the case where the sequencing pipeline needs to be rerun or modified to generate different output.
 
 ## Automation for scientific software
 
-Good software practices do not necessarily have to be implemented using automation.
+Good software practices do not necessarily have to rely on automation.
 However, as projects and infrastructure become more complex, it can be unwieldy to check and revise your results without some sort of automated process to kick them off automatically, without too much human intervention.
 Steps that are involved might include: rerunning the software itself (often on new or modified input data), software testing, code style linting, rebuilding figures or processed datasets, and so on.
 Each of these can be individually run by hand, or combined in a central script that runs all the steps in order or in parallel, which can also be triggered manually.
 Such a central script can itself be considered a form of automation.
 
+Automation via GitHub Actions, in contrast, can provide a "single point of truth": a single central script to run these steps, and a single set of (automated) criteria for when to run them.
+This eliminates the need for you to remember to run tests, or to clean up your code, or to rebuild figures, or to kick off similar standard processes or commands on your own.
+
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g28fb47c580d_0_55")
 ```
 
-Automation via GitHub Actions, in contrast, can provide a "single point of truth": a single central script to run these steps, and a single set of (automated) criteria for when to run them.
-This eliminates the need for you to remember to run tests, or to clean up your code, or to rebuild figures, etc. on your own.
-
-```{r, fig.align='center', out.width="100%", echo = FALSE }
-ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g28fb47c580d_0_115")
-```
-
-Later in the course, we will talk more specifically about what exactly automation via continuous integration is, and go into more depth as to its uses and benefits.
+Later in the course, we will talk more specifically about what exactly automation via continuous integration looks like, and go into more depth as to its uses and benefits.
