@@ -56,7 +56,7 @@ Before we discuss the concept of Continous integration / Continuous deployment (
 
 
 ```{r, out.width = "100%", echo = FALSE}
-ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g280d2b56f79_0_3844")
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g27a8d088b93_0_11")
 ```
 
 Obviously we are getting at here, that generally its a good idea to check work along the way instead of waiting until something is completely finished to test it.
