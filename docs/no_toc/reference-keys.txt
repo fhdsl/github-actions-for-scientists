@@ -54,5 +54,10 @@ fixing-action-2
 broken-action-3---run-script
 fixing-action-3
 summary-1
-more-github-actions-examples
+applying-github-actions-examples
+explore-the-actions
+diving-deeper
+spell-check-overview
+style-code-overview
+tips-for-adapting-these-to-your-own-repository
 references

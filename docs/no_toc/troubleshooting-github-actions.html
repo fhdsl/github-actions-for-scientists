@@ -30,7 +30,7 @@
   
   <link rel="shortcut icon" href="assets/ITN_favicon.ico" type="image/x-icon" />
 <link rel="prev" href="github-action-variables.html"/>
-<link rel="next" href="more-github-actions-examples.html"/>
+<link rel="next" href="applying-github-actions-examples.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -158,7 +158,14 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7.3" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#summary-1"><i class="fa fa-check"></i><b>7.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="more-github-actions-examples.html"><a href="more-github-actions-examples.html"><i class="fa fa-check"></i><b>8</b> More GitHub Actions Examples</a></li>
+<li class="chapter" data-level="8" data-path="applying-github-actions-examples.html"><a href="applying-github-actions-examples.html"><i class="fa fa-check"></i><b>8</b> Applying GitHub Actions Examples</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="applying-github-actions-examples.html"><a href="applying-github-actions-examples.html#explore-the-actions"><i class="fa fa-check"></i><b>8.1</b> Explore the actions</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="applying-github-actions-examples.html"><a href="applying-github-actions-examples.html#diving-deeper"><i class="fa fa-check"></i><b>8.1.1</b> Diving deeper</a></li>
+<li class="chapter" data-level="8.1.2" data-path="applying-github-actions-examples.html"><a href="applying-github-actions-examples.html#tips-for-adapting-these-to-your-own-repository"><i class="fa fa-check"></i><b>8.1.2</b> Tips for adapting these to your own repository</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
 <li class="chapter" data-level="9" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>9</b> References</a></li>
 <li class="divider"></li>
@@ -234,8 +241,8 @@ div.csl-indent {
 <div id="use-workflow_dispatchpull_request-triggers-for-development" class="section level3" number="7.1.3">
 <h3><span class="header-section-number">7.1.3</span> Use workflow_dispatch/pull_request triggers for development</h3>
 <p>Regardless of whether you want your final GitHub Action to run on a <code>pull_request</code> or <code>workflow_dispatch</code> triggers, it can be helpful during development to use these. You can have multiple triggers for a GitHub actions.</p>
-<p>The <code>pull_request</code> trigger is helpful for development so that every time you push to your pull request your action will be re-run automatically so you can see if what you tried worked.</p>
-<p>The <code>workflow_dispatch</code> trigger is useful so you can re-trigger the workflow run whenever you need to test the next thing you tried for troubleshooting purposes.</p>
+<p>The <code>pull_request</code> trigger is helpful for development so that every time you push to your pull request your action will be re-run automatically so you can see if what you tried worked. This is the default method (in my mind) for developing a GitHub action. The only instance you may not want to use this method is if you are using GitHub default variables that are different in pull requests than they will be in your final version of the GitHub Action. In that instance a <code>pull_request</code> may not be a representative test for you.</p>
+<p>The <code>workflow_dispatch</code> trigger is useful so you can re-trigger the workflow run whenever you need to test the next thing you tried for troubleshooting purposes. You might consider doing this if your testing as a pull request isn’t appropriate. You can also initiate <code>workflow_dispatch</code> workflow runs from any branch – so you don’t have to merge it before you’ve polished it.</p>
 <p>There’s two caveats to this strategy:</p>
 <ol style="list-style-type: decimal">
 <li>If you don’t want these triggers long term, make sure you delete them before you merge to main.</li>
@@ -254,7 +261,7 @@ div.csl-indent {
 <h3><span class="header-section-number">7.1.5</span> Use Marketplace actions</h3>
 <p>The great part about using GitHub Actions is that you can use other people’s actions from the marketplace so you don’t have to write everything from scratch!</p>
 <p>This however, does mean that you are dependent on the developers and maintainers of these GitHub Actions.</p>
-<p>There are two tips for troubleshooting a problematic GitHub Action that is borrowed from marketplace:</p>
+<p>There are three tips for troubleshooting a problematic GitHub Action that is borrowed from marketplace:</p>
 <ol style="list-style-type: decimal">
 <li>Read their docs carefully and make sure you are using it as specified.</li>
 <li>Try bumping up to a later version if it looks like there’s a bug that may have been addressed.</li>
@@ -410,7 +417,7 @@ For a further hint about fixing this problem look here
         </div>
       </div>
 <a href="github-action-variables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="more-github-actions-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="applying-github-actions-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
