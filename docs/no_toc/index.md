@@ -1,6 +1,6 @@
 ---
 title: "GitHub Automation for Scientists"
-date: "October, 2023"
+date: "November, 2023"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
