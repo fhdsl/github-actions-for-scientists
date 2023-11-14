@@ -10,15 +10,15 @@ These credits are based on our [course contributors table guidelines](https://ww
 |-------|-----|
 |**Pedagogy**||
 |Lead Content Instructor(s)|[Candace Savonen]|
-|Content Author(s)| [Candace Savonen], and [Jake Crawford]|
+|Content Author(s)| [Candace Savonen], and [Jake Crawford] - `Scientific software development best practices`|
 |**Technical**||
 |Template Publishing Engineers|[Candace Savonen], [Carrie Wright], [Ava Hoffman]|
 |Publishing Maintenance Engineer|[Candace Savonen]|
 |Technical Publishing Stylists|[Carrie Wright], [Ava Hoffman], [Candace Savonen]|
 |Package Developers ([ottrpal]) [Candace Savonen], [John Muschelli], [Carrie Wright]|
 |**Art and Design**||
-|Illustrator(s)| [Candace Savonen], and [Jake Crawford]|
-|Figure Artist(s)| [Candace Savonen], and [Jake Crawford]|
+|Illustrator(s)| [Candace Savonen], and [Jake Crawford] - `Scientific software development best practices`|
+|Figure Artist(s)| [Candace Savonen], and [Jake Crawford] - `Scientific software development best practices`|
 |**Funding**||
 |Funder(s)| NCI UE5CA254170|
 |Funding Staff| [Shasta Nicholson], [Maleah O'Connor], [Sandy Ombrek]|
