@@ -1,24 +1,17 @@
-# {Course Name}
+# GitHub Automation for Scientists 
 
-This course was created from [this GitHub template](https://github.com/jhudsl/OTTR_Template).
+This course covers how to use GitHub actions for scientific software development. We encourage the recognition that scientific software can take many forms that can all benefit from the concepts of continuous integration and continuous deployment.
 
-You can see the rendered course material here: {Link to rendered bookdown and/or to the Leanpub.}
+## Target Audience  
 
-If you would like to contribute to this course material, take a look at the [OTTR documentation](https://www.ottrproject.org/).
+The course is intended for students in the biomedical sciences and researchers who use informatics tools in their research
 
-## About this course
+_This course is written for individuals who:_   
 
-This course introduces {info on what this course introduces}
+- Are comfortable with GitHub and know how to make a pull request  
+- Wish to save time and enhance their scientific projects using  automation
+- Perhaps previously tried to learn about GitHub Actions but felt overwhelmed on how to get started
 
-## Learning Objectives
+## Prerequisites 
 
-This course will teach learners to:  
-
-- {You can use https://www.bobpikegroup.com/trainer-blog/5-steps-to-writing-clear-and-measurable-learning-objectives to define some learning objectives here}
-- {More learning objectives}
-
-## Encountering problems?
-
-If you are encountering any problems with this course, please file a GitHub issue or contact us at {Some email or web address with a contact form}.
-
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />All materials in this course are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a> unless noted otherwise.
+This course builds on concepts introduced in the [Reproducibility](https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/introduction.html) and [Advanced Reproducibility](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/introduction.html) courses from the ITCR Training Network. If you are unfamiliar with GitHub and/or do not have an account, we'd suggest you start with those courses by using the links. 
