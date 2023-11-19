@@ -60,7 +60,7 @@ We will take a closer look at two concrete examples, one on each end of the soft
 
 Imagine that you have two sampling distributions (lists/arrays of numbers) and you want to test whether the means of the distributions are statistically equivalent or not.
 This is the setup for a _t_-test.
-_t_-tests are implemented in standard functions in R ((`base` library)[https://rdrr.io/r/base/base-package.html]) and Python ((`scipy` library)[https://scipy.org/]), as well as most other commonly used programming languages.
+_t_-tests are implemented in standard functions in R ([`base` library](https://rdrr.io/r/base/base-package.html)) and Python ([`scipy` library](https://scipy.org/)), as well as most other commonly used programming languages.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g287bcb243d2_0_122")
@@ -72,7 +72,7 @@ In your own software, you might need to do some verification of your input (for 
 
 ### Sequencing analysis
 
-Imagine that you have a list of reads from a (DNA sequencing)[https://en.wikipedia.org/wiki/DNA_sequencing#High-throughput_methods] machine, and you want to use these data to answer a biological question, or to make a plot/visualization to communicate a biological insight.
+Imagine that you have a list of reads from a [DNA sequencing](https://en.wikipedia.org/wiki/DNA_sequencing#High-throughput_methods) machine, and you want to use these data to answer a biological question, or to make a plot/visualization to communicate a biological insight.
 This is a much less well-defined problem than our previous example, with many more independently operating components, and many more subjective decisions that a researcher must make along the way.
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
