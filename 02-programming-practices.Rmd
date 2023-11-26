@@ -81,8 +81,11 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 Most sequencing analyses require multiple steps (i.e. different programs or scripts), and generate multiple intermediate files (e.g. read counts, normalized counts, quality information) that can be checked to verify that the pipeline is proceeding as expected.
 Sequencing analyses can also take hours or days to run, as compared to the _t_-test example which runs effectively instantaneously.
-All of these potential axes of variation mean that 1) the set of steps that need to take place is more complex than our previous example, and 2) having infrastructure to check that everything is running smoothly will be more beneficial than our previous example.
-This is especially true in the case where the sequencing pipeline needs to be rerun or modified to generate different output.
+
+This means that:
+
+- The set of steps that need to take place is more complex than our previous example, and each step in the analysis likely builds from previous steps. Finding errors early in the process can save a lot of time and effort in later steps.
+- A longer or more complex set of steps often means there are more ambiguous/"gray area" decisions that need to be made along the way. This usually means more iterations or experiments, to explore what works and what doesn't. Introducing reproducible software practices from the ground up will help to make this exploratory process easier and clearer.
 
 ## Automation for scientific software
 
