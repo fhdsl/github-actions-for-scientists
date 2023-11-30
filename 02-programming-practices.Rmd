@@ -74,6 +74,7 @@ In your own software, you might need to do some verification of your input (for 
 
 Imagine that you have a list of reads from a [DNA sequencing](https://en.wikipedia.org/wiki/DNA_sequencing#High-throughput_methods) machine, and you want to use these data to answer a biological question, or to make a plot/visualization to communicate a biological insight.
 This is a much less well-defined problem than our previous example, with many more independently operating components, and many more subjective decisions that a researcher must make along the way.
+Complex data analyses means complex decisions! This often means that decisions made are not so cut and dry and should rely on the scientific context of the data. In other words, analyses often are tailored to reflect the biology (or other science) and or perhaps the experimental goals. 
 
 ```{r, fig.align='center', out.width="100%", echo = FALSE }
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g28fb47c580d_0_152")
