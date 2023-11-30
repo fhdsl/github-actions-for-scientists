@@ -4,7 +4,14 @@ topics-covered
 motivation
 curriculum
 how-to-use-the-course
-programming-practices
+scientific-software-development-best-practices
+learning-objectives
+science-and-software-as-iterative-processes
+software-complexity-as-a-spectrum
+examples
+t-test
+sequencing-analysis
+automation-for-scientific-software
 why-automation
 why-reproducibility-is-so-important.
 automation-as-a-reproducibility-tool
