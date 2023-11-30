@@ -1,8 +1,6 @@
 
 # Why Automation
 
-<img src="03-why-automation_files/figure-html//1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_gd422c5de97_0_0.png" width="100%" />
-
 
 All of science is built on results being reliable and continually working toward identifying more true/less wrong explanations about the world.
 
@@ -108,6 +106,6 @@ But, if you had been using the principles of CI/CD and reproducibility you may h
 
 By having automation keep tabs on your development, you will be less likely to be blind sided by bugs in a situation where you need to re-run your analysis (or adapt it for a new analysis!)
 
-### Other CI/CD services 
+### Other CI/CD services
 
 In this course we are focusing on using GitHub Actions for CI/CD. However, at this point we should mention that GitHub Actions is just one of many options for this. [Circle CI](https://circleci.com/), [Appveyor](https://www.appveyor.com/), and [Travis CI](https://www.travis-ci.com/) are all also perfectly fine options to use. But if you are using GitHub already, GitHub Actions may be the easiest to start out with. However, if at a later point in your automation development journey you find that GitHub Actions may not have a feature you need, we encourage you to explore these other options and use what works best for you. These other CI/CD options definitely have some commonalities with GitHub actions so learning GitHub Actions will still give you a good start in understanding how these services work.
