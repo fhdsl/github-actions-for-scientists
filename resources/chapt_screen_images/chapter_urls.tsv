@@ -1,7 +1,7 @@
 url	chapt_title	img_path
 http://hutchdatascience.org/GitHub_Automation_for_Scientists/no_toc/index.html	About this Course	resources/chapt_screen_images/index.png
 http://hutchdatascience.org/GitHub_Automation_for_Scientists/no_toc/introduction.html	1 Introduction	resources/chapt_screen_images/introduction.png
-http://hutchdatascience.org/GitHub_Automation_for_Scientists/no_toc/programming-practices.html	2 Programming Practices	resources/chapt_screen_images/programming-practices.png
+http://hutchdatascience.org/GitHub_Automation_for_Scientists/no_toc/scientific-software-development-best-practices.html	2 Scientific software development best practices	resources/chapt_screen_images/scientific-software-development-best-practices.png
 http://hutchdatascience.org/GitHub_Automation_for_Scientists/no_toc/why-automation.html	3 Why Automation	resources/chapt_screen_images/why-automation.png
 http://hutchdatascience.org/GitHub_Automation_for_Scientists/no_toc/github-actions-fundamentals.html	4 GitHub Actions Fundamentals	resources/chapt_screen_images/github-actions-fundamentals.png
 http://hutchdatascience.org/GitHub_Automation_for_Scientists/no_toc/automating-re-running-analyses.html	5 Automating Re-running Analyses	resources/chapt_screen_images/automating-re-running-analyses.png
