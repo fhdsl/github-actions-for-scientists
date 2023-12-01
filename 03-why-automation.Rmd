@@ -1,6 +1,11 @@
 
 # Why Automation
 
+```{r, out.width = "100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g104d8c58b62_46_4")
+```
+
+## Automation as an aid for reproducibility 
 
 All of science is built on results being reliable and continually working toward identifying more true/less wrong explanations about the world.
 
