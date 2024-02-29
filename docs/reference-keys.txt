@@ -13,6 +13,7 @@ t-test
 sequencing-analysis
 automation-for-scientific-software
 why-automation
+automation-as-an-aid-for-reproducibility
 why-reproducibility-is-so-important.
 automation-as-a-reproducibility-tool
 continuous-integration-continous-deployment
