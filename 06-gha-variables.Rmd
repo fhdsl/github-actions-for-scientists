@@ -110,7 +110,8 @@ To do this we can use this sort of set up:
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g290614d43ec_0_2")
 ```
 
-Step that sets a variable depending on some output
+Step that sets a variable depending on some output:
+
 ```
 # How to export a variable to a next step
 - name: Setting output to the environment at large

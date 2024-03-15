@@ -39,7 +39,7 @@ devtools::session_info()
 [Jake Crawford]: https://jjc2718.github.io/
 [Maleah O'Connor]: https://www.linkedin.com/in/maleah-o-connor/
 [Shasta Nicholson]: https://www.linkedin.com/in/shastanicholson/
-[Sandy Ombrek]: https://www.linkedin.com/in/sandy-ormbrek-1410b113/
+[Sandy Ormbrek]: https://www.linkedin.com/in/sandy-ormbrek-1410b113/
 
 <!-- Links -->
 
