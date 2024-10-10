@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 GitHub Action Variables | GitHub Automation for Scientists</title>
   <meta name="description" content="Chapter 6 GitHub Action Variables | GitHub Automation for Scientists" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.39.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 GitHub Action Variables | GitHub Automation for Scientists" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -31,7 +30,6 @@
   <link rel="shortcut icon" href="assets/ITN_favicon.ico" type="image/x-icon" />
 <link rel="prev" href="automating-re-running-analyses.html"/>
 <link rel="next" href="troubleshooting-github-actions.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,8 +47,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
   
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8K2XL467QV"></script>
@@ -64,6 +63,10 @@
 
 
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -237,12 +240,12 @@ div.csl-indent {
 <div class="hero-image-container"> 
   <img class= "hero-image" src="assets/itcr_main_image.png">
 </div>
-<div id="github-action-variables" class="section level1" number="6">
-<h1><span class="header-section-number">Chapter 6</span> GitHub Action Variables</h1>
+<div id="github-action-variables" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> GitHub Action Variables<a href="github-action-variables.html#github-action-variables" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_52.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>The GitHub Actions environments have variables that are already set by default in the environment but you can also set environment variables yourself.</p>
-<div id="types-of-variables" class="section level3" number="6.0.1">
-<h3><span class="header-section-number">6.0.1</span> Types of variables</h3>
+<div id="types-of-variables" class="section level3 hasAnchor" number="6.0.1">
+<h3><span class="header-section-number">6.0.1</span> Types of variables<a href="github-action-variables.html#types-of-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There are two types of variables in GitHub Actions.</p>
 <ol style="list-style-type: decimal">
 <li><code>Default</code> - Ones GitHub already sets for you.</li>
@@ -252,8 +255,8 @@ div.csl-indent {
 <pre><code>echo ${{ github.repository }}</code></pre>
 <p>In this next exercise we’ll explore different ways to use variables.</p>
 </div>
-<div id="exercise-3---exploring-variables" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Exercise 3 - Exploring Variables</h2>
+<div id="exercise-3---exploring-variables" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Exercise 3 - Exploring Variables<a href="github-action-variables.html#exercise-3---exploring-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For this exercise, we are going to continue to use the example repository that we set up in the previous chapter.</p>
 <ol style="list-style-type: decimal">
 <li>Create a new branch to work from.</li>
@@ -280,8 +283,8 @@ git push --set-upstream origin env-var</code></pre>
 <li><p>On your pull request page on GitHub, click on the <code>Details</code> button next to your workflow run. Keep this handy because we will dive into the details of what we just ran.</p></li>
 </ol>
 <p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3250.png" width="100%" style="display: block; margin: auto;" /></p>
-<div id="default-variables" class="section level3" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> Default variables</h3>
+<div id="default-variables" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Default variables<a href="github-action-variables.html#default-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You can read <a href="https://docs.github.com/en/actions/learn-github-actions/variables">the latest documentation about GitHub Action default variables here</a>. But here’s some highlights.</p>
 <table>
 <colgroup>
@@ -317,10 +320,10 @@ git push --set-upstream origin env-var</code></pre>
 <p>Below shows an example of the log of the where we printed out these default GitHub variables.</p>
 <p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g2903858106e_0_53.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="user-set-variables" class="section level3" number="6.1.2">
-<h3><span class="header-section-number">6.1.2</span> User set variables</h3>
-<div id="env" class="section level4" number="6.1.2.1">
-<h4><span class="header-section-number">6.1.2.1</span> env:</h4>
+<div id="user-set-variables" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> User set variables<a href="github-action-variables.html#user-set-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="env" class="section level4 hasAnchor" number="6.1.2.1">
+<h4><span class="header-section-number">6.1.2.1</span> env:<a href="github-action-variables.html#env" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>There are different ways to set variables. The simplest way to set variables is within a step you can set them using <code>env:</code>. Underneath <code>env:</code> you write the <code>name</code> of the variable on one side of the colon and then the definition on the other side. For example, in our yaml file we had:</p>
 <pre><code>- name: Hello, but make it personal
   run: echo &quot;Hello $First_Name.&quot;
@@ -329,8 +332,8 @@ git push --set-upstream origin env-var</code></pre>
 <p>This set up printed out <code>Hello Candace</code> in the logs as our output.</p>
 <p>This might be useful, but if we want an environmental variable to be stored and retrieved between steps we’ll need to use something different.</p>
 </div>
-<div id="setting-output-variables" class="section level4" number="6.1.2.2">
-<h4><span class="header-section-number">6.1.2.2</span> Setting output variables</h4>
+<div id="setting-output-variables" class="section level4 hasAnchor" number="6.1.2.2">
+<h4><span class="header-section-number">6.1.2.2</span> Setting output variables<a href="github-action-variables.html#setting-output-variables" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>If we’d like one step to be able to retrieve information from another step we’ll need to send a variable to the GITHUB_OUTPUT.</p>
 <p>To do this we can use this sort of set up:</p>
 <p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_2.png" width="100%" style="display: block; margin: auto;" /></p>
@@ -346,8 +349,8 @@ git push --set-upstream origin env-var</code></pre>
 <p>Or perhaps we are running a script that outputs a result:</p>
 <pre><code>results=$(Rscript utils/script.R)</code></pre>
 </div>
-<div id="using-output-variables" class="section level4" number="6.1.2.3">
-<h4><span class="header-section-number">6.1.2.3</span> Using output variables</h4>
+<div id="using-output-variables" class="section level4 hasAnchor" number="6.1.2.3">
+<h4><span class="header-section-number">6.1.2.3</span> Using output variables<a href="github-action-variables.html#using-output-variables" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>To use this output variable in a subsequent step we have to use this kind of setup:</p>
 <p><code>steps.step_name.outputs.results</code> where <code>step_name</code> is the <code>id:</code> we set for the step that set this variable (see above) and <code>results</code> is the name of the variable we set. And, as is typical we need the <code>${{ }}</code> notation.</p>
 <pre><code># How to print out the variable we just saved
@@ -368,19 +371,19 @@ git push --set-upstream origin env-var</code></pre>
     exit 1
 </code></pre>
 </div>
-<div id="setting-and-grabbing-secrets" class="section level4" number="6.1.2.4">
-<h4><span class="header-section-number">6.1.2.4</span> Setting and grabbing secrets</h4>
+<div id="setting-and-grabbing-secrets" class="section level4 hasAnchor" number="6.1.2.4">
+<h4><span class="header-section-number">6.1.2.4</span> Setting and grabbing secrets<a href="github-action-variables.html#setting-and-grabbing-secrets" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>What if the string or variable we need is not something we can supply in the YAML itself? Perhaps we have credentials or something that cannot be shared publicly but that we need it to complete our steps. That’s where GitHub secrets come in handy!</p>
 <p><a href="https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions">Read more about GitHub secrets here.</a>.</p>
 <p>One very common type of GitHub secret you may need to add is a GitHub Personal Access Token (sometimes abbreviated PAT). A personal access token is a string set that, when provided, gives access to a user’s GitHub account. <a href="https://github.com/settings/tokens">Read more about tokens here</a>.</p>
 <p>For GitHub actions that are doing things that require authorization or particular permissions levels, you will need to provide your GitHub action with your personal access token (PAT) that you store as a GitHub secret.</p>
 </div>
 </div>
-<div id="activity-setting-github-secrets" class="section level3" number="6.1.3">
-<h3><span class="header-section-number">6.1.3</span> Activity: Setting GitHub secrets</h3>
+<div id="activity-setting-github-secrets" class="section level3 hasAnchor" number="6.1.3">
+<h3><span class="header-section-number">6.1.3</span> Activity: Setting GitHub secrets<a href="github-action-variables.html#activity-setting-github-secrets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s practice this by setting a GitHub Access token as a secret!</p>
-<div id="make-a-personal-access-token" class="section level4" number="6.1.3.1">
-<h4><span class="header-section-number">6.1.3.1</span> Make a Personal Access token</h4>
+<div id="make-a-personal-access-token" class="section level4 hasAnchor" number="6.1.3.1">
+<h4><span class="header-section-number">6.1.3.1</span> Make a Personal Access token<a href="github-action-variables.html#make-a-personal-access-token" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>You can store any alphanumeric string as your GitHub secret. It may be an API key or authorization keys from some other software program. But for this example, we will use an authorization key for GitHub.</p>
 <p>Recall we have may have to give authorization to a GitHub action some times, because we are not actually running this with our user account, this job is being sent to GitHub for them to run on their servers somewhere.</p>
 <ol style="list-style-type: decimal">
@@ -395,8 +398,8 @@ You will likely have to enter your password at this point.</p></li>
 <li><p>Scroll to the bottom of the page and click <code>Generate</code>. Your token will be shown on the next page. You’ll keep this handy because they won’t show it to you again. Be careful not to share this any place publicly because it will give someone authorization to you GitHub account!</p></li>
 </ol>
 </div>
-<div id="creating-a-github-secret" class="section level4" number="6.1.3.2">
-<h4><span class="header-section-number">6.1.3.2</span> Creating a GitHub Secret</h4>
+<div id="creating-a-github-secret" class="section level4 hasAnchor" number="6.1.3.2">
+<h4><span class="header-section-number">6.1.3.2</span> Creating a GitHub Secret<a href="github-action-variables.html#creating-a-github-secret" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <ol style="list-style-type: decimal">
 <li>Return to your repository that we were using for these activities.</li>
 <li><code>Settings</code> &gt; <code>Secrets and variables</code> &gt; <code>Actions</code> &gt; <code>New Repository Secret</code>.</li>
@@ -404,8 +407,8 @@ You will likely have to enter your password at this point.</p></li>
 <li>Now copy and paste in the secret section.</li>
 </ol>
 <p><img src="06-gha-variables_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_38.png" width="100%" style="display: block; margin: auto;" /></p>
-<div id="referencing-a-github-secret-in-a-github-action" class="section level5" number="6.1.3.2.1">
-<h5><span class="header-section-number">6.1.3.2.1</span> Referencing a GitHub secret in a GitHub action</h5>
+<div id="referencing-a-github-secret-in-a-github-action" class="section level5 hasAnchor" number="6.1.3.2.1">
+<h5><span class="header-section-number">6.1.3.2.1</span> Referencing a GitHub secret in a GitHub action<a href="github-action-variables.html#referencing-a-github-secret-in-a-github-action" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p>To retrieve a GitHub secret amidst a GitHub Action workflow run, you do this sort of notation: <code>${{ secrets.SECRET_NAME}}</code> Where <code>SECRET_NAME</code> directly is the name you used for your GitHub secret.</p>
 <pre><code># Here&#39;s how we&#39;d reference a secret
 - name: How do we reference a GITHUB secret?
@@ -415,8 +418,8 @@ You will likely have to enter your password at this point.</p></li>
 <pre><code>run: echo ${ secrets.GH_PAT }</code></pre>
 <p>But, you don’t have to worry about that part, in your logs your secrets will show as <code>***</code> and will not be displayed.</p>
 </div>
-<div id="activity-using-a-github-secret" class="section level5" number="6.1.3.2.2">
-<h5><span class="header-section-number">6.1.3.2.2</span> Activity: Using a GitHub secret</h5>
+<div id="activity-using-a-github-secret" class="section level5 hasAnchor" number="6.1.3.2.2">
+<h5><span class="header-section-number">6.1.3.2.2</span> Activity: Using a GitHub secret<a href="github-action-variables.html#activity-using-a-github-secret" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <ol style="list-style-type: decimal">
 <li>On your repository, go to your <code>01-exploring-var-and-secrets.yml</code> file from your working branch.</li>
 <li>Click the <code>edit this file</code> button.</li>
