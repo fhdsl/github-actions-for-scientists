@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Scientific software development best practices | GitHub Automation for Scientists</title>
   <meta name="description" content="Chapter 2 Scientific software development best practices | GitHub Automation for Scientists" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.39.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Scientific software development best practices | GitHub Automation for Scientists" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -31,7 +30,6 @@
   <link rel="shortcut icon" href="assets/ITN_favicon.ico" type="image/x-icon" />
 <link rel="prev" href="introduction.html"/>
 <link rel="next" href="why-automation.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,8 +47,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
   
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8K2XL467QV"></script>
@@ -64,6 +63,10 @@
 
 
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -131,9 +134,9 @@ div.csl-indent {
 <li class="chapter" data-level="3.1.1" data-path="why-automation.html"><a href="why-automation.html#why-reproducibility-is-so-important."><i class="fa fa-check"></i><b>3.1.1</b> Why reproducibility is so important.</a></li>
 <li class="chapter" data-level="3.1.2" data-path="why-automation.html"><a href="why-automation.html#automation-as-a-reproducibility-tool"><i class="fa fa-check"></i><b>3.1.2</b> Automation as a reproducibility tool</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="why-automation.html"><a href="why-automation.html#continuous-integration-continous-deployment"><i class="fa fa-check"></i><b>3.2</b> Continuous integration / Continous deployment</a>
+<li class="chapter" data-level="3.2" data-path="why-automation.html"><a href="why-automation.html#continuous-integration-continuous-deployment"><i class="fa fa-check"></i><b>3.2</b> Continuous integration / Continuous deployment</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="why-automation.html"><a href="why-automation.html#continous-integration-continuous-deployment"><i class="fa fa-check"></i><b>3.2.1</b> Continous Integration / Continuous Deployment</a></li>
+<li class="chapter" data-level="3.2.1" data-path="why-automation.html"><a href="why-automation.html#continuous-integration-continuous-deployment-1"><i class="fa fa-check"></i><b>3.2.1</b> Continuous Integration / Continuous Deployment</a></li>
 <li class="chapter" data-level="3.2.2" data-path="why-automation.html"><a href="why-automation.html#a-real-world-example"><i class="fa fa-check"></i><b>3.2.2</b> A real world example</a></li>
 <li class="chapter" data-level="3.2.3" data-path="why-automation.html"><a href="why-automation.html#other-cicd-services"><i class="fa fa-check"></i><b>3.2.3</b> Other CI/CD services</a></li>
 </ul></li>
@@ -182,7 +185,7 @@ div.csl-indent {
 <li class="chapter" data-level="7.1.2" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#look-at-the-logs-closely"><i class="fa fa-check"></i><b>7.1.2</b> Look at the logs closely!</a></li>
 <li class="chapter" data-level="7.1.3" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-workflow_dispatchpull_request-triggers-for-development"><i class="fa fa-check"></i><b>7.1.3</b> Use workflow_dispatch/pull_request triggers for development</a></li>
 <li class="chapter" data-level="7.1.4" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#print-out-things-to-test-your-assumptions"><i class="fa fa-check"></i><b>7.1.4</b> Print out things to test your assumptions</a></li>
-<li class="chapter" data-level="7.1.5" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-marketplace-actions"><i class="fa fa-check"></i><b>7.1.5</b> Use Marketplace actions</a></li>
+<li class="chapter" data-level="7.1.5" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-marketplace-actions"><i class="fa fa-check"></i><b>7.1.5</b> Use Marketplace Actions</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#activity-troubleshooting-github-actions"><i class="fa fa-check"></i><b>7.2</b> Activity: Troubleshooting GitHub Actions</a>
 <ul>
@@ -237,14 +240,14 @@ div.csl-indent {
 <div class="hero-image-container"> 
   <img class= "hero-image" src="assets/itcr_main_image.png">
 </div>
-<div id="scientific-software-development-best-practices" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Scientific software development best practices</h1>
-<div id="learning-objectives" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Learning Objectives</h2>
+<div id="scientific-software-development-best-practices" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Scientific software development best practices<a href="scientific-software-development-best-practices.html#scientific-software-development-best-practices" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-objectives" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Learning Objectives<a href="scientific-software-development-best-practices.html#learning-objectives" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><img src="02-programming-practices_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g1013f9881e2_0_132.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="science-and-software-as-iterative-processes" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Science and software as iterative processes</h2>
+<div id="science-and-software-as-iterative-processes" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Science and software as iterative processes<a href="scientific-software-development-best-practices.html#science-and-software-as-iterative-processes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Scientific papers are often arranged as a list of methods and results, building on themselves more or less sequentially.
 Each figure follows from the previous figure or text description, to describe the data that support a hypothesis or illustrate a conclusion in a linear, “story”-like order.</p>
 <p><img src="02-programming-practices_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g24731cad425_0_0.png" width="100%" style="display: block; margin: auto;" /></p>
@@ -263,10 +266,10 @@ But more often, you’ll write a script (or join several of them together in a m
 <p><img src="02-programming-practices_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g287bcb243d2_0_46.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>In this course, through the lens of automation, we hope to familiarize you with some of the skills necessary to think about research software in an iterative way, from the beginning of a research project.
 Although software development is not generally rewarded directly in academia, it turns out that writing good software does have less obvious rewards, even within the traditional academic structure.
-For example, software that is easy to install tends to be cited more often <span class="citation">(<a href="#ref-mangul2019" role="doc-biblioref">Mangul et al. 2019</a>)</span>, and software that is more consistently maintained tends to be more accurate <span class="citation">(<a href="#ref-gardner2022" role="doc-biblioref">Gardner et al. 2022</a>)</span>.</p>
+For example, software that is easy to install tends to be cited more often <span class="citation">(<a href="#ref-mangul2019">Mangul et al. 2019</a>)</span>, and software that is more consistently maintained tends to be more accurate <span class="citation">(<a href="#ref-gardner2022">Gardner et al. 2022</a>)</span>.</p>
 </div>
-<div id="software-complexity-as-a-spectrum" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Software complexity as a spectrum</h2>
+<div id="software-complexity-as-a-spectrum" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Software complexity as a spectrum<a href="scientific-software-development-best-practices.html#software-complexity-as-a-spectrum" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Not all software is complex, and not all software requires complex infrastructure (or automation, for that matter)!
 It can be useful to think about the complexity of software engineering infrastructure necessary for a project proportionally to the complexity of the software itself:</p>
 <ul>
@@ -276,20 +279,20 @@ It can be useful to think about the complexity of software engineering infrastru
 <p><img src="02-programming-practices_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g287bcb243d2_0_153.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>We will take a closer look at two concrete examples, one on each end of the software complexity spectrum, in the next section.</p>
 </div>
-<div id="examples" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Examples</h2>
-<div id="t-test" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> t-test</h3>
+<div id="examples" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Examples<a href="scientific-software-development-best-practices.html#examples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="t-test" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> t-test<a href="scientific-software-development-best-practices.html#t-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Imagine that you have two sampling distributions (lists/arrays of numbers) and you want to test whether the means of the distributions are statistically equivalent or not.
 This is the setup for a <em>t</em>-test.
-<em>t</em>-tests are implemented in standard functions in R (<a href="https://rdrr.io/r/base/base-package.html"><code>base</code> library</a>) and Python (<a href="https://scipy.org/"><code>scipy</code> library</a>), as well as most other commonly used programming languages.</p>
+<em>t</em>-tests are implemented in standard functions in <a href="https://rdrr.io/r/base/base-package.html">base R</a> and <a href="https://scipy.org/">Python <code>scipy</code> library</a>, as well as most other commonly used programming languages.</p>
 <p><img src="02-programming-practices_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g287bcb243d2_0_122.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>In both R and Python, a <em>t</em>-test is a very well-defined, specific function that takes two lists of numbers and returns the <em>t</em>-statistic and <em>p</em>-value.
 Since this is a part of a standard, widely used library in each language, it is already tested as part of those libraries.
 In your own software, you might need to do some verification of your input (for instance, what happens if you pass an empty list of numbers?) but probably not too much, since you can be fairly confident that the <em>t</em>-test function does what it is documented to do in the programming language you choose to use.</p>
 </div>
-<div id="sequencing-analysis" class="section level3" number="2.4.2">
-<h3><span class="header-section-number">2.4.2</span> Sequencing analysis</h3>
+<div id="sequencing-analysis" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Sequencing analysis<a href="scientific-software-development-best-practices.html#sequencing-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Imagine that you have a list of reads from a <a href="https://en.wikipedia.org/wiki/DNA_sequencing#High-throughput_methods">DNA sequencing</a> machine, and you want to use these data to answer a biological question, or to make a plot/visualization to communicate a biological insight.
 This is a much less well-defined problem than our previous example, with many more independently operating components, and many more subjective decisions that a researcher must make along the way.
 Complex data analyses means complex decisions! This often means that decisions made are not so cut and dry and should rely on the scientific context of the data. In other words, analyses often are tailored to reflect the biology (or other science) and or perhaps the experimental goals.</p>
@@ -303,8 +306,8 @@ Sequencing analyses can also take hours or days to run, as compared to the <em>t
 </ul>
 </div>
 </div>
-<div id="automation-for-scientific-software" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Automation for scientific software</h2>
+<div id="automation-for-scientific-software" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Automation for scientific software<a href="scientific-software-development-best-practices.html#automation-for-scientific-software" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Good software practices do not necessarily have to rely on automation.
 However, complex projects can be unwieldy to check and revise in the absence of some sort of automated process to kick them off automatically, without too much human intervention.
 Steps that are involved might include:</p>
@@ -325,7 +328,7 @@ This eliminates the need for you to remember to run tests, to clean up your code
 
 </div>
 </div>
-<h3> References</h3>
+<h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-gardner2022" class="csl-entry">
 Gardner, Paul P, James M Paterson, Stephanie McGimpsey, Fatemeh Ashari-Ghomi, Sinan U Umu, Aleksandra Pawlik, Alex Gavryushkin, and Michael A Black. 2022. <span>“Sustained Software Development, Not Number of Citations or Journal Choice, Is Indicative of Accurate Bioinformatic Software.”</span> <em>Genome Biology</em> 23 (1): 1–13.

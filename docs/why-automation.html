@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Why Automation | GitHub Automation for Scientists</title>
   <meta name="description" content="Chapter 3 Why Automation | GitHub Automation for Scientists" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.39.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Why Automation | GitHub Automation for Scientists" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -31,7 +30,6 @@
   <link rel="shortcut icon" href="assets/ITN_favicon.ico" type="image/x-icon" />
 <link rel="prev" href="scientific-software-development-best-practices.html"/>
 <link rel="next" href="github-actions-fundamentals.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,8 +47,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
   
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8K2XL467QV"></script>
@@ -64,6 +63,10 @@
 
 
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -131,9 +134,9 @@ div.csl-indent {
 <li class="chapter" data-level="3.1.1" data-path="why-automation.html"><a href="why-automation.html#why-reproducibility-is-so-important."><i class="fa fa-check"></i><b>3.1.1</b> Why reproducibility is so important.</a></li>
 <li class="chapter" data-level="3.1.2" data-path="why-automation.html"><a href="why-automation.html#automation-as-a-reproducibility-tool"><i class="fa fa-check"></i><b>3.1.2</b> Automation as a reproducibility tool</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="why-automation.html"><a href="why-automation.html#continuous-integration-continous-deployment"><i class="fa fa-check"></i><b>3.2</b> Continuous integration / Continous deployment</a>
+<li class="chapter" data-level="3.2" data-path="why-automation.html"><a href="why-automation.html#continuous-integration-continuous-deployment"><i class="fa fa-check"></i><b>3.2</b> Continuous integration / Continuous deployment</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="why-automation.html"><a href="why-automation.html#continous-integration-continuous-deployment"><i class="fa fa-check"></i><b>3.2.1</b> Continous Integration / Continuous Deployment</a></li>
+<li class="chapter" data-level="3.2.1" data-path="why-automation.html"><a href="why-automation.html#continuous-integration-continuous-deployment-1"><i class="fa fa-check"></i><b>3.2.1</b> Continuous Integration / Continuous Deployment</a></li>
 <li class="chapter" data-level="3.2.2" data-path="why-automation.html"><a href="why-automation.html#a-real-world-example"><i class="fa fa-check"></i><b>3.2.2</b> A real world example</a></li>
 <li class="chapter" data-level="3.2.3" data-path="why-automation.html"><a href="why-automation.html#other-cicd-services"><i class="fa fa-check"></i><b>3.2.3</b> Other CI/CD services</a></li>
 </ul></li>
@@ -182,7 +185,7 @@ div.csl-indent {
 <li class="chapter" data-level="7.1.2" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#look-at-the-logs-closely"><i class="fa fa-check"></i><b>7.1.2</b> Look at the logs closely!</a></li>
 <li class="chapter" data-level="7.1.3" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-workflow_dispatchpull_request-triggers-for-development"><i class="fa fa-check"></i><b>7.1.3</b> Use workflow_dispatch/pull_request triggers for development</a></li>
 <li class="chapter" data-level="7.1.4" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#print-out-things-to-test-your-assumptions"><i class="fa fa-check"></i><b>7.1.4</b> Print out things to test your assumptions</a></li>
-<li class="chapter" data-level="7.1.5" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-marketplace-actions"><i class="fa fa-check"></i><b>7.1.5</b> Use Marketplace actions</a></li>
+<li class="chapter" data-level="7.1.5" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-marketplace-actions"><i class="fa fa-check"></i><b>7.1.5</b> Use Marketplace Actions</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#activity-troubleshooting-github-actions"><i class="fa fa-check"></i><b>7.2</b> Activity: Troubleshooting GitHub Actions</a>
 <ul>
@@ -237,35 +240,35 @@ div.csl-indent {
 <div class="hero-image-container"> 
   <img class= "hero-image" src="assets/itcr_main_image.png">
 </div>
-<div id="why-automation" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Why Automation</h1>
+<div id="why-automation" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Why Automation<a href="why-automation.html#why-automation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g104d8c58b62_46_4.png" width="100%" /></p>
-<div id="automation-as-an-aid-for-reproducibility" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Automation as an aid for reproducibility</h2>
+<div id="automation-as-an-aid-for-reproducibility" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Automation as an aid for reproducibility<a href="why-automation.html#automation-as-an-aid-for-reproducibility" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>All of science is built on results being reliable and continually working toward identifying more true/less wrong explanations about the world.</p>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g27a5d68b667_0_1747.png" width="100%" /></p>
 <p>The process of science is first repeatability – can the same researcher with the same data get the same results? Undoubtedly in the early stages of an analysis, sometimes the results and output can be in flux. But as the analysis gets further polished and decisions are made, it should be that the same results can be obtained no matter how many times an analysis is run or re-run by the same researcher.</p>
 <p>This brings us to the critical but previously historically overlooked part of the pyramid known as reproducibility. Reproducibility is what happens when another researcher can take the same data as the research #1 and get the same results. This is more difficult than it sounds at face value because data analysis requires so many decisions and variables. The order and ease of which something is re-run and the computing environment used to run the analysis are two such factors.</p>
 <p>Keep in mind that consistent results (like those seen with reproducible work) are not automatically true but inconsistent results (like those seen with irreproducible work) cannot be true. In other words, <strong>correctness is not the same as reproducibility but reproducibility is a necessary aspect of correctness.</strong></p>
 <p>Reproducibility is the overlooked but critical step that allows replicability to happen. Replicability is when new data is collected that extends the findings of the first study. With this new data, hopefully the same type of analysis can be done that helps the field learn even more about the concepts that were learned in the first study.</p>
-<div id="why-reproducibility-is-so-important." class="section level3" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> Why reproducibility is so important.</h3>
+<div id="why-reproducibility-is-so-important." class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Why reproducibility is so important.<a href="why-automation.html#why-reproducibility-is-so-important." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Reproducibility is not only important because all of science is built upon it but it also saves everyone time!</p>
 <p>We can often underestimate the extent to which our work, code, and data are being used and reused by others in the scientific community. The extent to which our work is reproducible then, not only affect us and our immediate collaborates but could aid or hinder other researcher’s work in an exponential scale.</p>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3916.png" width="100%" /></p>
 <p>In other words, if 10 researchers reuse your work and all 10 of them spent 100 hours trying to get it to work <strong>without</strong> success, that’s a lot of time to waste (10,000 hours)! But conversely, if your work was made with reproducibility aiding tools and skillsets (like automation that we are discussing in this course) then you could save other researchers loads of time! Let’s say instead 9 out of 10 of the researchers who try to reproduce your work (as opposed to running their own analysis from scratch) are able to do so in that time allotment, that saves them an insane amount of time and stress!</p>
 </div>
-<div id="automation-as-a-reproducibility-tool" class="section level3" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> Automation as a reproducibility tool</h3>
+<div id="automation-as-a-reproducibility-tool" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Automation as a reproducibility tool<a href="why-automation.html#automation-as-a-reproducibility-tool" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Automation is just one of many tools and skillsets that can aid the reproducibility of your work!</p>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g27a5d68b667_0_1821.png" width="100%" /></p>
 <p>Returning to those 10 researchers, if instead of having those 10 people manually try to reproduce our work every time we change it, what if we had robots do that work instead? That would not only help us re-run our results more quickly (because researchers are often busy) but also robots are much better at repetitive work. In other words, your human collaborator is great at many things but even your most reliable collaborator will not be as punctual as a robot who is programmed to do the job.</p>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g27a5d68b667_0_1764.png" width="100%" /></p>
 </div>
 </div>
-<div id="continuous-integration-continous-deployment" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Continuous integration / Continous deployment</h2>
-<p>Before we discuss the concept of Continous integration / Continuous deployment (often abbreviated CI/CD), let’s use an analogy.</p>
+<div id="continuous-integration-continuous-deployment" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Continuous integration / Continuous deployment<a href="why-automation.html#continuous-integration-continuous-deployment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before we discuss the concept of Continuous integration / Continuous deployment (often abbreviated CI/CD), let’s use an analogy.</p>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g27a8d088b93_0_11.png" width="100%" /></p>
 <p>Obviously we are getting at here, that generally its a good idea to check work along the way instead of waiting until something is completely finished to test it.</p>
 <p>Software is no exception to this idea. Often if we send a collaborator an enormous amount of code to review; they are likely to feel overwhelmed and may not be able to give useful feedback.</p>
@@ -277,12 +280,12 @@ div.csl-indent {
 <p>Let’s assume over the course of developing a project, bugs are introduced at a certain rate.</p>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_223.png" width="100%" /></p>
 <p>Without using CI/CD you may find yourself trying to fix many bugs at once! This will make the bugs harder to isolate and harder to fix and pinpoint. The amount of time it will take to fix 3 bugs at once may be exponentially higher than if you caught these bugs one at a time. Additionally, the longer amount of time that goes on before you catch a bug, it may be more likely it will get accidentally incorporated into your published results – this will be a lot more work for you and others to rectify.</p>
-<p>However with CI/CD you will likely catch these bugs earlier and have an easier time fixing them before they truly run a muck! A good continuous integration / continuous deployment pipeline will help you identify these bugs early and save time and stress!</p>
+<p>However with CI/CD you will likely catch these bugs earlier and have an easier time fixing them before they truly run amock! A good continuous integration / continuous deployment pipeline will help you identify these bugs early and save time and stress!</p>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g286f0c8db1a_0_68.png" width="100%" /></p>
 <p>This is not only true for classic “my script won’t run” bugs but also “silent” bugs – bugs where the analysis still ran to completion but perhaps the results were slightly different.</p>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g286f0c8db1a_0_33.png" width="100%" /></p>
-<div id="continous-integration-continuous-deployment" class="section level3" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Continous Integration / Continuous Deployment</h3>
+<div id="continuous-integration-continuous-deployment-1" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Continuous Integration / Continuous Deployment<a href="why-automation.html#continuous-integration-continuous-deployment-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A workflow that uses CI/CD principles may look like this:</p>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g290614d43ec_0_277.png" width="100%" />
 The idea is we use version control and build aspects of our software. Before what we’ve built is incorporated into the published version, we will stage it and test it. By staging we mean that perhaps we keep it stored on a different branch and have ways that we can play around with the <a href="https://en.wiktionary.org/wiki/beta_version">beta version</a> of the analysis or product before our most recent adds are incorporated.</p>
@@ -291,8 +294,8 @@ The idea is we use version control and build aspects of our software. Before wha
 <p>In the case of a scientific analysis, we may modify or add to the analysis, but we’ll want to test that these changes work – aka we may want to re-run the analysis before we merge it into the <code>main</code> branch or public facing version.</p>
 <p>In this instance we may think of the final product as being a published manuscript as opposed to deployed website or app. But the same principles here apply. We’ll want to re-run the analysis and build tests that check if the results make sense.</p>
 </div>
-<div id="a-real-world-example" class="section level3" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> A real world example</h3>
+<div id="a-real-world-example" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> A real world example<a href="why-automation.html#a-real-world-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s bring this into the terms of a very common story for science. Let’s say you are a researcher who submitted a manuscript and a reviewer comes back and asks you to re run the analysis with a minor tweak; perhaps a parameter change.</p>
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_987.png" width="100%" /></p>
 <p>If you developed your analysis without using reproducibility aiding practices and without automation, it is very likely that this seemingly simple task could take a lot of your time and brain power. Because while you don’t think anything on your computer changed since you ran this analysis 6 months ago, your computing environment and the software it uses has been changing the entire time!</p>
@@ -302,8 +305,8 @@ The idea is we use version control and build aspects of our software. Before wha
 <p><img src="03-why-automation_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g104d8c58b62_46_9.png" width="100%" /></p>
 <p>By having automation keep tabs on your development, you will be less likely to be blind sided by bugs in a situation where you need to re-run your analysis (or adapt it for a new analysis!)</p>
 </div>
-<div id="other-cicd-services" class="section level3" number="3.2.3">
-<h3><span class="header-section-number">3.2.3</span> Other CI/CD services</h3>
+<div id="other-cicd-services" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Other CI/CD services<a href="why-automation.html#other-cicd-services" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this course we are focusing on using GitHub Actions for CI/CD. However, at this point we should mention that GitHub Actions is just one of many options for this. <a href="https://circleci.com/">Circle CI</a>, <a href="https://www.appveyor.com/">Appveyor</a>, and <a href="https://www.travis-ci.com/">Travis CI</a> are all also perfectly fine options to use. But if you are using GitHub already, GitHub Actions may be the easiest to start out with. However, if at a later point in your automation development journey you find that GitHub Actions may not have a feature you need, we encourage you to explore these other options and use what works best for you. These other CI/CD options definitely have some commonalities with GitHub actions so learning GitHub Actions will still give you a good start in understanding how these services work.</p>
 
 </div>

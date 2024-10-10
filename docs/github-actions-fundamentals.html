@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 GitHub Actions Fundamentals | GitHub Automation for Scientists</title>
   <meta name="description" content="Chapter 4 GitHub Actions Fundamentals | GitHub Automation for Scientists" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.39.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 GitHub Actions Fundamentals | GitHub Automation for Scientists" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -31,7 +30,6 @@
   <link rel="shortcut icon" href="assets/ITN_favicon.ico" type="image/x-icon" />
 <link rel="prev" href="why-automation.html"/>
 <link rel="next" href="automating-re-running-analyses.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,8 +47,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
   
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8K2XL467QV"></script>
@@ -64,6 +63,10 @@
 
 
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -131,9 +134,9 @@ div.csl-indent {
 <li class="chapter" data-level="3.1.1" data-path="why-automation.html"><a href="why-automation.html#why-reproducibility-is-so-important."><i class="fa fa-check"></i><b>3.1.1</b> Why reproducibility is so important.</a></li>
 <li class="chapter" data-level="3.1.2" data-path="why-automation.html"><a href="why-automation.html#automation-as-a-reproducibility-tool"><i class="fa fa-check"></i><b>3.1.2</b> Automation as a reproducibility tool</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="why-automation.html"><a href="why-automation.html#continuous-integration-continous-deployment"><i class="fa fa-check"></i><b>3.2</b> Continuous integration / Continous deployment</a>
+<li class="chapter" data-level="3.2" data-path="why-automation.html"><a href="why-automation.html#continuous-integration-continuous-deployment"><i class="fa fa-check"></i><b>3.2</b> Continuous integration / Continuous deployment</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="why-automation.html"><a href="why-automation.html#continous-integration-continuous-deployment"><i class="fa fa-check"></i><b>3.2.1</b> Continous Integration / Continuous Deployment</a></li>
+<li class="chapter" data-level="3.2.1" data-path="why-automation.html"><a href="why-automation.html#continuous-integration-continuous-deployment-1"><i class="fa fa-check"></i><b>3.2.1</b> Continuous Integration / Continuous Deployment</a></li>
 <li class="chapter" data-level="3.2.2" data-path="why-automation.html"><a href="why-automation.html#a-real-world-example"><i class="fa fa-check"></i><b>3.2.2</b> A real world example</a></li>
 <li class="chapter" data-level="3.2.3" data-path="why-automation.html"><a href="why-automation.html#other-cicd-services"><i class="fa fa-check"></i><b>3.2.3</b> Other CI/CD services</a></li>
 </ul></li>
@@ -182,7 +185,7 @@ div.csl-indent {
 <li class="chapter" data-level="7.1.2" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#look-at-the-logs-closely"><i class="fa fa-check"></i><b>7.1.2</b> Look at the logs closely!</a></li>
 <li class="chapter" data-level="7.1.3" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-workflow_dispatchpull_request-triggers-for-development"><i class="fa fa-check"></i><b>7.1.3</b> Use workflow_dispatch/pull_request triggers for development</a></li>
 <li class="chapter" data-level="7.1.4" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#print-out-things-to-test-your-assumptions"><i class="fa fa-check"></i><b>7.1.4</b> Print out things to test your assumptions</a></li>
-<li class="chapter" data-level="7.1.5" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-marketplace-actions"><i class="fa fa-check"></i><b>7.1.5</b> Use Marketplace actions</a></li>
+<li class="chapter" data-level="7.1.5" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#use-marketplace-actions"><i class="fa fa-check"></i><b>7.1.5</b> Use Marketplace Actions</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="troubleshooting-github-actions.html"><a href="troubleshooting-github-actions.html#activity-troubleshooting-github-actions"><i class="fa fa-check"></i><b>7.2</b> Activity: Troubleshooting GitHub Actions</a>
 <ul>
@@ -237,11 +240,11 @@ div.csl-indent {
 <div class="hero-image-container"> 
   <img class= "hero-image" src="assets/itcr_main_image.png">
 </div>
-<div id="github-actions-fundamentals" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> GitHub Actions Fundamentals</h1>
+<div id="github-actions-fundamentals" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> GitHub Actions Fundamentals<a href="github-actions-fundamentals.html#github-actions-fundamentals" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_982.png" width="100%" style="display: block; margin: auto;" /></p>
-<div id="gha-structure" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> GHA structure</h2>
+<div id="gha-structure" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> GHA structure<a href="github-actions-fundamentals.html#gha-structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2777.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>All GitHub Actions involve answering three questions:</p>
 <ol style="list-style-type: decimal">
@@ -249,7 +252,7 @@ div.csl-indent {
 <li>What should be run?</li>
 <li>With what environment should the thing be run?</li>
 </ol>
-<p>These questions and other specifications are set by writing a <a href="https://www.redhat.com/en/topics/automation/what-is-yaml">YAML file</a>. YAML files are human readable markup language files. Basically its a list that is easy for humans to read and write and computers can read them too. This makes it good for writing a GitHub Action. Essentially, we’re going to write a YAML file to make a recipe that GitHub will read to know what/when/with what we are trying to do.</p>
+<p>These questions and other specifications are set by writing a <a href="https://www.redhat.com/en/topics/automation/what-is-yaml">YAML file</a>. YAML files are human readable markup language files. Basically it’s a list that is easy for humans to read and write and computers can read them too. This makes it good for writing a GitHub Action. Essentially, we’re going to write a YAML file to make a recipe that GitHub will read to know what/when/with what we are trying to do.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2781.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>The headlines about working with YAML files:</p>
 <ol style="list-style-type: decimal">
@@ -258,7 +261,7 @@ div.csl-indent {
 <li>Spacing is VERY specific! – incorrect spacing will definitely result in errors for your GitHub Action run.</li>
 </ol>
 <p>Let’s take a look at an example YAML.
-Note that the what comes before a <code>:</code> is generally a name and indent indicate subsets of a list. So in the overall list of <code>food</code> we have sublists of <code>vegetables</code> and <code>fruits</code>. <code>#</code> can be used as a comment and will not be treated as code.</p>
+Note that what comes before a <code>:</code> is generally a name and indentations indicate subsets of a list. So in the overall list of <code>food</code> we have sublists of <code>vegetables</code> and <code>fruits</code>. <code>#</code> can be used as a comment and will not be treated as code.</p>
 <p>Additionally, <code>:</code> are often names. So <code>citrus</code> is the name for the item <code>oranges</code> and etc.</p>
 <pre><code># A comment here which is ignored
 food:
@@ -273,19 +276,23 @@ food:
 <li><code>runs-on</code>: tells GitHub with what environment should this be run. For example “windows-latest”.</li>
 </ul>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2787.png" width="100%" style="display: block; margin: auto;" /></p>
-<div id="on-when-a-thing-should-be-run" class="section level3" number="4.1.1">
-<h3><span class="header-section-number">4.1.1</span> on: When a thing should be run</h3>
+<div id="on-when-a-thing-should-be-run" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> on: When a thing should be run<a href="github-actions-fundamentals.html#on-when-a-thing-should-be-run" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If you are to automate something, step one is to figure out when do you want the thing to happen.</p>
 <p>What should trigger your action? For that we use <code>on:</code> in a GitHub Action.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2808.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>There’s lots of possible answers for when something should be run. The triggers can be a lot of different events on GitHub: pull requests, issues, comments, times of day, etc.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2815.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="jobs-what-should-be-run" class="section level3" number="4.1.2">
-<h3><span class="header-section-number">4.1.2</span> jobs: What should be run</h3>
+<div id="jobs-what-should-be-run" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> jobs: What should be run<a href="github-actions-fundamentals.html#jobs-what-should-be-run" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Perhaps even more important, what is the job that this automated task needs to do?</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2820.png" width="100%" style="display: block; margin: auto;" /></p>
 <table>
+<colgroup>
+<col width="48%" />
+<col width="52%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Description</th>
@@ -330,8 +337,8 @@ food:
 <p>And here’s the good news, you don’t have to write things from scratch or know ALL the languages. GitHub marketplace allows you to use really cool actions that other people have created. More on this later.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2843.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="runs-on-with-what" class="section level3" number="4.1.3">
-<h3><span class="header-section-number">4.1.3</span> runs-on: with what:</h3>
+<div id="runs-on-with-what" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> runs-on: with what:<a href="github-actions-fundamentals.html#runs-on-with-what" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>runs-on:</code> tag specifies with what environment the job is going to be run.</p>
 <p>What does this mean? Well let’s start by discussing that the term “cloud” computing is a tad misleading. When we send a job to an online service like GitHub Actions, its not a mysterious vague mass.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2859.png" width="100%" style="display: block; margin: auto;" /></p>
@@ -340,17 +347,17 @@ food:
 <p>What do we mean by a computing environment? As just like when you work on your personal computer, you install, update, and sometimes delete software in order to run different things, the GitHub Actions computers need to do the same in order to run your code. Although some person from Microsoft isn’t setting up a new physical computer and manually installing software, the specs you give underneath <code>runs-on:</code> tell GitHub Actions what kind of set up to use.</p>
 <p>So for example, there are built in operating systems like <code>windows-latest</code>, <code>mac-latest</code>, and <code>ubuntu-latest</code>. You can see more about the <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources">default GitHub runners here</a>.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2843.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>But just like a Windows machine straight out of a box is unlikely to have everything you need to run some code, you may need a more specific computing environment. You can also create custom environments using <code>containerization</code>.</p>
+<p>Similarly to how a new Windows computer may not come equipped with all the software you need to execute certain code, you might require a more tailored computing environment. You can also create custom environments using <code>containerization</code>.</p>
 </div>
-<div id="containerization" class="section level3" number="4.1.4">
-<h3><span class="header-section-number">4.1.4</span> Containerization</h3>
+<div id="containerization" class="section level3 hasAnchor" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> Containerization<a href="github-actions-fundamentals.html#containerization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A “virtual machine” is basically when your computer creates its own fake computer inside of it. It’s acting like a different computer but it doesn’t have any additional physical parts.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g285ab2029e8_0_2.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>Containers aren’t virtual machines, but they do a similar thing, which is they spin up a computing environment where you can do things. They are called containers because they are isolated from the rest of your computer.</p>
+<p>Containers, while not virtual machines, serve a similar purpose by creating an isolated computing environment where tasks can be performed. They are named “containers” due to their separation from the rest of your computer.</p>
 <p>Containerization is useful because it allows us to share our computing environments with others. This is useful because it can be a powerful tool for reproducing analyses if we are controlling our computing environments.</p>
-<p>The software you use, and the versions of the software you use can affect the results from an analysis <span class="citation">(<a href="#ref-BeaulieuJones2017" role="doc-biblioref">Beaulieu-Jones and Greene 2017</a>)</span>.</p>
+<p>The software you use, and the versions of the software you use can affect the results from an analysis <span class="citation">(<a href="#ref-BeaulieuJones2017">Beaulieu-Jones and Greene 2017</a>)</span>.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2889.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>Real data and experiments have shown this! Below is a figure from <a href="https://pubmed.ncbi.nlm.nih.gov/28288103/">Beaulieu-Jones and Casey S. Greene, 2017</a> that shows how a microarray data analysis had different results depending on the software versions used <span class="citation">(<a href="#ref-BeaulieuJones2017" role="doc-biblioref">Beaulieu-Jones and Greene 2017</a>)</span>.</p>
+<p>Real data and experiments have shown this! Below is a figure from <a href="https://pubmed.ncbi.nlm.nih.gov/28288103/">Beaulieu-Jones and Casey S. Greene, 2017</a> that shows how a microarray data analysis had different results depending on the software versions used <span class="citation">(<a href="#ref-BeaulieuJones2017">Beaulieu-Jones and Greene 2017</a>)</span>.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2937.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>And as time goes on, your computing environment changes; potentially in ways you don’t realize!</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2894.png" width="100%" style="display: block; margin: auto;" /></p>
@@ -363,10 +370,10 @@ food:
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_2942.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Docker is a whole other world. There’s whole conferences, hackathons, and etc devoted to Docker and other containerization software. It can be a lot to learn. To start, we recommend borrowing other people’s Docker images as much as possible instead of trying to build your own And then install the few packages you need. (more on this in a future chapter)</p>
 <div class="warning">
-<p>Super important side note: DO NOT put data that needs to be secured like Personally Identifiable Information (PII) and Personal Health Information (PHI) data on your Docker images! Especially when you share them! They are not meant for this purpose and this data would be exposed!</p>
+<p>Super important side note: DO NOT put data that needs to be secured like Personally Identifiable Information (PII) and Personal Health Information (PHI) data in your Docker images! Especially when you share them! They are not meant for this purpose and this data would be exposed!</p>
 </div>
-<div id="more-resources-about-docker" class="section level4" number="4.1.4.1">
-<h4><span class="header-section-number">4.1.4.1</span> More resources about Docker</h4>
+<div id="more-resources-about-docker" class="section level4 hasAnchor" number="4.1.4.1">
+<h4><span class="header-section-number">4.1.4.1</span> More resources about Docker<a href="github-actions-fundamentals.html#more-resources-about-docker" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <ul>
 <li><a href="https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/launching-a-docker-image.html">Launching a Docker image</a></li>
 <li><a href="https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/modifying-a-docker-image.html">Modifying a Docker image</a></li>
@@ -374,8 +381,8 @@ food:
 </ul>
 </div>
 </div>
-<div id="summarizing" class="section level3" number="4.1.5">
-<h3><span class="header-section-number">4.1.5</span> Summarizing</h3>
+<div id="summarizing" class="section level3 hasAnchor" number="4.1.5">
+<h3><span class="header-section-number">4.1.5</span> Summarizing<a href="github-actions-fundamentals.html#summarizing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>GitHub actions are specified by YAML files in <code>.github/workflows/</code> folder on a GitHub repository.</li>
 <li>The specs from this YAML are used to run a <code>job</code> when an <code>on</code> trigger specifies it should be run.</li>
@@ -385,8 +392,8 @@ food:
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3054.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-<div id="exercise-1---running-your-first-github-action" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Exercise 1 - Running your first GitHub Action</h2>
+<div id="exercise-1---running-your-first-github-action" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Exercise 1 - Running your first GitHub Action<a href="github-actions-fundamentals.html#exercise-1---running-your-first-github-action" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s apply what we’ve learned about GitHub Actions by running one!</p>
 <ol style="list-style-type: decimal">
 <li><p>If you don’t have a standard workflow for how you use GitHub locally, or are unhappy with your current methods for this activity we recommend <a href="https://desktop.github.com/">installing GitHub Desktop</a></p></li>
@@ -453,8 +460,8 @@ git push --set-upstream origin first-gha</code></pre>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3161.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Yay!</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3168.png" width="100%" style="display: block; margin: auto;" /></p>
-<div id="checking-results-of-a-github-action" class="section level3" number="4.2.1">
-<h3><span class="header-section-number">4.2.1</span> Checking results of a GitHub Action</h3>
+<div id="checking-results-of-a-github-action" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Checking results of a GitHub Action<a href="github-actions-fundamentals.html#checking-results-of-a-github-action" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Go to the <code>Action</code> tab. You’ll see your newest run of your GitHub Action is logged here. All future GitHub Action runs will have their logs here.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3173.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Click on the workflow run log so we can look into it.
@@ -463,8 +470,8 @@ To see more run details we’ll click on the job name which in this case is <cod
 <p>Click on the dropdown arrows to see even more details on each step.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3188.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="breaking-down-the-yaml" class="section level3" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> Breaking down the YAML</h3>
+<div id="breaking-down-the-yaml" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Breaking down the YAML<a href="github-actions-fundamentals.html#breaking-down-the-yaml" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We can break down how what we wrote in the YAML lead to what is shown in this run’s log.</p>
 <p><img src="04-gha-basics_files/figure-html/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA_g280d2b56f79_0_3193.png" width="100%" style="display: block; margin: auto;" /></p>
 <ul>
@@ -481,7 +488,7 @@ To see more run details we’ll click on the job name which in this case is <cod
 </div>
 </div>
 </div>
-<h3> References</h3>
+<h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-BeaulieuJones2017" class="csl-entry">
 Beaulieu-Jones, Brett K, and Casey S Greene. 2017. <span>“Reproducibility of Computational Workflows Is Automated Using Continuous Analysis.”</span> <em>Nature Biotechnology</em> 35 (4): 342–46. <a href="https://doi.org/10.1038/nbt.3780">https://doi.org/10.1038/nbt.3780</a>.
