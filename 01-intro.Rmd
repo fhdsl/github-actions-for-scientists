@@ -19,8 +19,7 @@ _This course is written for individuals who:_
 - Wish to save time and enhance their scientific projects using automation
 - Have perhaps tried to learn about GitHub Actions before but felt overwhelmed about how to start
 
-
-```{r, out.width = "100%", echo = FALSE}
+```{r for_individuals_who, out.width = "100%", echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g1173f7473f7_0_0")
 ```
 
@@ -28,13 +27,13 @@ ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmX
 
 This course covers how to use GitHub actions for scientific software development. We encourage the recognition that scientific software can take many forms that can all benefit from the concepts of continuous integration and continuous deployment.
 
-```{r, out.width = "100%", echo = FALSE}
-ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.gd422c5de97_0_10")
+```{r topics_covered, out.width = "100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g2ab6f05fef1_0_0")
 ```
 
 This course builds on concepts introduced in the [Reproducibility](https://jhudatascience.org/Reproducibility_in_Cancer_Informatics/introduction.html) and [Advanced Reproducibility](https://jhudatascience.org/Adv_Reproducibility_in_Cancer_Informatics/introduction.html) courses from the ITCR Training Network. If you are unfamiliar with GitHub and/or do not have an account, we'd suggest you start with those courses by using the links or QR codes below.
 
-```{r, echo = FALSE}
+```{r prereqs, echo = FALSE}
 ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.g101867ebdaa_18_0")
 ```
 
@@ -63,6 +62,10 @@ Equip learners with basics skills and confidence to utilize the concepts of cont
 
 **What is not the goal**  
 This course is meant to teach learners how to create sophisticated GitHub Actions, but instead introduce learners to basic fundamentals of continuous integration and continuous deployment. This course focuses on GitHub Actions and will not cover any other (perfectly fine) tools for CI/CD.
+
+```{r learning_objectives, out.width = "100%", echo = FALSE}
+ottrpal::include_slide("https://docs.google.com/presentation/d/1x0Cnk2Wcsg8HYkmXnXo_0PxmYCxAwzVrUQzb8DUDvTA/edit#slide=id.gd422c5de97_0_10")
+```
 
 ## How to use the course
 
